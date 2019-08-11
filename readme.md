@@ -10,7 +10,7 @@ Want a Mod or Feature? [Here](https://github.com/DiscworldZA/gta-resources/issue
 
 Changelog [here](https://github.com/DiscworldZA/gta-resources/blob/master/changelog.md)
 
-#Explanation
+# Explanation
 Most of my mods work with the [Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base) mod and [ESX](https://github.com/ESX-Org/es_extended)
 
 The reasoning behind this is to simplify my process and have all my mods up to the same standard and address bug fixing over the whole platform rather individual broken sections.
@@ -18,10 +18,10 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 
 Most server owners are not developers but understand the basics. My mods are created highly configurable. Every Location and Price for the mods will be able to be configured. If you want more configuration options create an issue!
 
-#Requirements for all mods
+# Requirements for all mods
 - [ESX](https://github.com/ESX-Org/es_extended)
 
-#Mod List
+# Mod List
 
 - [Disc-Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base)
 - [Disc-Armory](https://github.com/DiscworldZA/gta-resources/tree/master/disc-armory)
@@ -36,7 +36,7 @@ Most server owners are not developers but understand the basics. My mods are cre
 - [Disc-Warrant](https://github.com/DiscworldZA/gta-resources/tree/master/disc-warrant)
 
 
-#Ideas
+# Ideas
 
 - NPC Jobs (These are all mods to add depth to the ESX versions)
   - [Disc-Cops](https://github.com/DiscworldZA/gta-resources/tree/master/disc-cops) (WIP)
