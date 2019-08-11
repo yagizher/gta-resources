@@ -1,5 +1,5 @@
 # Introduction
-Hi, my name is DiscworldZA. I create GTA V mods for FiveM
+Hi, my name is [DiscworldZA](). I create GTA V mods for FiveM
 
 This is my repo for all the mods I create.
 Feedback is highly recommended.
@@ -7,6 +7,7 @@ Feedback is highly recommended.
 Report Issues! [Here](https://github.com/DiscworldZA/gta-resources/issues)
 
 Want a Mod or Feature? [Here](https://github.com/DiscworldZA/gta-resources/issues)
+I will create almost anything you can think of. Feel free to request it and I will see about creating it.
 
 Changelog [here](https://github.com/DiscworldZA/gta-resources/blob/master/changelog.md)
 
@@ -20,6 +21,7 @@ Most server owners are not developers but understand the basics. My mods are cre
 
 # Requirements for all mods
 - [ESX](https://github.com/ESX-Org/es_extended)
+- [Mythic Notify](https://github.com/mythicrp/mythic_notify)
 
 # Mod List
 
@@ -43,3 +45,9 @@ Most server owners are not developers but understand the basics. My mods are cre
   - Disc-EMS
   - Disc-Mechanic
   - Disc-CarSales
+  
+# Usage
+Feel free to use my [Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base) mod to create your own! Just credit me in some way. Share your mods you created with my base mod with me!
+
+# Discord
+- DiscworldZA#5430
