@@ -9,7 +9,7 @@ Add to resource folder `[esx]` or `[disc]`
 
 Start using `start disc-drugsales`
 
-##Steps
+# Steps
 
 - Insert Drug Items into `essentialmode.items`
 - Configure with your drug items
