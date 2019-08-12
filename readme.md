@@ -1,5 +1,7 @@
 # Introduction
-Hi, my name is [DiscworldZA](https://twitter.com/DiscworldZA). I create GTA V mods for FiveM
+Hi, my name is [DiscworldZA](https://twitter.com/DiscworldZA). I create GTA V mods for FiveM.
+
+I create mods while streaming. Give me a follow here for notifications [Twitch](https://www.twitch.tv/DiscworldZA)
 
 This is my repo for all the mods I create.
 Feedback is highly recommended.
