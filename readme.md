@@ -4,14 +4,17 @@ Hi, my name is [DiscworldZA](https://twitter.com/DiscworldZA). I create GTA V mo
 I create mods while streaming. Give me a follow here for notifications [Twitch](https://www.twitch.tv/DiscworldZA)
 
 This is my repo for all the mods I create.
-Feedback is highly recommended.
 
-Report Issues! [Here](https://github.com/DiscworldZA/gta-resources/issues)
 
-Want a Mod or Feature? [Here](https://github.com/DiscworldZA/gta-resources/issues)
+# Feedback.
+
+- Highly recommended
+- Report Issues [here](https://github.com/DiscworldZA/gta-resources/issues)
+- Want a Mod or Feature? Request [here](https://github.com/DiscworldZA/gta-resources/issues)
+- Changelog [here](https://github.com/DiscworldZA/gta-resources/blob/master/changelog.md)
+
 I will create almost anything you can think of. Feel free to request it and I will see about creating it.
 
-Changelog [here](https://github.com/DiscworldZA/gta-resources/blob/master/changelog.md)
 
 # Configuration
 Most server owners are not developers but understand the basics. My mods are created highly configurable. Every location or price for the mods will be able to be configured. If you want more configuration options create an [issue](https://github.com/DiscworldZA/gta-resources/issues)
@@ -56,6 +59,13 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
   
 # Usage
 Feel free to use my [Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base) mod to create your own! Just credit me in some way. Share your mods you created with my base mod with me!
+
+# Credit
+- Did I forget to credit you for your code?
+- Am I using your code without permission?
+- Do you want to use my code?
+
+Message me on Discord. I will help you out.
 
 # Discord
 - DiscworldZA#5430
