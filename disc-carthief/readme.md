@@ -16,13 +16,12 @@ Add to resource folder `[esx]` or `[disc]`
 
 Start using `start disc-carthief`
 
-##Steps
-
-- Insert Drug Items into `essentialmode.items`
-- Configure with your drug items
-
 # Usage
-If you have drugs you can walk up to an NPC and sell them the drugs.
+1. Go to the Start location
+2. Activate the marker
+3. Drive to the Delivery Location
+4. Cops are alerted as soon as the vehicle is stolen 
+5. Activate the jammer to hide yourself
 
 # Configuration
 
