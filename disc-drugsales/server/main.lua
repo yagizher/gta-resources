@@ -2,7 +2,7 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-ESX.RegisterServerCallback("rdrp_drugsales:sellDrug", function(source, cb)
+ESX.RegisterServerCallback("disc-drugsales:sellDrug", function(source, cb)
     local player = ESX.GetPlayerFromId(source)
 
     if player then
@@ -52,14 +52,14 @@ DoPlayerHaveItems = function(player)
 end
 
 
-ESX.RegisterServerCallback('rdrp_drugsales:hasDrugs', function(source, cb)
+ESX.RegisterServerCallback('disc-drugsales:hasDrugs', function(source, cb)
     local player = ESX.GetPlayerFromId(source)
     local item, hasItem = DoPlayerHaveItems(player)
     cb(hasItem)
 end)
 
 
-ESX.RegisterServerCallback('rdrp_drugsales:getOnlinePolice', function(source, cb)
+ESX.RegisterServerCallback('disc-drugsales:getOnlinePolice', function(source, cb)
     local _source  = source
     local xPlayers = ESX.GetPlayers()
     local cops = 0

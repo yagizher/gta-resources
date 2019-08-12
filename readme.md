@@ -13,13 +13,18 @@ I will create almost anything you can think of. Feel free to request it and I wi
 
 Changelog [here](https://github.com/DiscworldZA/gta-resources/blob/master/changelog.md)
 
+# Configuration
+Most server owners are not developers but understand the basics. My mods are created highly configurable. Every location or price for the mods will be able to be configured. If you want more configuration options create an [issue](https://github.com/DiscworldZA/gta-resources/issues)
+
+All ReadMe contains Configuration sections
+
+
 # Explanation
 Most of my mods work with the [Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base) mod and [ESX](https://github.com/ESX-Org/es_extended)
 
 The reasoning behind this is to simplify my process and have all my mods up to the same standard and address bug fixing over the whole platform rather individual broken sections.
 It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works on but for all my needs.
 
-Most server owners are not developers but understand the basics. My mods are created highly configurable. Every Location and Price for the mods will be able to be configured. If you want more configuration options create an issue!
 
 # Requirements for all mods
 - [ESX](https://github.com/ESX-Org/es_extended)

@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
 			end
 
 			if IsControlJustReleased(0, 38) and cs and cst then
-				ESX.TriggerServerCallback('rdrp_drugsales:getOnlinePolice', 
+				ESX.TriggerServerCallback('disc-drugsales:getOnlinePolice',
 				function(online)
 					if Config.CopsNeeded > online then 
 						exports['mythic_notify']:DoHudText('error', "Not enough cops in town! Need " .. Config.CopsNeeded)
@@ -87,7 +87,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 	end
 	while true do
-		ESX.TriggerServerCallback('rdrp_drugsales:hasDrugs', function(hD)
+		ESX.TriggerServerCallback('disc-drugsales:hasDrugs', function(hD)
 			if hasDrugs ~= hD then
 				if hD then 
 					exports['mythic_notify']:DoHudText('inform', "You have drugs!")

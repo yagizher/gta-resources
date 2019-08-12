@@ -7,6 +7,8 @@ Add to resource folder `[esx]` or `[disc]`
 
 Execute SQL : `disc-jobcars.sql`
 
+Start using `start disc-jobcars`
+
 # Config
 ```
 {

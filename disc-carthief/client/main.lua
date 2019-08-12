@@ -51,11 +51,11 @@ end)
 
 
 function SpawnCar()
-	ESX.TriggerServerCallback('esx_carthief:isActive', function(isActive, isCooldownActive)
+	ESX.TriggerServerCallback('disc-carthief:isActive', function(isActive, isCooldownActive)
 		if isCooldownActive == 1 then 
 			exports['mythic_notify']:DoHudText('error', "Cooldown is active!")
 		elseif isActive == 0 then
-			ESX.TriggerServerCallback('esx_carthief:anycops', function(anycops)
+			ESX.TriggerServerCallback('disc-carthief:anycops', function(anycops)
 				if anycops >= Config.CopsRequired then
 
 					--Get a random delivery point
@@ -100,7 +100,7 @@ function SpawnCar()
 					SetBlipRoute(deliveryblip, true)
 
 					--Register acitivity for server
-					TriggerServerEvent('esx_carthief:registerActivity', 1)
+					TriggerServerEvent('disc-carthief:registerActivity', 1)
 					
 					--For delivery blip
 					isTaken = 1
@@ -137,10 +137,10 @@ function FinishDelivery()
 
 	exports['mythic_notify']:DoHudText('success', "You finished the robbery, Here is your payment! You earned $" .. finalpayment)
 
-	TriggerServerEvent('esx_carthief:pay', finalpayment)
+	TriggerServerEvent('disc-carthief:pay', finalpayment)
 
 	--Register Activity
-	TriggerServerEvent('esx_carthief:registerActivity', 0)
+	TriggerServerEvent('disc-carthief:registerActivity', 0)
 
     --For delivery blip
     isTaken = 0
@@ -152,7 +152,7 @@ function FinishDelivery()
 	isJammerActive = 0
 		
 	--Remove Last Cop Blips
-    TriggerServerEvent('esx_carthief:stopalertcops')
+    TriggerServerEvent('disc-carthief:stopalertcops')
 		
   else
 		exports['mythic_notify']:DoHudText('error', "You have to use the car that was provided for you and you must come to a full stop.")
@@ -173,7 +173,7 @@ function AbortDelivery()
 		RemoveBlip(deliveryblip)
 
 		--Register Activity
-		TriggerServerEvent('esx_carthief:registerActivity', 0)
+		TriggerServerEvent('disc-carthief:registerActivity', 0)
 
 		--For delivery blip
 		isTaken = 0
@@ -185,12 +185,12 @@ function AbortDelivery()
 		isJammerActive = 0
 
 		--Remove Last Cop Blips
-		TriggerServerEvent('esx_carthief:stopalertcops')
+		TriggerServerEvent('disc-carthief:stopalertcops')
 	end
 end
 
 function Buy()
-	ESX.TriggerServerCallback('esx_carthief:buyJammer', function(bought)
+	ESX.TriggerServerCallback('disc-carthief:buyJammer', function(bought)
 		if bought == 1 then
 			exports['mythic_notify']:DoHudText('inform', "You bought a Jammer!")
 		elseif bought == -1 then
@@ -201,12 +201,12 @@ function Buy()
 	end)
 end
 
-RegisterNetEvent('esx_carthief:jammerActive')
-AddEventHandler('esx_carthief:jammerActive', function()
+RegisterNetEvent('disc-carthief:jammerActive')
+AddEventHandler('disc-carthief:jammerActive', function()
 	if isTaken == 1 and isDelivered == 0 and (GetVehiclePedIsIn(GetPlayerPed(-1), false) == car) then
 		isJammerActive = 1
 		exports['mythic_notify']:DoHudText('inform', "Activating Jammer!")
-		TriggerServerEvent('esx_carthief:removeJammer')
+		TriggerServerEvent('disc-carthief:removeJammer')
 	end
 end)
 
@@ -232,16 +232,16 @@ Citizen.CreateThread(function()
 	if isTaken == 1 and IsPedInAnyVehicle(GetPlayerPed(-1)) and isJammerActive == 0 then
 		Citizen.Wait(Config.BlipUpdateTime)
 		local coords = GetEntityCoords(GetPlayerPed(-1))
-		TriggerServerEvent('esx_carthief:alertcops', coords.x, coords.y, coords.z)
+		TriggerServerEvent('disc-carthief:alertcops', coords.x, coords.y, coords.z)
 	elseif isJammerActive == 1 then
-		TriggerServerEvent('esx_carthief:activatedJammerCops')
-		TriggerServerEvent('esx_carthief:stopalertcops')		
+		TriggerServerEvent('disc-carthief:activatedJammerCops')
+		TriggerServerEvent('disc-carthief:stopalertcops')
 		Citizen.Wait(5000)
 	elseif isTaken == 1 and not IsPedInAnyVehicle(GetPlayerPed(-1)) then			
-		TriggerServerEvent('esx_carthief:stopalertcops')			
+		TriggerServerEvent('disc-carthief:stopalertcops')
 		Citizen.Wait(Config.BlipUpdateTime)
 	elseif isTaken == 0 then
-		TriggerServerEvent('esx_carthief:stopalertcops')			
+		TriggerServerEvent('disc-carthief:stopalertcops')
 		Citizen.Wait(Config.BlipUpdateTime)
 	else
 		Citizen.Wait(5000)
@@ -273,19 +273,19 @@ Citizen.CreateThread(function()
 	end
 end)
 
-RegisterNetEvent('esx_carthief:removecopblip')
-AddEventHandler('esx_carthief:removecopblip', function()
+RegisterNetEvent('disc-carthief:removecopblip')
+AddEventHandler('disc-carthief:removecopblip', function()
 	RemoveBlip(copblip)
 end)
 
 
-RegisterNetEvent('esx_carthief:activatedJammerCops')
-AddEventHandler('esx_carthief:activatedJammerCops', function()
+RegisterNetEvent('disc-carthief:activatedJammerCops')
+AddEventHandler('disc-carthief:activatedJammerCops', function()
 	exports['mythic_notify']:DoHudText('error', "Criminals have activated their signal jammer! Beware!")
 end)
 
-RegisterNetEvent('esx_carthief:setcopblip')
-AddEventHandler('esx_carthief:setcopblip', function(cx,cy,cz)
+RegisterNetEvent('disc-carthief:setcopblip')
+AddEventHandler('disc-carthief:setcopblip', function(cx,cy,cz)
 	RemoveBlip(copblip)
     copblip = AddBlipForCoord(cx,cy,cz)
     SetBlipSprite(copblip , 161)
@@ -294,12 +294,12 @@ AddEventHandler('esx_carthief:setcopblip', function(cx,cy,cz)
 	PulseBlip(copblip)
 end)
 
-RegisterNetEvent('esx_carthief:setcopnotification')
-AddEventHandler('esx_carthief:setcopnotification', function()
+RegisterNetEvent('disc-carthief:setcopnotification')
+AddEventHandler('disc-carthief:setcopnotification', function()
 	exports['mythic_notify']:DoHudText('inform', "Car stealing in progress. Vehicle tracker will be active on your radar")
 end)
 
-AddEventHandler('esx_carthief:hasEnteredMarker', function(zone)
+AddEventHandler('disc-carthief:hasEnteredMarker', function(zone)
   	if LastZone == 'menucarthief' then
 		CurrentAction     = 'carthief_menu'
 		CurrentActionMsg  = 'Press ~INPUT_CONTEXT~ to steal a car'
@@ -315,7 +315,7 @@ AddEventHandler('esx_carthief:hasEnteredMarker', function(zone)
   	end
 end)
 
-AddEventHandler('esx_carthief:hasExitedMarker', function(zone)
+AddEventHandler('disc-carthief:hasExitedMarker', function(zone)
 	CurrentAction = nil
 	ESX.UI.Menu.CloseAll()
 end)
@@ -350,11 +350,11 @@ Citizen.CreateThread(function()
       
 		if isInMarker and not HasAlreadyEnteredMarker then
 			HasAlreadyEnteredMarker = true
-			TriggerEvent('esx_carthief:hasEnteredMarker', currentZone)
+			TriggerEvent('disc-carthief:hasEnteredMarker', currentZone)
 		end
 		if not isInMarker and HasAlreadyEnteredMarker then
 			HasAlreadyEnteredMarker = false
-			TriggerEvent('esx_carthief:hasExitedMarker', LastZone)
+			TriggerEvent('disc-carthief:hasExitedMarker', LastZone)
 		end
 	end
 end)

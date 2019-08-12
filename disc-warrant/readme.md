@@ -10,6 +10,9 @@ This mod adds the following:
 Add to resource folder `[esx]` or `[disc]`
 
 Execute SQL : `disc-warrant.sql`
+
+Start using `start disc-warrant`
+
 # Usage
 As a cop press F5 to open the Warrant Menu
 

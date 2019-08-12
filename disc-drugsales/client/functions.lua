@@ -1,6 +1,6 @@
 TryToSell = function(pedId, coords)
     if not DoesEntityExist(pedId) or IsPedDeadOrDying(pedId) or IsPedAPlayer(pedId) or IsPedFalling(pedId) then
-        Citizen.Trace("rdrp_drugsales: ped: " .. pedId .. " not able to sell to.")
+        Citizen.Trace("disc-drugsales: ped: " .. pedId .. " not able to sell to.")
         return
     end
 
@@ -19,7 +19,7 @@ TryToSell = function(pedId, coords)
     if canSell > 5 then
         Sell()
     else
-        TriggerServerEvent('esx_addons_gcphone:startRandomCall', "police", "Drug Sale Attempt in progress!", coords)
+        TriggerServerEvent('disc-gcphone:sendMessageFrom', "police", "police", "Drug Sale Attempt in progress!", coords)
         exports['mythic_notify']:DoHudText('error', "Are you stupid? Don't ever contact me again.")
     end
 
@@ -30,7 +30,7 @@ TryToSell = function(pedId, coords)
 end
 
 Sell = function()
-    ESX.TriggerServerCallback("rdrp_drugsales:sellDrug", function(soldDrug)
+    ESX.TriggerServerCallback("disc-drugsales:sellDrug", function(soldDrug)
         if soldDrug then
             exports['mythic_notify']:DoHudText('success', "Thanks! Here's $" ..soldDrug)
         else

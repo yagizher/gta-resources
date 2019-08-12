@@ -1,18 +1,8 @@
 ESX                       = nil
-local PhoneNumbers        = {}
-
 
 TriggerEvent('esx:getSharedObject', function(obj)
   ESX = obj
 end)
-
-AddEventHandler('esx_phone:registerNumber', function(number, type, sharePos, hasDispatch, hideNumber, hidePosIfAnon)
-    PhoneNumbers[number] = {
-        type = type,
-        rNumber = getPhoneRandomNumber()
-    }
-end)
-
 
 function getPhoneRandomNumber()
     local numBase0 = math.random(100,999)

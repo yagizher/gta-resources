@@ -1,7 +1,6 @@
 Config = {}
 
-Config.SellDistance = 1050 -- The distance before you can press e and negotiate.
-Config.DiscussTime = 5000 -- Seconds of the ped waiting for answer of purchase or not.
+Config.DiscussTime = 5000
 
 Config.CopsNeeded = 2
 
