@@ -1,30 +1,30 @@
 ESX = nil
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
+TriggerEvent('esx:getSharedObject', function(obj)
+    ESX = obj
+end)
 
 ESX.RegisterServerCallback("disc-jobcars:getJobCars", function(source, cb)
     local player = ESX.GetPlayerFromId(source)
-    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner', 
-    {
-        ['@owner'] = player.identifier
-    },
-    function(results)
-        cb(results)
-    end)
+    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner',
+            {
+                ['@owner'] = player.identifier
+            },
+            function(results)
+                cb(results)
+            end)
 end)
 
 ESX.RegisterServerCallback("disc-jobcars:getClaimableCars", function(source, cb)
     local player = ESX.GetPlayerFromId(source)
-    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner and `stored` = false', 
-    {
-        ['@owner'] = player.identifier
-    },
-    function(results)
-        cb(results)
-    end)
+    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner and `stored` = false',
+            {
+                ['@owner'] = player.identifier
+            },
+            function(results)
+                cb(results)
+            end)
 end)
-
 
 ESX.RegisterServerCallback("disc-jobcars:canBuyCar", function(source, cb, car)
     local player = ESX.GetPlayerFromId(source)
@@ -39,12 +39,12 @@ end)
 RegisterServerEvent('disc-jobcars:buyCar')
 AddEventHandler("disc-jobcars:buyCar", function(car, props, plate)
     local player = ESX.GetPlayerFromId(source)
-    MySQL.Async.execute('INSERT INTO job_cars (model, owner, props, `stored`, plate) VALUES (@model, @owner, @props, 1, @plate)', 
+    MySQL.Async.execute('INSERT INTO job_cars (model, owner, props, `stored`, plate) VALUES (@model, @owner, @props, 1, @plate)',
             {
                 ['@model'] = car.model,
                 ['@owner'] = player.identifier,
                 ['@props'] = json.encode(props),
-                ['@plate'] = plate                
+                ['@plate'] = plate
             }
     )
 end)
@@ -73,35 +73,34 @@ AddEventHandler("disc-jobcars:storeCar", function(plate)
     })
 end)
 
-
 ESX.RegisterServerCallback("disc-jobcars:storeNearbyJobCar", function(source, cb, nearbyVehicles)
     local player = ESX.GetPlayerFromId(source)
-	local foundPlate, foundNum
+    local foundPlate, foundNum
 
-	for k,v in ipairs(nearbyVehicles) do
-		local result = MySQL.Sync.fetchAll('SELECT plate FROM job_cars WHERE owner = @owner AND plate = @plate', {
-			['@owner'] = player.identifier,
-			['@plate'] = v.plate,
-		})
+    for k, v in ipairs(nearbyVehicles) do
+        local result = MySQL.Sync.fetchAll('SELECT plate FROM job_cars WHERE owner = @owner AND plate = @plate', {
+            ['@owner'] = player.identifier,
+            ['@plate'] = v.plate,
+        })
 
-		if result[1] then
-			foundPlate, foundNum = result[1].plate, k
-			break
-		end
-	end
+        if result[1] then
+            foundPlate, foundNum = result[1].plate, k
+            break
+        end
+    end
 
-	if not foundPlate then
-		cb(false)
-	else
-		MySQL.Async.execute('UPDATE job_cars SET `stored` = true WHERE owner = @owner AND plate = @plate', {
-			['@owner'] = player.identifier,
-			['@plate'] = foundPlate
-		}, function (rowsChanged)
-			if rowsChanged == 0 then
-				cb(false)
-			else
-				cb(true, foundNum)
-			end
-		end)
-	end
+    if not foundPlate then
+        cb(false)
+    else
+        MySQL.Async.execute('UPDATE job_cars SET `stored` = true WHERE owner = @owner AND plate = @plate', {
+            ['@owner'] = player.identifier,
+            ['@plate'] = foundPlate
+        }, function(rowsChanged)
+            if rowsChanged == 0 then
+                cb(false)
+            else
+                cb(true, foundNum)
+            end
+        end)
+    end
 end)

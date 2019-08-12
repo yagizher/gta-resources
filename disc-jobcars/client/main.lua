@@ -141,12 +141,12 @@ function BuyCar(car, garage)
             exports['mythic_notify']:DoHudText('success', 'Bought Vehicle')
 
             ESX.Game.SpawnLocalVehicle(car.model, garage.coords, 0.0, function(vehicle)
+                local vehicle  = GetVehiclePedIsIn(playerPed, false)
                 SetEntityCollision(vehicle, false, true)
                 TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
                 FreezeEntityPosition(vehicle, true)
 
                 local newPlate = exports['esx_vehicleshop']:GeneratePlate()
-				local vehicle  = GetVehiclePedIsIn(playerPed, false)
 				local props    = ESX.Game.GetVehicleProperties(vehicle)
 				props.plate    = newPlate
                 
