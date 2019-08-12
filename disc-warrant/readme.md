@@ -2,7 +2,7 @@
 
 This mod adds the following:
 
-- Searching for Warrant
+- Searching for a Warrant
 - Listing all Warrants
 - Creating a Warrant
 
@@ -22,3 +22,4 @@ As a cop press F5 to open the Warrant Menu
 # To do
 
 - Add job configuration
+- Integration Search Warrants into [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property)
