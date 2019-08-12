@@ -16,7 +16,6 @@ ESX.RegisterServerCallback('disc-armory:modifyWeaponCount', function(source, cb,
         ['@armory'] = armory,
         ['@weapon'] = weapon
     }, function(weapons)
-        print(#weapons)
         if #weapons > 0 then
             if weapons[1].count + count <= 0 then
                 MySQL.Async.execute('DELETE FROM armory WHERE weapon = @weapon and armory_job = @armory', {
