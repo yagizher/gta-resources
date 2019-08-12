@@ -32,7 +32,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 # Requirements for all mods
 - [ESX](https://github.com/ESX-Org/es_extended)
 - [Mythic Notify](https://github.com/mythicrp/mythic_notify)
-- [ESX Addon Acount](https://github.com/ESX-Org/esx_addonaccount)
+- [ESX Add on Account](https://github.com/ESX-Org/esx_addonaccount)
 
 # Mod List
 
