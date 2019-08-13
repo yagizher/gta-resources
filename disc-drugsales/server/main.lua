@@ -1,6 +1,8 @@
 ESX = nil
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+TriggerEvent('esx:getSharedObject', function(obj)
+    ESX = obj
+end)
 
 ESX.RegisterServerCallback("disc-drugsales:sellDrug", function(source, cb)
     local player = ESX.GetPlayerFromId(source)
@@ -20,7 +22,7 @@ ESX.RegisterServerCallback("disc-drugsales:sellDrug", function(source, cb)
             else
                 count = randomCount
             end
-            
+
             player.removeInventoryItem(item.name, count)
 
             player.addAccountMoney('black_money', randomPayment * count)
@@ -51,26 +53,24 @@ DoPlayerHaveItems = function(player)
     return item, item ~= false
 end
 
-
 ESX.RegisterServerCallback('disc-drugsales:hasDrugs', function(source, cb)
     local player = ESX.GetPlayerFromId(source)
     local item, hasItem = DoPlayerHaveItems(player)
     cb(hasItem)
 end)
 
-
 ESX.RegisterServerCallback('disc-drugsales:getOnlinePolice', function(source, cb)
-    local _source  = source
+    local _source = source
     local xPlayers = ESX.GetPlayers()
     local cops = 0
-  
-      for i=1, #xPlayers, 1 do
-  
-          local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-          if xPlayer.job.name == 'police' then
-          cops = cops + 1
-          end
-      end
-      Wait(25)
-      cb(cops)
-  end)
+
+    for i = 1, #xPlayers, 1 do
+
+        local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+        if xPlayer.job.name == 'police' then
+            cops = cops + 1
+        end
+    end
+    Wait(25)
+    cb(cops)
+end)

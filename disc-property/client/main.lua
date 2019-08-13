@@ -1,7 +1,6 @@
 ESX = nil
 local propertyData = {}
 local propertyOwners = {}
-local playerIdentifier = nil
 
 Citizen.CreateThread(function()
     while ESX == nil do
@@ -14,11 +13,17 @@ Citizen.CreateThread(function()
     while ESX.GetPlayerData().job == nil do
         Citizen.Wait(0)
     end
-    playerIdentifier = ESX.GetPlayerData().identifier
+
+    ESX.PlayerData = ESX.GetPlayerData()
+end)
+
+RegisterNetEvent('esx:setJob')
+AddEventHandler('esx:setJob', function(job)
+    ESX.PlayerData.job = job
 end)
 
 Citizen.CreateThread(function()
-    Citizen.Wait(0)
+    Citizen.Wait(1000)
     ESX.TriggerServerCallback('disc-property:getPropertyData', function(data, owners)
         propertyData = data
         propertyOwners = owners
@@ -211,7 +216,7 @@ function IsPlayerOwnerOf(property)
     local owners = GetPropertyOwnersForProperty(property)
     if owners then
         for k, v in pairs(owners) do
-            if playerIdentifier == v.identifier then
+            if ESX.PlayerData.identifier == v.identifier then
                 return true
             end
         end
@@ -227,10 +232,6 @@ function IsPropertySold(property)
         return false
     end
 end
-
-Citizen.CreateThread(function()
-
-end)
 
 function ShowViewProperty(property)
 

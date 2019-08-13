@@ -42,7 +42,6 @@ ESX.RegisterServerCallback('disc-warrant:allWarrants', function(source, cb, valu
             end)
 end)
 
-
 RegisterServerEvent('disc-warrant:createWarrant')
 AddEventHandler('disc-warrant:createWarrant', function(warrant)
     MySQL.Async.execute(

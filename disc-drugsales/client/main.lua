@@ -5,98 +5,97 @@ local hasDrugs = false
 cachedPeds = {}
 
 Citizen.CreateThread(function()
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
-	end
+    while ESX == nil do
+        TriggerEvent('esx:getSharedObject', function(obj)
+            ESX = obj
+        end)
+        Citizen.Wait(0)
+    end
 
-	while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(10)
-	end
+    while ESX.GetPlayerData().job == nil do
+        Citizen.Wait(10)
+    end
 
-	PlayerData = ESX.GetPlayerData()
+    PlayerData = ESX.GetPlayerData()
 end)
 
-
-
 function canSell(pedId)
-	return hasDrugs ~= nill and hasDrugs and not IsPedSittingInAnyVehicle(pedId)
+    return hasDrugs ~= nill and hasDrugs and not IsPedSittingInAnyVehicle(pedId)
 end
 
 function CanSellTo(pedId)
-	return DoesEntityExist(pedId) and not IsPedDeadOrDying(pedId) and not IsPedAPlayer(pedId) and not IsPedFalling(pedId) and not cachedPeds[pedId] 
+    return DoesEntityExist(pedId) and not IsPedDeadOrDying(pedId) and not IsPedAPlayer(pedId) and not IsPedFalling(pedId) and not cachedPeds[pedId]
 end
 
 function GetPedInFront()
-	local player = PlayerId()
-	local plyPed = GetPlayerPed(player)
-	local plyPos = GetEntityCoords(plyPed, false)
-	local plyOffset = GetOffsetFromEntityInWorldCoords(plyPed, 0.0, 1.3, 0.0)
-	local rayHandle = StartShapeTestCapsule(plyPos.x, plyPos.y, plyPos.z, plyOffset.x, plyOffset.y, plyOffset.z, 1.0, 12, plyPed, 7)
-	local _, _, _, _, ped = GetShapeTestResult(rayHandle)
-	return ped
+    local player = PlayerId()
+    local plyPed = GetPlayerPed(player)
+    local plyPos = GetEntityCoords(plyPed, false)
+    local plyOffset = GetOffsetFromEntityInWorldCoords(plyPed, 0.0, 1.3, 0.0)
+    local rayHandle = StartShapeTestCapsule(plyPos.x, plyPos.y, plyPos.z, plyOffset.x, plyOffset.y, plyOffset.z, 1.0, 12, plyPed, 7)
+    local _, _, _, _, ped = GetShapeTestResult(rayHandle)
+    return ped
 end
 
 Citizen.CreateThread(function()
-	Citizen.Wait(0)
+    Citizen.Wait(0)
 
-	while true do
-		local sleepThread = 500
+    while true do
+        local sleepThread = 500
 
-		local ped = PlayerPedId()
-		local pedCoords = GetEntityCoords(ped)
-		local closestPed = GetPedInFront()
-		local closestpedCoords = GetEntityCoords(closestPed)
-		local dist = GetDistanceBetweenCoords(pedCoords.x, pedCoords.y, pedCoords.z, closestpedCoords.x, closestpedCoords.y, closestpedCoords.z, true)
-		if dist <= pedCoords.x then
-			sleepThread = 5
-			
-			local cs = canSell(PlayerPedId())
-			local cst = CanSellTo(closestPed)
+        local ped = PlayerPedId()
+        local pedCoords = GetEntityCoords(ped)
+        local closestPed = GetPedInFront()
+        local closestpedCoords = GetEntityCoords(closestPed)
+        local dist = GetDistanceBetweenCoords(pedCoords.x, pedCoords.y, pedCoords.z, closestpedCoords.x, closestpedCoords.y, closestpedCoords.z, true)
+        if dist <= pedCoords.x then
+            sleepThread = 5
 
-			if cs and cst then 
-				ESX.ShowHelpNotification("~INPUT_CONTEXT~ to Sell Drugs")
-			end
+            local cs = canSell(PlayerPedId())
+            local cst = CanSellTo(closestPed)
 
-			if IsControlJustReleased(0, 38) and cs and cst then
-				ESX.TriggerServerCallback('disc-drugsales:getOnlinePolice',
-				function(online)
-					if Config.CopsNeeded > online then 
-						exports['mythic_notify']:DoHudText('error', "Not enough cops in town! Need " .. Config.CopsNeeded)
-					else
-						if not cachedPeds[closestPed] then
-							showNotification = false
-							TryToSell(closestPed, pedCoords)
-						else
-							exports['mythic_notify']:DoHudText('inform', "You've already talked to me? Don't come up to me again.")
-						end
-					end
-				end)
-				sleepThread = 500
-			end
-		end
+            if cs and cst then
+                ESX.ShowHelpNotification("~INPUT_CONTEXT~ to Sell Drugs")
+            end
 
-		Citizen.Wait(sleepThread)
-	end
+            if IsControlJustReleased(0, 38) and cs and cst then
+                ESX.TriggerServerCallback('disc-drugsales:getOnlinePolice',
+                        function(online)
+                            if Config.CopsNeeded > online then
+                                exports['mythic_notify']:DoHudText('error', "Not enough cops in town! Need " .. Config.CopsNeeded)
+                            else
+                                if not cachedPeds[closestPed] then
+                                    showNotification = false
+                                    TryToSell(closestPed, pedCoords)
+                                else
+                                    exports['mythic_notify']:DoHudText('inform', "You've already talked to me? Don't come up to me again.")
+                                end
+                            end
+                        end)
+                sleepThread = 500
+            end
+        end
+
+        Citizen.Wait(sleepThread)
+    end
 end)
 
-
 Citizen.CreateThread(function()
-	Citizen.Wait(0)
-	while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(10)
-	end
-	while true do
-		ESX.TriggerServerCallback('disc-drugsales:hasDrugs', function(hD)
-			if hasDrugs ~= hD then
-				if hD then 
-					exports['mythic_notify']:DoHudText('inform', "You have drugs!")
-				else
-					exports['mythic_notify']:DoHudText('inform', "Your drugs are done!")
-				end
-				hasDrugs = hD
-			end
-		end)
-		Citizen.Wait(5000)
-	end
+    Citizen.Wait(0)
+    while ESX.GetPlayerData().job == nil do
+        Citizen.Wait(10)
+    end
+    while true do
+        ESX.TriggerServerCallback('disc-drugsales:hasDrugs', function(hD)
+            if hasDrugs ~= hD then
+                if hD then
+                    exports['mythic_notify']:DoHudText('inform', "You have drugs!")
+                else
+                    exports['mythic_notify']:DoHudText('inform', "Your drugs are done!")
+                end
+                hasDrugs = hD
+            end
+        end)
+        Citizen.Wait(5000)
+    end
 end)

@@ -75,5 +75,5 @@ Config.Weapons = {
     { name = 'WEAPON_POOLCUE', label = 'weapon_poolcue' },
     { name = 'WEAPON_WRENCH', label = 'weapon_wrench' },
     { name = 'WEAPON_FLASHLIGHT', label = 'weapon_flashlight' },
-  }
+}
   

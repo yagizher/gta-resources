@@ -1,6 +1,8 @@
 ESX = nil
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+TriggerEvent('esx:getSharedObject', function(obj)
+    ESX = obj
+end)
 
 ESX.RegisterServerCallback('disc-armory:getStoredWeapons', function(source, cb, armory)
     MySQL.Async.fetchAll("SELECT * FROM armory WHERE armory_job = @armory", {
@@ -9,7 +11,6 @@ ESX.RegisterServerCallback('disc-armory:getStoredWeapons', function(source, cb, 
         cb(results)
     end)
 end)
-
 
 ESX.RegisterServerCallback('disc-armory:modifyWeaponCount', function(source, cb, armory, weapon, count)
     MySQL.Async.fetchAll("SELECT * FROM armory WHERE armory_job= @armory and weapon = @weapon", {
@@ -21,16 +22,16 @@ ESX.RegisterServerCallback('disc-armory:modifyWeaponCount', function(source, cb,
                 MySQL.Async.execute('DELETE FROM armory WHERE weapon = @weapon and armory_job = @armory', {
                     ['@armory'] = armory,
                     ['@weapon'] = weapon,
-                    }, function(rows)
-                        cb(true)
-                    end)
-            else      
+                }, function(rows)
+                    cb(true)
+                end)
+            else
                 MySQL.Async.execute('UPDATE armory SET count = count + @count where weapon = @weapon and armory_job = @armory', {
                     ['@armory'] = armory,
                     ['@weapon'] = weapon,
                     ['@count'] = count
-                    }, function(rows)
-                        cb(true)
+                }, function(rows)
+                    cb(true)
                 end)
             end
         else
@@ -38,9 +39,9 @@ ESX.RegisterServerCallback('disc-armory:modifyWeaponCount', function(source, cb,
                 ['@armory'] = armory,
                 ['@weapon'] = weapon,
                 ['@count'] = count
-                }, function(rows)
-                    cb(true)
-                end)
+            }, function(rows)
+                cb(true)
+            end)
         end
     end)
 end)

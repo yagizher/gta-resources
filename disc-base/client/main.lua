@@ -88,7 +88,7 @@ function OpenDialogMenu(menu)
             function(data, m)
                 if getOrElse(menu.action, nil) then
                     menu.action(data.value)
-					m.close()
+                    m.close()
                 else
                     exports['mythic_notify']:DoHudText('error', 'This menu has no action!')
                 end
@@ -100,3 +100,5 @@ function OpenDialogMenu(menu)
                 m.close()
             end)
 end
+
+

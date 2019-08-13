@@ -24,7 +24,7 @@ TryToSell = function(pedId, coords)
     end
 
     SetPedAsNoLongerNeeded(pedId)
-    
+
     FreezeEntityPosition(PlayerPedId(), false)
     FreezeEntityPosition(pedId, false)
 end
@@ -32,7 +32,7 @@ end
 Sell = function()
     ESX.TriggerServerCallback("disc-drugsales:sellDrug", function(soldDrug)
         if soldDrug then
-            exports['mythic_notify']:DoHudText('success', "Thanks! Here's $" ..soldDrug)
+            exports['mythic_notify']:DoHudText('success', "Thanks! Here's $" .. soldDrug)
         else
             exports['mythic_notify']:DoHudText('error', "Well don't try to waste my time if you don't even have something to sell?")
         end

@@ -9,6 +9,17 @@ Citizen.CreateThread(function()
         end)
         Citizen.Wait(0)
     end
+
+    while ESX.GetPlayerData().job == nil do
+        Citizen.Wait(10)
+    end
+
+    ESX.PlayerData = ESX.GetPlayerData()
+end)
+
+RegisterNetEvent('esx:setJob')
+AddEventHandler('esx:setJob', function(job)
+    ESX.PlayerData.job = job
 end)
 
 Citizen.CreateThread(function()
@@ -16,7 +27,7 @@ Citizen.CreateThread(function()
     local options = {
         { label = 'Search for Warrant', action = ShowSearchMenu },
         { label = 'List Warrants', action = ListWarrants },
-        { label = 'Create Warrant', action = ShowCreateWarrantMenu },
+        { label = 'Create Warrant', action = ShowCreateWarrantMenu }
     }
 
     local menu = {
@@ -26,7 +37,7 @@ Citizen.CreateThread(function()
     }
     while true do
         Citizen.Wait(0)
-        if IsControlJustReleased(1, 166) and ESX.GetPlayerData().job and ESX.GetPlayerData().job.name == 'police' then
+        if IsControlJustReleased(1, 166) and ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
             TriggerEvent('disc-base:openMenu', menu)
         end
     end

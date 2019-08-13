@@ -6,12 +6,12 @@ client_scripts {
     'client/kitchen.lua',
     'client/garage.lua',
     'client/clothes.lua',
-	'client/main.lua',
+    'client/main.lua',
 }
 
 server_scripts {
     "@mysql-async/lib/MySQL.lua",
     'config.lua',
-	'server/main.lua',
-	'server/clothes.lua',
+    'server/main.lua',
+    'server/clothes.lua',
 }
