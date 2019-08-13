@@ -11,7 +11,7 @@ Start using `start disc-drugsales`
 
 # Steps
 
-- Insert Drug Items into `essentialmode.items`
+- Insert Drug Items into `essentialmode.items` table on your database
 - Configure with your drug items
 
 # Usage
