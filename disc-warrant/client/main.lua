@@ -125,7 +125,7 @@ function SendWarrant(warrant)
     Citizen.Wait(random)
     local message = 'Warrant for ' .. getOrElse(warrant.firstname, 'Unknown') .. ' ' .. getOrElse(warrant.lastname, 'Unknown') .. '\nDescription: ' .. warrant.char_description .. '\nCrime: ' .. warrant.crime_description
     local serverId = GetPlayerServerId(PlayerId())
-    ESX.TriggerServerCallback('gcphone:getNumber', function(number)
+    ESX.TriggerServerCallback('disc-gcphone:getNumber', function(number)
         TriggerServerEvent('disc-gcphone:sendMessageFrom', 'warrants', number, message, serverId)
     end)
 end

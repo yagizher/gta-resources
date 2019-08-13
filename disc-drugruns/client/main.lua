@@ -134,7 +134,7 @@ Citizen.CreateThread(function()
             Citizen.Wait(1000)
             isHidingRun = false
             serverId = GetPlayerServerId(PlayerId())
-            ESX.TriggerServerCallback('gcphone:getNumber', function(number)
+            ESX.TriggerServerCallback('disc-gcphone:getNumber', function(number)
                 coords = Config.DeliveryPoints[currentDrugTask.pointIndex].coords
                 message = 'GPS: ' .. coords.x .. ', ' .. coords.y
                 TriggerServerEvent('disc-gcphone:sendMessageFrom', 'druggie', number, message, serverId)
