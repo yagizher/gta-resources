@@ -1,11 +1,11 @@
 Config = {}
 Config.DrawDistance = 100.0
-Config.CopsRequired = 2
+Config.CopsRequired = 0
 Config.BlipUpdateTime = 1000
 Config.CooldownTime = 20 --minutes
 Config.FinishTime = 15 --minutes
 Config.JammerTime = 5 --minutes
-Config.JammerPrice = 25000
+Config.JammerPrice = 5000
 
 Config.Zones = {
     VehicleSpawner = {
@@ -40,7 +40,7 @@ Config.Delivery = {
         Color = { r = 204, g = 204, b = 0 },
         Type = 1,
         Payment = 18000,
-        Cars = { 'fxxk', '18performante', '488lb', 'c7r', 'pista', 'senna', 'rmodmustang', 'rmodm4' },
+        Cars = {'adder'},
     },
     --Lighthouse 9.61KM
     Delivery4 = {
@@ -49,7 +49,7 @@ Config.Delivery = {
         Color = { r = 204, g = 204, b = 0 },
         Type = 1,
         Payment = 18000,
-        Cars = { 'fxxk', '18performante', '488lb', 'c7r', 'pista', 'senna', 'rmodmustang', 'rmodm4' },
+        Cars = {'adder'},
     },
     --House in Paleto 12.94KM
     Delivery7 = {
@@ -58,7 +58,7 @@ Config.Delivery = {
         Color = { r = 204, g = 204, b = 0 },
         Type = 1,
         Payment = 18000,
-        Cars = { 'fxxk', '18performante', '488lb', 'c7r', 'pista', 'senna', 'rmodmustang', 'rmodm4' },
+        Cars = {'adder'},
     },
     --Great Ocean Highway 10.47KM
     Delivery10 = {
@@ -67,7 +67,7 @@ Config.Delivery = {
         Color = { r = 204, g = 204, b = 0 },
         Type = 1,
         Payment = 18000,
-        Cars = { 'fxxk', '18performante', '488lb', 'c7r', 'pista', 'senna', 'rmodmustang', 'rmodm4' },
+        Cars = {'adder'},
     },
     --Marina Drive Desert 8.15KM
     Delivery13 = {
@@ -76,6 +76,6 @@ Config.Delivery = {
         Color = { r = 204, g = 204, b = 0 },
         Type = 1,
         Payment = 18000,
-        Cars = { 'fxxk', '18performante', '488lb', 'c7r', 'pista', 'senna', 'rmodmustang', 'rmodm4' },
+        Cars = {'adder'},
     },
 }

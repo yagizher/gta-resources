@@ -129,9 +129,6 @@ function FinishDelivery()
 
         --Remove delivery zone
         RemoveBlip(deliveryblip)
-
-        exports['mythic_notify']:DoHudText('success', tostring(EngineDamageFactor))
-        exports['mythic_notify']:DoHudText('success', tostring(BodyDamageFactor))
         --Pay the poor fella
         local finalpayment = math.floor(alldeliveries[randomdelivery].payment * EngineDamageFactor * BodyDamageFactor)
 

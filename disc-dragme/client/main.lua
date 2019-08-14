@@ -26,14 +26,14 @@ Citizen.CreateThread(function()
             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
             local targetPed = GetPlayerPed(closestPlayer)
             local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
-            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and IsPedDeadOrDying(targetPed) then
+            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
                 TriggerServerEvent('dragme:drag', GetPlayerServerId(closestPlayer))
             end
         elseif IsControlJustReleased(0, 109) then
             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
             local targetPed = GetPlayerPed(closestPlayer)
             local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
-            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and IsPedDeadOrDying(targetPed) then
+            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
                 local vehicle = ESX.Game.GetClosestVehicle()
                 if DoesVehicleHaveDoor(vehicle, 5) then
                     TriggerServerEvent('dragme:putInVehicle', GetPlayerServerId(closestPlayer))
@@ -45,12 +45,20 @@ Citizen.CreateThread(function()
             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
             local targetPed = GetPlayerPed(closestPlayer)
             local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
-            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and IsPedDeadOrDying(targetPed) then
+            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
                 TriggerServerEvent('dragme:OutVehicle', GetPlayerServerId(closestPlayer))
             end
         end
     end
 end)
+
+function CanDoWhileDead(targetPed)
+    if Config.OnlyWhileDead then
+        return IsPedDeadOrDying(targetPed)
+    else
+        return true
+    end
+end
 
 RegisterNetEvent('dragme:drag')
 AddEventHandler('dragme:drag', function(draggerId)
@@ -87,7 +95,7 @@ Citizen.CreateThread(function()
         if true then
             playerPed = PlayerPedId()
 
-            if not IsPedDeadOrDying(playerPed) then
+            if not CanDoWhileDead(playerPed) then
                 isInVehicle = false
             end
 
