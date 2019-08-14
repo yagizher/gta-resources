@@ -119,10 +119,6 @@ Citizen.CreateThread(function()
             DetachEntity(playerPed, true, false)
         end
 
-        if not isInVehicle then
-            SetEntityVisible(GetPlayerPed(-1), true)
-        end
-
         if true then
             playerPed = PlayerPedId()
 
@@ -147,7 +143,7 @@ Citizen.CreateThread(function()
                 end
             elseif isInVehicle then
                 local boneIndex = GetEntityBoneIndexByName(InVehicle, 'boot')
-                AttachEntityToEntity(playerPed, InVehicle, boneIndex, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, true, 2, true)
+                AttachEntityToEntity(playerPed, InVehicle, boneIndex, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 2, true)
             else
                 isInVehicle = false
                 DetachEntity(playerPed, true, false)
