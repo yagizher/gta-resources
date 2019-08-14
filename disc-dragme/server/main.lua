@@ -17,3 +17,5 @@ RegisterServerEvent('dragme:OutVehicle')
 AddEventHandler('dragme:OutVehicle', function(target)
     TriggerClientEvent('dragme:OutVehicle', target)
 end)
+
+

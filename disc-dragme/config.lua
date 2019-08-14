@@ -1,3 +1,5 @@
 Config = {}
 
-Config.OnlyWhileDead = true
+Config.OnlyWhileDead = false
+
+Config.EnableCommands = true

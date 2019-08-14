@@ -3,6 +3,7 @@ dragStatus = {}
 dragStatus.isDragged = false
 isInVehicle = false
 InVehicle = nil
+local vehicle
 
 Citizen.CreateThread(function()
     while ESX == nil do
@@ -19,35 +20,47 @@ Citizen.CreateThread(function()
     PlayerData = ESX.GetPlayerData()
 end)
 
+function DragMe()
+    local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+    local targetPed = GetPlayerPed(closestPlayer)
+    local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
+    if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
+        TriggerServerEvent('dragme:drag', GetPlayerServerId(closestPlayer))
+    end
+end
+
+function PutInVehicle()
+    local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+    local targetPed = GetPlayerPed(closestPlayer)
+    local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
+    if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
+        local vehicle = ESX.Game.GetClosestVehicle()
+        if DoesVehicleHaveDoor(vehicle, 5) then
+            TriggerServerEvent('dragme:putInVehicle', GetPlayerServerId(closestPlayer))
+        else
+            exports['mythic_notify']:DoHudText('error', 'This car does not have a boot.')
+        end
+    end
+end
+
+function OutVehicle()
+    local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+    local targetPed = GetPlayerPed(closestPlayer)
+    local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
+    if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
+        TriggerServerEvent('dragme:OutVehicle', GetPlayerServerId(closestPlayer))
+    end
+end
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if IsControlJustReleased(0, 110) then
-            local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-            local targetPed = GetPlayerPed(closestPlayer)
-            local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
-            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
-                TriggerServerEvent('dragme:drag', GetPlayerServerId(closestPlayer))
-            end
+            DragMe()
         elseif IsControlJustReleased(0, 109) then
-            local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-            local targetPed = GetPlayerPed(closestPlayer)
-            local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
-            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
-                local vehicle = ESX.Game.GetClosestVehicle()
-                if DoesVehicleHaveDoor(vehicle, 5) then
-                    TriggerServerEvent('dragme:putInVehicle', GetPlayerServerId(closestPlayer))
-                else
-                    exports['mythic_notify']:DoHudText('error', 'This car does not have a boot.')
-                end
-            end
+            PutInVehicle()
         elseif IsControlJustReleased(0, 108) then
-            local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-            local targetPed = GetPlayerPed(closestPlayer)
-            local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
-            if closestPlayer ~= -1 and closestDistance <= 3.0 and not isInCar and CanDoWhileDead(targetPed) then
-                TriggerServerEvent('dragme:OutVehicle', GetPlayerServerId(closestPlayer))
-            end
+            OutVehicle()
         end
     end
 end)
@@ -59,6 +72,24 @@ function CanDoWhileDead(targetPed)
         return true
     end
 end
+
+RegisterCommand("drag", function(src, args, raw)
+    if Config.EnableCommands then
+        DragMe()
+    end
+end)
+
+RegisterCommand("outvehicle", function(src, args, raw)
+    if Config.EnableCommands then
+        OutVehicle()
+    end
+end)
+
+RegisterCommand("putvehicle", function(src, args, raw)
+    if Config.EnableCommands then
+        PutInVehicle()
+    end
+end)
 
 RegisterNetEvent('dragme:drag')
 AddEventHandler('dragme:drag', function(draggerId)
@@ -103,7 +134,7 @@ Citizen.CreateThread(function()
                 targetPed = GetPlayerPed(GetPlayerFromServerId(dragStatus.draggerId))
 
                 -- undrag if target is in an vehicle
-                if not IsPedSittingInAnyVehicle(targetPed) and not IsPedSittingInAnyVehicle(playerPed) and IsPedDeadOrDying(playerPed) and not isInVehicle then
+                if not IsPedSittingInAnyVehicle(targetPed) and not IsPedSittingInAnyVehicle(playerPed) and CanDoWhileDead(playerPed) and not isInVehicle then
                     AttachEntityToEntity(playerPed, targetPed, 11816, 0.54, 0.54, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
                 else
                     dragStatus.isDragged = false
@@ -149,8 +180,8 @@ RegisterNetEvent('dragme:OutVehicle')
 AddEventHandler('dragme:OutVehicle', function()
     SetEntityVisible(GetPlayerPed(-1), true)
     isInVehicle = false
-    vehicle = nil
     SetCarBootOpen(vehicle)
+    vehicle = nil
 end)
 
 
