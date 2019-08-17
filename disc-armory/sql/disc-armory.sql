@@ -1,13 +1,13 @@
-CREATE TABLE IF NOT EXISTS ARMORY
+CREATE TABLE IF NOT EXISTS armory
 (
-    ID         BIGINT UNSIGNED AUTO_INCREMENT,
-    WEAPON     TEXT          NOT NULL,
-    COUNT      INT DEFAULT 0 NOT NULL,
-    ARMORY_JOB TEXT          NOT NULL,
-    CONSTRAINT ID
-        UNIQUE (ID)
+    id         BIGINT UNSIGNED AUTO_INCREMENT,
+    weapon     TEXT          NOT NULL,
+    count      INT DEFAULT 0 NOT NULL,
+    armory_job TEXT          NOT NULL,
+    CONSTRAINT id
+        UNIQUE (id)
 );
 
-ALTER TABLE ARMORY
-    ADD PRIMARY KEY (ID);
+ALTER TABLE armory
+    ADD PRIMARY KEY (id);
 

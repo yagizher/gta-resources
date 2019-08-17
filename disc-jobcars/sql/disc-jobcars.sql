@@ -1,14 +1,14 @@
-CREATE TABLE IF NOT EXISTS JOB_CARS
+CREATE TABLE IF NOT EXISTS job_cars
 (
-    ID     BIGINT UNSIGNED AUTO_INCREMENT,
-    OWNER  TEXT                 NOT NULL,
-    PLATE  TEXT                 NOT NULL,
-    PROPS  LONGTEXT             NULL,
-    `STORED` BOOLEAN DEFAULT TRUE NULL,
-    CONSTRAINT ID
-        UNIQUE (ID)
+    id     BIGINT UNSIGNED AUTO_INCREMENT,
+    owner  TEXT                 NOT NULL,
+    plate  TEXT                 NOT NULL,
+    props  LONGTEXT             NULL,
+    `stored` BOOLEAN DEFAULT TRUE NULL,
+    model TEXT NOT NULL,
+    CONSTRAINT id
+        UNIQUE (id)
 );
 
-ALTER TABLE JOB_CARS
-    ADD PRIMARY KEY (ID);
-
+ALTER TABLE job_cars
+    ADD PRIMARY KEY (id);

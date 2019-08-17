@@ -117,8 +117,8 @@ function CannotSpawnCar()
 end
 
 function ShowBuyCars(garage)
-    if garage.cars[ESX.GetPlayerData().job.grade_name] and #garage.cars[ESX.GetPlayerData().job.grade_name] == 0 then
-        exports['mythic_notify']:DoHudText('inform', 'No vehicle to spawn')
+    if not garage.cars[ESX.PlayerData.job.grade_name] or #garage.cars[ESX.PlayerData.job.grade_name] == 0 then
+        exports['mythic_notify']:DoHudText('inform', 'No vehicle to buy for ' .. ESX.PlayerData.job.grade_name)
         return
     end
     local cars = {}
@@ -162,15 +162,12 @@ function ConfirmBuyCar(car, garage)
 end
 
 function BuyCar(car, garage)
-    local playerPed = PlayerPedId()
     ESX.TriggerServerCallback('disc-jobcars:canBuyCar', function(canbuy)
         if canbuy == 1 then
             exports['mythic_notify']:DoHudText('success', 'Bought Vehicle')
 
-            ESX.Game.SpawnLocalVehicle(car.model, garage.coords, 0.0, function(vehicle)
-                local vehicle = GetVehiclePedIsIn(playerPed, false)
+            ESX.Game.SpawnLocalVehicle(car.model, garage.shopCoords, 0.0, function(vehicle)
                 SetEntityCollision(vehicle, false, true)
-                TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
                 FreezeEntityPosition(vehicle, true)
 
                 local newPlate = exports['esx_vehicleshop']:GeneratePlate()
