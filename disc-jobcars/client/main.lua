@@ -76,7 +76,7 @@ function ShowCars(garage)
             local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(props.model))
             local label = ('%s - <span style="color:darkgoldenrod;">%s</span>: '):format(vehicleName, props.plate)
 
-            local action = nil
+            local action
             if v.stored then
                 label = label .. ('<span style="color:green;">%s</span>'):format('Stored')
                 action = function()
@@ -123,7 +123,7 @@ function ShowBuyCars(garage)
     end
     local cars = {}
 
-    for k, v in pairs(garage.cars[ESX.GetPlayerData().job.grade_name]) do
+    for k, v in pairs(garage.cars[ESX.PlayerData.job.grade_name]) do
         table.insert(cars, {
             label = v.name .. (' <span style="color:green;">$%s</span>'):format(v.price),
             action = function()

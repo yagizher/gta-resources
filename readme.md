@@ -46,6 +46,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-GcPhone](https://github.com/DiscworldZA/gta-resources/tree/master/disc-gcphone) (add-on to [gcphone](https://github.com/N3MTV/gcphone))
 - [Disc-JobCars](https://github.com/DiscworldZA/gta-resources/tree/master/disc-jobcars)
 - [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (Currently WIP)
+- [Disc-VehiclePick](https://github.com/DiscworldZA/gta-resources/tree/master/disc-vehiclepick)
 - [Disc-Warrant](https://github.com/DiscworldZA/gta-resources/tree/master/disc-warrant)
 
 
@@ -56,7 +57,6 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
   - Disc-EMS
   - Disc-Mechanic
   - Disc-CarSales
-- Lockpick Vehicle
 - Hotwiring Vehicle
 - Racing
 - Search Warrants for Disc-Properties via Disc-Warrants

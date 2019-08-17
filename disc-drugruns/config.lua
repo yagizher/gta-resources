@@ -19,7 +19,6 @@ Config.DeliveryPoints = {
     { coords = vector3(-382.07, 6187.68, 31.14), heading = 46.49, name = 'Palito Bay House', isDeliveryPointActive = false },
     { coords = vector3(79.75, 6641.68, 31.6), heading = 320.98, name = 'Palito Bay Shed', isDeliveryPointActive = false },
     { coords = vector3(144.15, 6365.36, 31.53), heading = 298.3, name = 'Palito Bay Factory', isDeliveryPointActive = false },
-    { coords = vector3(-1393.88, 6375.64, 13.47), heading = 206.56, name = 'Palito Bay Promenade', isDeliveryPointActive = false },
     { coords = vector3(-2171.43, 4280.76, 48.69), heading = 16.12, name = 'Great Ocean Hwy Biker Hangout', isDeliveryPointActive = false },
     { coords = vector3(726.34, 4171.9, 40.36), heading = 178.33, name = 'Alamo Sea North Lake', isDeliveryPointActive = false },
     { coords = vector3(1363.79, 4318.71, 37.33), heading = 166.26, name = 'Galilee North Lake', isDeliveryPointActive = false },
