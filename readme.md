@@ -59,6 +59,16 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - Lockpick Vehicle
 - Hotwiring Vehicle
 - Racing
+- Search Warrants for Disc-Properties via Disc-Warrants
+- Automatic BOLO/Facial Detection
+- Handheld Police and EMS devices
+- Variable Drug Import and Selling (Allow Drug importing via ship or truck) (Allow Large shipments of drugs)
+- Expanding EMS and Cop Procedure (Require documentation to be filed, 
+- Mechanic Repair Expansion
+- Vehicle Shop Documentation (License and Registration)
+- Cop Evidence Mechanic
+- Judge Job (Allow search warrant authorization, Allow cases to be handled)
+
 # Usage
 Feel free to use my [Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base) mod to create your own! Just credit me in some way. Share your mods you created with my base mod with me!
 
