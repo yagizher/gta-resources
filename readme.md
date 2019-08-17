@@ -56,7 +56,9 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
   - Disc-EMS
   - Disc-Mechanic
   - Disc-CarSales
-  
+- Lockpick Vehicle
+- Hotwiring Vehicle
+- Racing
 # Usage
 Feel free to use my [Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base) mod to create your own! Just credit me in some way. Share your mods you created with my base mod with me!
 
