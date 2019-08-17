@@ -57,13 +57,14 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
   - Disc-EMS
   - Disc-Mechanic
   - Disc-CarSales
+- Unique Garages
 - Hotwiring Vehicle
 - Racing
 - Search Warrants for Disc-Properties via Disc-Warrants
 - Automatic BOLO/Facial Detection
 - Handheld Police and EMS devices
 - Variable Drug Import and Selling (Allow Drug importing via ship or truck) (Allow Large shipments of drugs)
-- Expanding EMS and Cop Procedure (Require documentation to be filed, 
+- Expanding EMS and Cop Procedure (Require documentation to be filed)
 - Mechanic Repair Expansion
 - Vehicle Shop Documentation (License and Registration)
 - Cop Evidence Mechanic
