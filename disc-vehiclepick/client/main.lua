@@ -63,12 +63,11 @@ function LockPick(playerPed, veh, tool)
     Citizen.CreateThread(function()
         isLockPicking = true
         lockPickingVehicle = veh
+        TriggerAlarm(veh, tool)
 
         if tool.animation ~= nil and tool.lib ~= nil then
             ESX.Streaming.RequestAnimDict(tool.lib, function()
                 TaskPlayAnim(playerPed, tool.lib, tool.animation, 8.0, -8, -1, 49, 0, 0, 0, 0)
-                SetVehicleAlarm(veh, true)
-                StartVehicleAlarm(veh)
             end)
         end
         if tool.scenario then
@@ -85,6 +84,14 @@ function LockPick(playerPed, veh, tool)
         isLockPicking = false
         exports['mythic_notify']:DoHudText('success', 'Door is open!')
     end)
+end
+
+function TriggerAlarm(veh, tool)
+    local random = math.random(100)
+    if random <= tool.alarmChance and GetVehicleDoorLockStatus(veh) == 2 then
+        SetVehicleAlarm(veh, true)
+        StartVehicleAlarm(veh)
+    end
 end
 
 Citizen.CreateThread(function()
