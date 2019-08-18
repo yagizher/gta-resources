@@ -90,6 +90,8 @@ Citizen.CreateThread(function()
         if inAnimation then
             Citizen.Wait(0)
             DisableAllControlActions(0)
+            EnableControlAction(0, 1)
+            EnableControlAction(0, 2)
         else
             Citizen.Wait(500)
         end
