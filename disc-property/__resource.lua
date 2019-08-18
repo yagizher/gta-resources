@@ -7,11 +7,13 @@ client_scripts {
     'client/garage.lua',
     'client/clothes.lua',
     'client/main.lua',
+    'client/property.lua',
 }
 
 server_scripts {
     "@mysql-async/lib/MySQL.lua",
     'config.lua',
     'server/main.lua',
+    'server/property.lua',
     'server/clothes.lua',
 }

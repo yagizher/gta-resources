@@ -23,7 +23,7 @@ AddEventHandler('esx:setJob', function(job)
 end)
 
 Citizen.CreateThread(function()
-    Citizen.Wait(1000)
+    Citizen.Wait(0)
     ESX.TriggerServerCallback('disc-property:getPropertyData', function(data, owners)
         propertyData = data
         propertyOwners = owners
@@ -36,6 +36,13 @@ AddEventHandler('disc-property:updatePropertyData', function(updatePropertyData,
     propertyOwners = updateOwners
 end)
 
+RegisterNetEvent('disc-property:forceUpdatePropertyData')
+AddEventHandler('disc-property:forceUpdatePropertyData', function()
+    ESX.TriggerServerCallback('disc-property:getPropertyData', function(data, owners)
+        propertyData = data
+        propertyOwners = owners
+    end)
+end)
 Citizen.CreateThread(function()
     for propertyIndex, property in pairs(Config.Properties) do
 
@@ -51,7 +58,7 @@ Citizen.CreateThread(function()
             end,
             property = property,
             shouldDraw = function()
-                return IsPlayerOwnerOf(property) and IsPropertySold(property)
+                return DoesPlayerHaveKeysOf(property) and IsPropertySold(property)
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
@@ -102,7 +109,7 @@ Citizen.CreateThread(function()
             end,
             property = property,
             shouldDraw = function()
-                return IsPropertySold(property) and IsPlayerOwnerOf(property)
+                return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
@@ -119,7 +126,7 @@ Citizen.CreateThread(function()
             end,
             property = property,
             shouldDraw = function()
-                return IsPropertySold(property) and IsPlayerOwnerOf(property)
+                return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
@@ -137,7 +144,7 @@ Citizen.CreateThread(function()
                 end,
                 room = room,
                 shouldDraw = function()
-                    return IsPropertySold(property) and IsPlayerOwnerOf(property)
+                    return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
                 end
             }
             TriggerEvent('disc-base:registerMarker', marker)
@@ -154,7 +161,7 @@ Citizen.CreateThread(function()
                 end,
                 room = room,
                 shouldDraw = function()
-                    return IsPropertySold(property) and IsPlayerOwnerOf(property)
+                    return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
                 end
             }
             TriggerEvent('disc-base:registerMarker', marker)
@@ -212,11 +219,23 @@ function GetPropertyOwnersForProperty(property)
     return owners
 end
 
-function IsPlayerOwnerOf(property)
+function DoesPlayerHaveKeysOf(property)
     local owners = GetPropertyOwnersForProperty(property)
     if owners then
         for k, v in pairs(owners) do
             if ESX.PlayerData.identifier == v.identifier then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function IsPlayerOwnerOf(property)
+    local owners = GetPropertyOwnersForProperty(property)
+    if owners then
+        for k, v in pairs(owners) do
+            if ESX.PlayerData.identifier == v.identifier and v.owner then
                 return true
             end
         end
@@ -231,25 +250,6 @@ function IsPropertySold(property)
     else
         return false
     end
-end
-
-function ShowViewProperty(property)
-
-    local propData = GetPropertyDataForProperty(property)
-
-    local options = {
-        { label = 'View Property', action = function()
-            EnterProperty(property)
-        end, },
-        { label = 'Buy Property for $' .. propData.price }
-    }
-
-    local menu = {
-        title = 'View Property',
-        name = 'view_property',
-        options = options
-    }
-    TriggerEvent('disc-base:openMenu', menu)
 end
 
 function EnterProperty(property)

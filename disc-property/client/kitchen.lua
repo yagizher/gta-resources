@@ -3,9 +3,13 @@ function OpenKitchen(property)
     local options = {
         { label = 'Take Food' },
         { label = 'Store Food' },
-        { label = 'Give Keys' },
-        { label = 'Take Keys' }
     }
+
+    if IsPlayerOwnerOf(property) then
+        table.insert(options, { label = 'Manage Property', action = function()
+            ShowManageProperty(property)
+        end })
+    end
 
     local menu = {
         name = 'kitchen',

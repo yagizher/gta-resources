@@ -42,7 +42,8 @@ Config.Properties = {
                     coords = vector3(-174.83, 489.88, 130.04)
                 }
             }
-        }
+        },
+        price = 1000000
     },
     -- 2044 North Conker Avenue
     -- High end house 2: 340.9412 437.1798 149.3925

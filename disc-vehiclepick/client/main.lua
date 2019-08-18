@@ -28,10 +28,13 @@ AddEventHandler('disc-lockpick:lockpick', function(withTool)
         return
     end
 
-    isLockPicking = true
     local tool = Config.Tools[withTool]
     local playerPed = GetPlayerPed(-1)
-    local veh, distance = ESX.Game.GetClosestVehicle()
+    local veh, _ = ESX.Game.GetClosestVehicle()
+    local boneIndex = GetEntityBoneIndexByName(veh, 'door_dside_f')
+    local bonePos = GetWorldPositionOfEntityBone(veh, boneIndex)
+    local playerPos = GetEntityCoords(playerPed)
+    local distance = GetDistanceBetweenCoords(bonePos, playerPos)
     local count = 1
     if tool.use then
         count = 1
@@ -39,8 +42,8 @@ AddEventHandler('disc-lockpick:lockpick', function(withTool)
         count = 0
     end
 
-    if distance < 2.0 then
-        if count > 1 then
+    if distance < 1.5 then
+        if count >= 1 then
             ESX.TriggerServerCallback('disc-base:takePlayerItem', function(took)
                 if not took then
                     exports['mythic_notify']:DoHudText('error', 'You do not have the correct tool')
@@ -51,13 +54,24 @@ AddEventHandler('disc-lockpick:lockpick', function(withTool)
         else
             LockPick(playerPed, veh, tool)
         end
+    else
+        exports['mythic_notify']:DoHudText('error', 'Not at driver door')
     end
 end)
 
 function LockPick(playerPed, veh, tool)
     Citizen.CreateThread(function()
+        isLockPicking = true
+        lockPickingVehicle = veh
 
-        TaskStartScenarioInPlace(playerPed, tool.animation, 0, true)
+        if tool.animation ~= nil and tool.lib ~= nil then
+            ESX.Streaming.RequestAnimDict(tool.lib, function()
+                TaskPlayAnim(playerPed, tool.lib, tool.animation, 8.0, -8, -1, 49, 0, 0, 0, 0)
+            end)
+        end
+        if tool.scenario then
+            TaskStartScenarioInPlace(playerPed, tool.scenario, 0, true)
+        end
         inAnimation = true
         Citizen.Wait(tool.time)
 
@@ -67,6 +81,7 @@ function LockPick(playerPed, veh, tool)
         SetVehicleDoorsLockedForAllPlayers(veh, false)
         SetVehicleDoorsLocked(veh, 1)
         isLockPicking = false
+        exports['mythic_notify']:DoHudText('success', 'Door is open!')
     end)
 end
 
