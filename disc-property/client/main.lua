@@ -58,7 +58,7 @@ Citizen.CreateThread(function()
             end,
             property = property,
             shouldDraw = function()
-                return DoesPlayerHaveKeysOf(property) and IsPropertySold(property)
+                return IsPropertySold(property) and IsUnlocked(property)
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
@@ -132,22 +132,25 @@ Citizen.CreateThread(function()
         TriggerEvent('disc-base:registerMarker', marker)
 
         for roomIndex, room in pairs(property.rooms) do
-            local marker = {
-                name = property.name .. '_prop_room_clothes' .. roomIndex,
-                type = -1,
-                coords = room.clothes.coords,
-                colour = { r = 0, b = 0, g = 0 },
-                size = vector3(1.0, 1.0, 1.0),
-                msg = 'Press ~INPUT_CONTEXT~ to change Clothes',
-                action = function()
-                    OpenClothes(room)
-                end,
-                room = room,
-                shouldDraw = function()
-                    return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
-                end
-            }
-            TriggerEvent('disc-base:registerMarker', marker)
+
+            if room.clothes ~= nil then
+                local marker = {
+                    name = property.name .. '_prop_room_clothes' .. roomIndex,
+                    type = -1,
+                    coords = room.clothes.coords,
+                    colour = { r = 0, b = 0, g = 0 },
+                    size = vector3(1.0, 1.0, 1.0),
+                    msg = 'Press ~INPUT_CONTEXT~ to change Clothes',
+                    action = function()
+                        OpenClothes(room)
+                    end,
+                    room = room,
+                    shouldDraw = function()
+                        return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
+                    end
+                }
+                TriggerEvent('disc-base:registerMarker', marker)
+            end
 
             local marker = {
                 name = property.name .. '_prop_room_items' .. roomIndex,
@@ -157,7 +160,7 @@ Citizen.CreateThread(function()
                 size = vector3(1.0, 1.0, 1.0),
                 msg = 'Press ~INPUT_CONTEXT~ to open Cupboard',
                 action = function()
-                    OpenCupboard(room)
+                    OpenCupboard(property.name .. '_prop_room_items' .. roomIndex)
                 end,
                 room = room,
                 shouldDraw = function()
@@ -250,6 +253,11 @@ function IsPropertySold(property)
     else
         return false
     end
+end
+
+function IsUnlocked(property)
+    local pd = GetPropertyDataForProperty(property)
+    return not pd.locked
 end
 
 function EnterProperty(property)

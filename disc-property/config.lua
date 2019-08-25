@@ -8,6 +8,7 @@ Config.Properties = {
     -- High end house 1: -169.286 486.4938 137.4436
     {
         name = '3655 Wild Oats Drive',
+        price = 1000000,
         view = {
             coords = vector3(-178.56, 502.66, 136.84),
         },
@@ -42,8 +43,7 @@ Config.Properties = {
                     coords = vector3(-174.83, 489.88, 130.04)
                 }
             }
-        },
-        price = 1000000
+        }
     },
     -- 2044 North Conker Avenue
     -- High end house 2: 340.9412 437.1798 149.3925

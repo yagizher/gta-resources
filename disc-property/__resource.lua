@@ -16,4 +16,5 @@ server_scripts {
     'server/main.lua',
     'server/property.lua',
     'server/clothes.lua',
+    'server/inventory.lua',
 }
