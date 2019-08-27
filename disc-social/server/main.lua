@@ -3,7 +3,7 @@ for k, v in pairs(Config.Socials) do
         local msg = 'Social: ' .. v.social .. ': ' .. v.response
         local fal = '^1SYSTEM'
         TriggerClientEvent('chat:addMessage', src, {
-            args = { fal, msg }
+            args = { fal, msg, template = v.template }
         })
     end)
 end
