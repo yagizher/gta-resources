@@ -4,6 +4,14 @@ local hasDrugs = false
 
 cachedPeds = {}
 
+--Clean ped cache to avoid memory leaks
+Citizen.CreateThread(function()
+    while true do
+        cachedPeds = {}
+        Citizen.Wait(300000)
+    end
+end)
+
 Citizen.CreateThread(function()
     while ESX == nil do
         TriggerEvent('esx:getSharedObject', function(obj)
