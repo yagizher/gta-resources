@@ -16,8 +16,7 @@ Command `/compensate` opens menu of nearby players, select player and follow pro
 {
     lawyer = { --job
          'judge' --grade
-     }
-}
+    }
 ```
 
 # Requirements
