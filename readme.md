@@ -39,6 +39,8 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base)
 - [Disc-Armory](https://github.com/DiscworldZA/gta-resources/tree/master/disc-armory)
 - [Disc-AutoRepair](https://github.com/DiscworldZA/gta-resources/tree/master/disc-autorepair)
+- [Disc-Billing](https://github.com/DiscworldZA/gta-resources/tree/master/disc-billing)
+- [Disc-Compensation](https://github.com/DiscworldZA/gta-resources/tree/master/disc-compensation)
 - [Disc-CarThief](https://github.com/DiscworldZA/gta-resources/tree/master/disc-carthief) (my version of [esx_carthief](https://github.com/KlibrDM/esx_carthief))
 - [Disc-DragMe](https://github.com/DiscworldZA/gta-resources/tree/master/disc-dragme)
 - [Disc-DrugRuns](https://github.com/DiscworldZA/gta-resources/tree/master/disc-drugruns)
@@ -46,6 +48,8 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-GcPhone](https://github.com/DiscworldZA/gta-resources/tree/master/disc-gcphone) (add-on to [gcphone](https://github.com/N3MTV/gcphone))
 - [Disc-JobCars](https://github.com/DiscworldZA/gta-resources/tree/master/disc-jobcars)
 - [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (Currently WIP)
+- [Disc-ShowId](https://github.com/DiscworldZA/gta-resources/tree/master/disc-showid)
+- [Disc-Social](https://github.com/DiscworldZA/gta-resources/tree/master/disc-social)
 - [Disc-VehiclePick](https://github.com/DiscworldZA/gta-resources/tree/master/disc-vehiclepick)
 - [Disc-Warrant](https://github.com/DiscworldZA/gta-resources/tree/master/disc-warrant)
 

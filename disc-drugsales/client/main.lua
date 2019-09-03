@@ -4,6 +4,14 @@ local hasDrugs = false
 
 cachedPeds = {}
 
+--Clean ped cache to avoid memory leaks
+Citizen.CreateThread(function()
+    while true do
+        cachedPeds = {}
+        Citizen.Wait(300000)
+    end
+end)
+
 Citizen.CreateThread(function()
     while ESX == nil do
         TriggerEvent('esx:getSharedObject', function(obj)
@@ -41,15 +49,12 @@ Citizen.CreateThread(function()
     Citizen.Wait(0)
 
     while true do
-        local sleepThread = 500
-
         local ped = PlayerPedId()
         local pedCoords = GetEntityCoords(ped)
         local closestPed = GetPedInFront()
         local closestpedCoords = GetEntityCoords(closestPed)
         local dist = GetDistanceBetweenCoords(pedCoords.x, pedCoords.y, pedCoords.z, closestpedCoords.x, closestpedCoords.y, closestpedCoords.z, true)
         if dist <= pedCoords.x then
-            sleepThread = 5
 
             local cs = canSell(PlayerPedId())
             local cst = CanSellTo(closestPed)
@@ -72,11 +77,9 @@ Citizen.CreateThread(function()
                                 end
                             end
                         end)
-                sleepThread = 500
             end
         end
-
-        Citizen.Wait(sleepThread)
+        Citizen.Wait(0)
     end
 end)
 

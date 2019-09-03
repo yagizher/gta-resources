@@ -17,10 +17,29 @@ Citizen.CreateThread(function()
         Citizen.Wait(10)
     end
 
-    PlayerData = ESX.GetPlayerData()
+    ESX.PlayerData = ESX.GetPlayerData()
 end)
 
+RegisterNetEvent('esx:setJob')
+AddEventHandler('esx:setJob', function(job)
+    ESX.PlayerData.job = job
+end)
+
+function CanDoJob()
+    for k, v in pairs(Config.Jobs.AllowedJobs) do
+        if v == ESX.PlayerData.job.name then
+            return true
+        end
+    end
+    return false
+end
+
 function DragMe()
+
+    if Config.Jobs.LimitJobs and not CanDoJob() then
+        return
+    end
+
     local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
     local targetPed = GetPlayerPed(closestPlayer)
     local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
@@ -30,6 +49,10 @@ function DragMe()
 end
 
 function PutInVehicle()
+    if Config.Jobs.LimitJobs and not CanDoJob() then
+        return
+    end
+
     local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
     local targetPed = GetPlayerPed(closestPlayer)
     local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
@@ -44,6 +67,9 @@ function PutInVehicle()
 end
 
 function OutVehicle()
+    if Config.Jobs.LimitJobs and not CanDoJob() then
+        return
+    end
     local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
     local targetPed = GetPlayerPed(closestPlayer)
     local isInCar = IsPedSittingInAnyVehicle(PlayerPedId())
@@ -143,6 +169,8 @@ Citizen.CreateThread(function()
                 end
             elseif isInVehicle then
                 local boneIndex = GetEntityBoneIndexByName(InVehicle, 'boot')
+                SetEntityCollision(GetPlayerPed(-1), false, false)
+                SetPlayerInvincible(GetPlayerPed(-1), true)
                 AttachEntityToEntity(playerPed, InVehicle, boneIndex, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 2, true)
             else
                 isInVehicle = false
@@ -163,7 +191,7 @@ AddEventHandler('dragme:putInVehicle', function()
         local vehicle = GetClosestVehicle(coords, 5.0, 0, 71)
 
         if DoesEntityExist(vehicle) then
-            SetEntityVisible(GetPlayerPed(-1), false)
+            --SetEntityVisible(GetPlayerPed(-1), false)
             dragStatus.isDragged = false
             SetCarBootOpen(vehicle)
             isInVehicle = true
@@ -174,7 +202,9 @@ end)
 
 RegisterNetEvent('dragme:OutVehicle')
 AddEventHandler('dragme:OutVehicle', function()
-    SetEntityVisible(GetPlayerPed(-1), true)
+    --SetEntityVisible(GetPlayerPed(-1), true)
+    SetEntityCollision(GetPlayerPed(-1), true, true)
+    SetPlayerInvincible(GetPlayerPed(-1), false)
     isInVehicle = false
     SetCarBootOpen(vehicle)
     vehicle = nil
