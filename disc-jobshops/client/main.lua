@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
                 OpenShopMenu(v)
             end,
             shouldDraw = function()
-                return true
+                return ESX.PlayerData.job.name == v.name
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
