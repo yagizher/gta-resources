@@ -6,7 +6,7 @@ end)
 
 ESX.RegisterServerCallback('disc-shops:buyItem', function(source, cb, item, price)
     local player = ESX.GetPlayerFromId(source)
-    local invItem = player.inventory.getItem(item)
+    local invItem = player.getInventoryItem(item)
 
     if invItem.count + 1 > invItem.limit then
         cb(-1)

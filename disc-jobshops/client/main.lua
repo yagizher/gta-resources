@@ -23,17 +23,17 @@ end)
 Citizen.CreateThread(function()
     for _, v in pairs(Config.Shops) do
         local marker = {
-            name = v.name,
+            name = v.name .. '_shop',
             type = v.markerType,
             coords = v.coords,
             colour = v.colour,
-            size = vector3(1.0, 1.0, 1.0),
+            size = vector3(1.5, 1.5, 1.0),
             msg = 'Press ~INPUT_CONTEXT~ to open the Shop',
             action = function()
                 OpenShopMenu(v)
             end,
             shouldDraw = function()
-                return ESX.PlayerData.job.name == v.job
+                return true
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
@@ -43,7 +43,7 @@ end)
 function OpenShopMenu(shop)
     local options = {}
 
-    for _, v in shop.items do
+    for _, v in pairs(shop.items) do
         table.insert(options, { label = v.label .. (' - <span style="color:green;">$%s</span>'):format(v.price), action = function()
             BuyItem(v.item, v.price)
         end })
@@ -52,6 +52,7 @@ function OpenShopMenu(shop)
     local menu = {
         title = shop.name,
         name = 'shop_items',
+        align = 'center',
         options = options
     }
     TriggerEvent('disc-base:openMenu', menu)
