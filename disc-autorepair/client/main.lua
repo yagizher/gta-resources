@@ -145,8 +145,6 @@ AddEventHandler('disc-autorepair:notifyOwner', function(veh)
     ESX.TriggerServerCallback('disc-gcphone:getNumber', function(number)
         coords = GetEntityCoords(veh)
         plate = GetVehicleNumberPlateText(veh)
-        print(plate)
-        print(coords.x)
         message = 'Vehicle Repair: Your Vehicle ' .. plate .. ' is ready at GPS: ' .. coords.x .. ', ' .. coords.y
         TriggerServerEvent('disc-gcphone:sendMessageFrom', 'repair', number, message, serverId)
     end)
