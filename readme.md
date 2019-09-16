@@ -46,10 +46,12 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-DrugRuns](https://github.com/DiscworldZA/gta-resources/tree/master/disc-drugruns)
 - [Disc-DrugSales](https://github.com/DiscworldZA/gta-resources/tree/master/disc-drugsales)
 - [Disc-GcPhone](https://github.com/DiscworldZA/gta-resources/tree/master/disc-gcphone) (add-on to [gcphone](https://github.com/N3MTV/gcphone))
+- [Disc-HotWire](https://github.com/DiscworldZA/gta-resources/tree/master/disc-hotwire)
 - [Disc-JobCars](https://github.com/DiscworldZA/gta-resources/tree/master/disc-jobcars)
 - [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (Currently WIP)
 - [Disc-ShowId](https://github.com/DiscworldZA/gta-resources/tree/master/disc-showid)
 - [Disc-Social](https://github.com/DiscworldZA/gta-resources/tree/master/disc-social)
+- [Disc-Teleport](https://github.com/DiscworldZA/gta-resources/tree/master/disc-teleport)
 - [Disc-VehiclePick](https://github.com/DiscworldZA/gta-resources/tree/master/disc-vehiclepick)
 - [Disc-Warrant](https://github.com/DiscworldZA/gta-resources/tree/master/disc-warrant)
 
@@ -62,7 +64,6 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
   - Disc-Mechanic
   - Disc-CarSales
 - Unique Garages
-- Hotwiring Vehicle
 - Racing
 - Search Warrants for Disc-Properties via Disc-Warrants
 - Automatic BOLO/Facial Detection
