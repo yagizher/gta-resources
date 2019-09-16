@@ -4,10 +4,10 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
-ESX.RegisterUsableItem('lockpick', function(source)
-    TriggerClientEvent('disc-lockpick:lockpick', source, 'lockpick')
+TriggerEvent('disc-base:registerItemUse', 'lockpick', function(source, item)
+    TriggerClientEvent('disc-lockpick:lockpick', source, item)
 end)
 
-ESX.RegisterUsableItem('blowtorch', function(source)
-    TriggerClientEvent('disc-lockpick:lockpick', source, 'blowtorch')
+TriggerEvent('disc-base:registerItemUse', 'blowtorch', function(source, item)
+    TriggerClientEvent('disc-lockpick:lockpick', source, item)
 end)

@@ -24,15 +24,13 @@ end)
 
 RegisterNetEvent('disc-lockpick:lockpick')
 AddEventHandler('disc-lockpick:lockpick', function(withTool)
-    if isLockPicking then
+    local playerPed = GetPlayerPed(-1)
+    if isLockPicking or IsPedInAnyVehicle(playerPed) then
         return
     end
 
     local tool = Config.Tools[withTool]
-    local playerPed = GetPlayerPed(-1)
     local veh, _ = ESX.Game.GetClosestVehicle()
-    local boneIndex = GetEntityBoneIndexByName(veh, 'door_dside_f')
-    local bonePos = GetWorldPositionOfEntityBone(veh, boneIndex)
     local playerPos = GetEntityCoords(playerPed)
     local distance = GetDistanceBetweenCoords(bonePos, playerPos)
     local count = 1
