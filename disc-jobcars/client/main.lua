@@ -104,7 +104,7 @@ end
 function SpawnCar(garage, props)
     local playerPed = PlayerPedId()
     exports['mythic_notify']:DoHudText('success', 'Spawned Vehicle')
-    ESX.Game.SpawnVehicle(props.model, garage.coords, 0.0, function(vehicle)
+    ESX.Game.SpawnVehicle(props.model, garage.coords, garage.heading, function(vehicle)
         ESX.Game.SetVehicleProperties(vehicle, props)
         TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
         TriggerServerEvent('disc-jobcars:spawnCar', props.plate)
