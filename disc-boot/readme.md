@@ -2,8 +2,8 @@
 
 This mod adds the following:
 
-- Ability to get in a boot `/getin`
-- Ability to get out of a boot `/getout`
+- Ability to get in a boot `/boot in`
+- Ability to get out of a boot `/boot out`
 
 
 # Installation
