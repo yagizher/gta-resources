@@ -65,6 +65,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
   - Disc-Mechanic
   - Disc-CarSales
 - Unique Garages
+- Server Wide Robbery Mechanic
 - Racing
 - Search Warrants for Disc-Properties via Disc-Warrants
 - Automatic BOLO/Facial Detection
