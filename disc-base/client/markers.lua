@@ -44,7 +44,7 @@ Citizen.CreateThread(function()
             if distance < Config.DrawDistance and v.shouldDraw() then
                 DrawMarker(v.type, v.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.size.x, v.size.y, v.size.z, v.colour.r, v.colour.g, v.colour.b, 100, getOrElse(v.bob, false), true, 2, true, false, false, false)
             end
-            if distance < v.size.x then
+            if distance < v.size.x and v.shouldDraw() then
                 isInMarker = true
                 lastMarker = v
             end
