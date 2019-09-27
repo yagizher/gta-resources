@@ -17,19 +17,25 @@ Citizen.CreateThread(function()
 end)
 
 function GetInBoot()
-    local vehicle = ESX.Game.GetClosestVehicle()
+    local vehicle, closestDistance = ESX.Game.GetClosestVehicle()
     local playerPed = GetPlayerPed(-1)
     local px, py, pz = table.unpack(GetEntityCoords(playerPed))
     local vx, vy, vz = table.unpack(GetEntityCoords(vehicle))
-    if GetDistanceBetweenCoords(px, py, pz, vx, vy, vz, true) > 3.0 or IsPedInAnyVehicle(playerPed) then
+    if  closestDistance > 4.0 or IsPedInAnyVehicle(playerPed) then
         return
     end
     if Config.MustHaveBoot and not DoesVehicleHaveDoor(vehicle, 5) then
         exports['mythic_notify']:DoHudText('error', 'This car does not have a boot')
         return
     end
+    if IsBigVehicle(vehicle) then
+        exports['mythic_notify']:DoHudText('error', 'NO')
+        return
+    end
+
     if DoesEntityExist(vehicle) then
         SetEntityVisible(playerPed, false)
+        SetEntityCollision(playerPed, false, false)
         IsInBoot = true
         InVehicle = vehicle
         TriggerBootAnimation()
@@ -38,9 +44,9 @@ end
 
 function TriggerBootAnimation()
     Citizen.CreateThread(function()
-        SetVehicleDoorOpen(InVehicle, 5, false, true)
-        Citizen.Wait(500)
-        SetVehicleDoorShut(InVehicle, 5, true)
+        SetVehicleDoorOpen(InVehicle, 5, false, false)
+        Citizen.Wait(1000)
+        SetVehicleDoorShut(InVehicle, 5, false)
     end)
 end
 
@@ -51,7 +57,10 @@ function GetOutOfBoot()
     end
     if DoesEntityExist(InVehicle) then
         local playerPed = GetPlayerPed(-1)
+        local coords = GetOffsetFromEntityInWorldCoords(InVehicle, 0.0, -4.0, 0.0)
         SetEntityVisible(playerPed, true)
+        SetEntityCoords(playerPed, coords)
+        SetEntityCollision(playerPed, true, true)
         IsInBoot = false
         InVehicle = false
         TriggerBootAnimation()
@@ -63,18 +72,23 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         local playerPed = GetPlayerPed(-1)
         if IsInBoot then
-            local boneIndex = GetEntityBoneIndexByName(InVehicle, 'boot')
-            AttachEntityToEntity(playerPed, InVehicle, boneIndex, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, true, false, true, 2, false)
+            DisableAllControlActions(0)
+            EnableControlAction(0, 1)
+            EnableControlAction(0, 2)
+            EnableControlAction(0, 245)
+            AttachEntityToEntity(playerPed, InVehicle, -1, 0.0, 0.0, 0.4, 0.0, 0.0, 0.0, false, false, true, true, 2, true)
         else
-            DetachEntity(playerPed, true, false)
+            DetachEntity(playerPed, true, true)
         end
     end
 end)
 
-RegisterCommand("getin", function(src, args, raw)
-    GetInBoot()
-end)
+RegisterCommand("boot", function(src, args, raw)
+    if args[1] == 'in' and not IsInBoot then
+        GetInBoot()
+    end
 
-RegisterCommand("getout", function(src, args, raw)
-    GetOutOfBoot()
+    if args[1] == 'out' and IsInBoot then
+        GetOutOfBoot()
+    end
 end)
