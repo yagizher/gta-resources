@@ -40,6 +40,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-Armory](https://github.com/DiscworldZA/gta-resources/tree/master/disc-armory)
 - [Disc-AutoRepair](https://github.com/DiscworldZA/gta-resources/tree/master/disc-autorepair)
 - [Disc-Billing](https://github.com/DiscworldZA/gta-resources/tree/master/disc-billing)
+- [Disc-Boot](https://github.com/DiscworldZA/gta-resources/tree/master/disc-boot)
 - [Disc-Compensation](https://github.com/DiscworldZA/gta-resources/tree/master/disc-compensation)
 - [Disc-CarThief](https://github.com/DiscworldZA/gta-resources/tree/master/disc-carthief) (my version of [esx_carthief](https://github.com/KlibrDM/esx_carthief))
 - [Disc-DragMe](https://github.com/DiscworldZA/gta-resources/tree/master/disc-dragme)
