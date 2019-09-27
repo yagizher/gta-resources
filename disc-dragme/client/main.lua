@@ -168,10 +168,10 @@ Citizen.CreateThread(function()
                     DetachEntity(playerPed, true, false)
                 end
             elseif isInVehicle then
-                local boneIndex = GetEntityBoneIndexByName(InVehicle, 'boot')
-                SetEntityCollision(GetPlayerPed(-1), false, false)
-                SetPlayerInvincible(GetPlayerPed(-1), true)
-                AttachEntityToEntity(playerPed, InVehicle, boneIndex, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, true, false, 2, true)
+                DisableAllControlActions(0)
+                EnableControlAction(0, 1)
+                EnableControlAction(0, 2)
+                AttachEntityToEntity(playerPed, InVehicle, -1, 0.0, 0.0, 0.4, 0.0, 0.0, 0.0, false, false, true, true, 2, true)
             else
                 isInVehicle = false
                 DetachEntity(playerPed, true, false)
