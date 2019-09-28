@@ -9,6 +9,7 @@ Config.ImportJobs = {
         Item = 'lockpick',
         Quantity = 10,
         Vehicle = 'Burrito3',
-        VehicleSpawnLocation = vector3(913.18, -3341.56, 5.9)
+        VehicleSpawnLocation = vector3(913.18, -3341.56, 5.9),
+        VehicleSpawnHeading = 0.0
     }
 }
