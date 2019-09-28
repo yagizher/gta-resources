@@ -104,7 +104,7 @@ function StartImport(k, config)
         end
 
         local playerPed = PlayerPedId()
-        ESX.Game.SpawnVehicle(config.Vehicle, config.VehicleSpawnLocation, 0.0, function(vehicle)
+        ESX.Game.SpawnVehicle(config.Vehicle, config.VehicleSpawnLocation, config.VehicleSpawnHeading, function(vehicle)
             ActiveVehicle = vehicle
             TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
             IsImportActive = true
