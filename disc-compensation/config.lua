@@ -7,3 +7,4 @@ Config.Jobs = {
 }
 
 Config.CompensationPercentage = 10 --%
+Config.AllowSelfCompensation = false

@@ -20,15 +20,17 @@ AddEventHandler('disc-compensation:compensate', function()
     local players = GetNeareastPlayers()
     local options = {}
     for k, v in pairs(players) do
-        table.insert(options, {
-            label = v.playerName .. ' (' .. v.playerId .. ')', action = function()
-                local compensation = {
-                    compensator = GetPlayerServerId(PlayerId()),
-                    receiver = v.playerId
-                }
-                ESX.UI.Menu.CloseAll()
-                ShowCompensationReason(compensation)
-            end })
+        if v.playerId ~= PlayerId() or Config.AllowSelfCompensation then
+            table.insert(options, {
+                label = v.playerName .. ' (' .. v.playerId .. ')', action = function()
+                    local compensation = {
+                        compensator = GetPlayerServerId(PlayerId()),
+                        receiver = v.playerId
+                    }
+                    ESX.UI.Menu.CloseAll()
+                    ShowCompensationReason(compensation)
+                end })
+        end
     end
 
     local menu = {
