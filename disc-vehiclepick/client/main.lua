@@ -32,6 +32,8 @@ AddEventHandler('disc-lockpick:lockpick', function(withTool)
     local tool = Config.Tools[withTool]
     local veh, _ = ESX.Game.GetClosestVehicle()
     local playerPos = GetEntityCoords(playerPed)
+    local boneIndex = GetEntityBoneIndexByName(veh, 'door_dside_f')
+    local bonePos = GetWorldPositionOfEntityBone(veh, boneIndex)
     local distance = GetDistanceBetweenCoords(bonePos, playerPos)
     local count = 1
     if tool.use then
