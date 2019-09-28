@@ -19,7 +19,9 @@ TryToSell = function(pedId, coords)
     if canSell > 5 then
         Sell()
     else
-        TriggerServerEvent('disc-gcphone:sendMessageFrom', "police", "police", "Drug Sale Attempt in progress!", coords)
+        serverId = GetPlayerServerId(PlayerId())
+        message = 'Dispatch Message: Drug Sale Attempt in progress at GPS: ' .. coords.x .. ', ' .. coords.y
+        TriggerServerEvent('disc-gcphone:sendMessageFrom', 'police', 'police', message, serverId)
         exports['mythic_notify']:DoHudText('error', "Are you stupid? Don't ever contact me again.")
     end
 
