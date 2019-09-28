@@ -5,6 +5,8 @@ Allow compensation for specific jobs
 # Installation
 Add to resource folder `[esx]` or `[disc]`
 
+Execute SQL : `disc-compensation.sql`
+
 Start using `start disc-compensation`
 
 # Usage
