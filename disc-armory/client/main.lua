@@ -106,7 +106,7 @@ function takeOutWeapon(weapon)
                         TriggerEvent('esx:addWeapon', weapon, 200)
                         ESX.UI.Menu.Close('default', 'disc-base', 'take_weapons')
                     else
-                        exports['mythic_notify']:DoHudText('error', 'Failed to take Weapon ' .. ESX.GetWeaponLabel(weapon))
+                        exports['mythic_notify']:DoHudText('error', 'Unable to take Weapon ' .. ESX.GetWeaponLabel(weapon))
                     end
                 end, currentArmory.job, weapon, -1)
     end
@@ -139,7 +139,7 @@ function buyWeapon(weapon, price)
                     elseif bought == 0 then
                         exports['mythic_notify']:DoHudText('error', 'You need $' .. price .. ' to buy a ' .. ESX.GetWeaponLabel(weapon))
                     else
-                        exports['mythic_notify']:DoHudText('error', 'Failed to buy Weapon ' .. ESX.GetWeaponLabel(weapon))
+                        exports['mythic_notify']:DoHudText('error', 'Unable to buy Weapon ' .. ESX.GetWeaponLabel(weapon))
                     end
                 end, price)
     end

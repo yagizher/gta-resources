@@ -3,7 +3,7 @@ Config = {}
 Config.Armories = {
     {
         name = 'Police',
-        coords = vector3(459.45, -981.20, 30.69),
+        coords = vector3(919.14, -3340.21, 5.9),
         job = 'police',
         weapons = {
             { name = 'WEAPON_FLASHLIGHT', price = 500 },
