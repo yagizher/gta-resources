@@ -48,6 +48,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-DrugSales](https://github.com/DiscworldZA/gta-resources/tree/master/disc-drugsales)
 - [Disc-GcPhone](https://github.com/DiscworldZA/gta-resources/tree/master/disc-gcphone) (add-on to [gcphone](https://github.com/N3MTV/gcphone))
 - [Disc-HotWire](https://github.com/DiscworldZA/gta-resources/tree/master/disc-hotwire)
+- [Disc-Import](https://github.com/DiscworldZA/gta-resources/tree/master/disc-import)
 - [Disc-JobCars](https://github.com/DiscworldZA/gta-resources/tree/master/disc-jobcars)
 - [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (Currently WIP)
 - [Disc-ShowId](https://github.com/DiscworldZA/gta-resources/tree/master/disc-showid)
@@ -66,7 +67,6 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
   - Disc-CarSales
 - Unique Garages
 - Server Wide Robbery Mechanic
-- Racing
 - Search Warrants for Disc-Properties via Disc-Warrants
 - Automatic BOLO/Facial Detection
 - Handheld Police and EMS devices
@@ -76,6 +76,8 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - Vehicle Shop Documentation (License and Registration)
 - Cop Evidence Mechanic
 - Judge Job (Allow search warrant authorization, Allow cases to be handled)
+- Daily Login Reward System
+- Vehicle Keys (Compatible With Hotwire)
 
 # Usage
 Feel free to use my [Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base) mod to create your own! Just credit me in some way. Share your mods you created with my base mod with me!
