@@ -64,7 +64,7 @@ Citizen.CreateThread(function()
                 PickupCrate(k, v)
             end,
             shouldDraw = function()
-                return Config.ImportJobs[k].State == 1 and InImportVehicle(k)
+                return Config.ImportJobs[k].State == 1 and InImportVehicle()
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
@@ -82,7 +82,7 @@ Citizen.CreateThread(function()
                 FinishImport(k, v)
             end,
             shouldDraw = function()
-                return Config.ImportJobs[k].State == 2 and InImportVehicle(k)
+                return Config.ImportJobs[k].State == 2 and InImportVehicle()
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
 
 end)
 
-function InImportVehicle(k)
+function InImportVehicle()
     local playerPed = PlayerPedId()
     return IsPedInAnyVehicle(playerPed) and GetVehiclePedIsIn(playerPed) == ActiveVehicle
 end
