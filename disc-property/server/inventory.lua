@@ -33,11 +33,29 @@ end)
 RegisterServerEvent('disc-property:putItemInPropertyFor')
 AddEventHandler('disc-property:putItemInPropertyFor', function(name, item, count)
     local source = source
+    local player = ESX.GetPlayerFromId(source)
     MySQL.Async.fetchAll('SELECT * FROM disc_property_inventory WHERE inventory_name = @name', {
         ['@name'] = name
     }, function(results)
         local data = json.decode(results[1].data)
         local found = false
+
+        if item.type == 'item_standard' then
+            if count > player.getInventoryItem(item.name).count then
+                return
+            end
+        elseif item.type == 'item_weapon' then
+            --player.removeWeapon(item.name)
+        elseif item.type == 'item_account' then
+            if count > player.getAccount(item.name).money then
+                return
+            end
+        elseif item.type == 'item_money' then
+            if count > player.getMoney() then
+                return
+            end
+        end
+
 
         if data[item.type] == nil then
             data[item.type] = {}
@@ -59,7 +77,6 @@ AddEventHandler('disc-property:putItemInPropertyFor', function(name, item, count
             ['@data'] = json.encode(data),
             ['@name'] = name
         }, function()
-            local player = ESX.GetPlayerFromId(source)
             if item.type == 'item_standard' then
                 player.removeInventoryItem(item.name, count)
             elseif item.type == 'item_weapon' then
@@ -84,9 +101,16 @@ AddEventHandler('disc-property:takeItemFromProperty', function(name, item, count
 
         for k, v in pairs(data[item.type]) do
             if v.name == item.name then
-                data[item.type][k].count = data[item.type][k].count - count
+                if data[item.type][k].count - count == 0 then
+                    data[item.type][k] = nil
+                elseif data[item.type][k].count - count < 0 then
+                    return
+                else
+                    data[item.type][k].count = data[item.type][k].count - count
+                end
             end
         end
+
         MySQL.Async.execute('UPDATE disc_property_inventory SET data = @data WHERE inventory_name = @name', {
             ['@data'] = json.encode(data),
             ['@name'] = name

@@ -56,7 +56,7 @@ function setPropertyInventoryData(data)
         accountData = {
             label = _U(money.name),
             count = money.count,
-            type = "item_account",
+            type = "item_money",
             name = money.name,
             usable = false,
             rare = false,
