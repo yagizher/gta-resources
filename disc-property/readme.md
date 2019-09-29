@@ -69,3 +69,4 @@ can give out keys to other players. Players with keys have access to the propert
 # Requirements
 
 - [Disc-Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base)
+- ESX_InventoryHud (Soon to be placed with my own)
