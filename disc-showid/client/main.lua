@@ -16,12 +16,24 @@ Citizen.CreateThread(function()
 end)
 
 local shouldDraw = false
+local shouldOpenMenu = false
 
 RegisterNetEvent('disc-showid:id')
 AddEventHandler('disc-showid:id', function()
     shouldDraw = not shouldDraw
 end)
 
+--Test Inputs
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if Config.Key.Enabled then
+            shouldDraw = IsControlPressed(0, Config.Key.Code)
+        end
+    end
+end)
+
+--Draw Things
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
