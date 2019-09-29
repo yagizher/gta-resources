@@ -2,6 +2,7 @@ Config = {}
 
 Config.BuyPercentage = 1.0
 Config.ResellPercentage = 0.7
+Config.FoodItem = 'bread'
 
 Config.Properties = {
     -- 3655 Wild Oats Drive

@@ -1,8 +1,7 @@
 function OpenKitchen(property)
 
     local options = {
-        { label = 'Take Food' },
-        { label = 'Store Food' },
+        { label = 'Make Food', action = MakeFood }
     }
 
     if IsPlayerOwnerOf(property) then
@@ -18,4 +17,8 @@ function OpenKitchen(property)
     }
 
     TriggerEvent('disc-base:openMenu', menu)
+end
+
+function MakeFood()
+    TriggerServerEvent('disc-base:givePlayerItem', Config.FoodItem, 1)
 end

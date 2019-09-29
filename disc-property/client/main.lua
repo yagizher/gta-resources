@@ -43,6 +43,7 @@ AddEventHandler('disc-property:forceUpdatePropertyData', function()
         propertyOwners = owners
     end)
 end)
+
 Citizen.CreateThread(function()
     for propertyIndex, property in pairs(Config.Properties) do
 
