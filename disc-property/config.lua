@@ -25,7 +25,8 @@ Config.Properties = {
             coords = vector3(-167.03, 495.42, 137.65)
         },
         garage = {
-            coords = vector3(-188.73, 500.61, 134.64)
+            coords = vector3(-188.73, 500.61, 134.64),
+            heading = 0.0
         },
         rooms = {
             {
@@ -50,6 +51,7 @@ Config.Properties = {
     -- High end house 2: 340.9412 437.1798 149.3925
     {
         name = '2044 North Conker Avenue',
+        price = 1000000,
         view = {
             coords = vector3(350.22, 443.42, 146.94),
         },

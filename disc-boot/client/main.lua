@@ -19,8 +19,6 @@ end)
 function GetInBoot()
     local vehicle, closestDistance = ESX.Game.GetClosestVehicle()
     local playerPed = GetPlayerPed(-1)
-    local px, py, pz = table.unpack(GetEntityCoords(playerPed))
-    local vx, vy, vz = table.unpack(GetEntityCoords(vehicle))
     if  closestDistance > 4.0 or IsPedInAnyVehicle(playerPed) then
         return
     end

@@ -12,7 +12,11 @@ ESX.RegisterServerCallback('disc-property:getPropertyInventoryFor', function(sou
     MySQL.Async.fetchAll('SELECT data FROM disc_property_inventory WHERE inventory_name = @name', {
         ['@name'] = name
     }, function(results)
-        cb(json.decode(results[1].data))
+        if #results == 0 then
+            cb(nil)
+        else
+            cb(json.decode(results[1].data))
+        end
     end)
 end)
 
