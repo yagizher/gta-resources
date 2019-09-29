@@ -1,4 +1,5 @@
 ESX = nil
+local clipboardEntity
 
 Citizen.CreateThread(function()
     while ESX == nil do
@@ -35,8 +36,30 @@ end)
 
 --Draw Things
 Citizen.CreateThread(function()
+    local animationState = false
     while true do
         Citizen.Wait(0)
+        if animationState ~= shouldDraw then
+            animationState = shouldDraw
+            if animationState then
+                local playerPed = GetPlayerPed(-1)
+                ESX.Streaming.RequestAnimDict('missheistdockssetup1clipboard@base', function()
+                    TaskPlayAnim(playerPed, 'missheistdockssetup1clipboard@base', 'base', 8.0, -8, -1, 49, 0, 0, 0, 0)
+                end)
+
+                clipboardEntity = CreateObject(GetHashKey("p_amb_clipboard_01"), x, y, z, true)
+                coords = { x = 0.2, y = 0.1, z = 0.08 }
+                rotation = { x = -80.0, y = -20.0, z = 0.0 }
+                AttachEntityToEntity(clipboardEntity, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(PlayerId()), 18905), coords.x, coords.y, coords.z, rotation.x, rotation.y, rotation.z, 1, 1, 0, 1, 0, 1)
+            else
+                ClearPedTasks(GetPlayerPed(-1))
+                if clipboardEntity ~= nil then
+                    DeleteEntity(clipboardEntity)
+                    clipboardEntity = nil
+                end
+            end
+        end
+
         if shouldDraw then
             local nearbyPlayers = GetNeareastPlayers()
             for k, v in pairs(nearbyPlayers) do
