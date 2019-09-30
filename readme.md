@@ -50,7 +50,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-HotWire](https://github.com/DiscworldZA/gta-resources/tree/master/disc-hotwire)
 - [Disc-Import](https://github.com/DiscworldZA/gta-resources/tree/master/disc-import)
 - [Disc-JobCars](https://github.com/DiscworldZA/gta-resources/tree/master/disc-jobcars)
-- [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (Currently WIP)
+- [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (BETA)
 - [Disc-ShowId](https://github.com/DiscworldZA/gta-resources/tree/master/disc-showid)
 - [Disc-Social](https://github.com/DiscworldZA/gta-resources/tree/master/disc-social)
 - [Disc-Teleport](https://github.com/DiscworldZA/gta-resources/tree/master/disc-teleport)
