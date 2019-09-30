@@ -16,12 +16,13 @@ Citizen.CreateThread(function()
     ESX.PlayerData = ESX.GetPlayerData()
 end)
 
+local forceDraw = false
 local shouldDraw = false
 local shouldOpenMenu = false
 
 RegisterNetEvent('disc-showid:id')
 AddEventHandler('disc-showid:id', function()
-    shouldDraw = not shouldDraw
+    forceDraw = not forceDraw
 end)
 
 --Test Inputs
@@ -60,7 +61,7 @@ Citizen.CreateThread(function()
             end
         end
 
-        if shouldDraw then
+        if shouldDraw or forceDraw then
             local nearbyPlayers = GetNeareastPlayers()
             for k, v in pairs(nearbyPlayers) do
                 local x, y, z = table.unpack(v.coords)
