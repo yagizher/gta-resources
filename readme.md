@@ -53,6 +53,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (BETA)
 - [Disc-ShowId](https://github.com/DiscworldZA/gta-resources/tree/master/disc-showid)
 - [Disc-Social](https://github.com/DiscworldZA/gta-resources/tree/master/disc-social)
+- [Disc-Tax](https://github.com/DiscworldZA/gta-resources/tree/master/disc-tax)
 - [Disc-Teleport](https://github.com/DiscworldZA/gta-resources/tree/master/disc-teleport)
 - [Disc-VehiclePick](https://github.com/DiscworldZA/gta-resources/tree/master/disc-vehiclepick)
 - [Disc-Warrant](https://github.com/DiscworldZA/gta-resources/tree/master/disc-warrant)
