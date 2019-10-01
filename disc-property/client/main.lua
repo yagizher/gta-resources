@@ -211,6 +211,7 @@ function GetPropertyDataForProperty(property)
             return v
         end
     end
+    print('Unable to find property data, probably misconfigured in DB')
 end
 
 function GetPropertyOwnersForProperty(property)
@@ -249,6 +250,9 @@ end
 
 function IsPropertySold(property)
     local pd = GetPropertyDataForProperty(property)
+    if pd == nil then
+        return
+    end
     if pd then
         return pd.sold
     else
