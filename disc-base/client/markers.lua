@@ -28,7 +28,24 @@ AddEventHandler('disc-base:registerMarker', function(marker)
         end
     end
 
-    markers[getOrElse(marker.name, #markers + 1)] = marker
+    if marker.command then
+        RegisterCommand(marker.command.key, function(src, args, raw)
+            local command = marker.command.key
+            if args and marker.command.args then
+                command = command .. ' ' .. marker.command.args
+            end
+            if raw == command then
+                TriggerEvent('disc-base:triggerCurrentMarkerAction')
+            end
+        end)
+    end
+
+    if markers[marker.name] then
+        markers[marker.name] = marker
+    else
+        markers[getOrElse(marker.name, #markers + 1)] = marker
+    end
+
 end)
 
 Citizen.CreateThread(function()
@@ -42,13 +59,21 @@ Citizen.CreateThread(function()
         for k, v in pairs(markers) do
             local distance = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, v.coords.x, v.coords.y, v.coords.z, true)
             if distance < Config.DrawDistance and v.shouldDraw() then
-                DrawMarker(v.type, v.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.size.x, v.size.y, v.size.z, v.colour.r, v.colour.g, v.colour.b, 100, getOrElse(v.bob, false), true, 2, true, false, false, false)
+                if v.show3D then
+                    if distance < Config.Draw3DDistance then
+                        ESX.Game.Utils.DrawText3D(v.coords, v.msg, 0.5)
+                    end
+                elseif v.type ~= -1 then
+                    DrawMarker(v.type, v.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.size.x, v.size.y, v.size.z, v.colour.r, v.colour.g, v.colour.b, 100, getOrElse(v.bob, false), true, 2, true, false, false, false)
+                end
             end
             if distance < v.size.x and v.shouldDraw() then
+                if v.enableE then
+                    EnableControlAction(0, 38)
+                end
                 isInMarker = true
                 lastMarker = v
             end
-
         end
 
         if isInMarker and not HasAlreadyEnteredMarker then
@@ -69,7 +94,9 @@ AddEventHandler('disc-base:hasExitedMarker', function()
 end)
 
 AddEventHandler('disc-base:hasEnteredMarker', function(marker)
-    print('Marker: ' .. marker.name)
+    if marker.show3D then
+        PlaySound(GetSoundId(), "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+    end
     CurrentMarker = marker
 end)
 
@@ -78,7 +105,9 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
 
         if CurrentMarker and CurrentMarker.shouldDraw() then
-            ESX.ShowHelpNotification(CurrentMarker.msg)
+            if not CurrentMarker.show3D then
+                ESX.ShowHelpNotification(CurrentMarker.msg)
+            end
 
             if IsControlJustReleased(0, 38) then
                 if CurrentMarker.action ~= nil then
@@ -86,6 +115,13 @@ Citizen.CreateThread(function()
                 end
             end
         end
+    end
+end)
+
+RegisterNetEvent('disc-base:triggerCurrentMarkerAction')
+AddEventHandler('disc-base:triggerCurrentMarkerAction', function()
+    if CurrentMarker and CurrentMarker.action ~= nil then
+        CurrentMarker.action(CurrentMarker)
     end
 end)
 
