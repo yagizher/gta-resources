@@ -2,7 +2,9 @@ function ShowViewProperty(property)
 
     local propData = GetPropertyDataForProperty(property)
 
-    if propData == nil then return end
+    if propData == nil then
+        return
+    end
 
     local options = {
         { label = 'View Property', action = function()

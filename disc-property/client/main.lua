@@ -211,7 +211,6 @@ function GetPropertyDataForProperty(property)
             return v
         end
     end
-    print('Unable to find property data, probably misconfigured in DB')
 end
 
 function GetPropertyOwnersForProperty(property)
