@@ -135,7 +135,9 @@ AddEventHandler('disc-base:registerBlip', function(blip)
 
     local _blip = AddBlipForCoord(blip.coords)
     SetBlipSprite(_blip, getOrElse(blip.sprite, 1))
-    SetBlipDisplay(_blip, 4)
+
+    SetBlipDisplay(_blip, getOrElse(blip.display, 4))
+
     if blip.scale then
         SetBlipScale(_blip, getOrElse(blip.scale, 0.5))
     end
@@ -143,16 +145,33 @@ AddEventHandler('disc-base:registerBlip', function(blip)
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentString(getOrElse(blip.name, "Blip Missing Name"))
     EndTextCommandSetBlipName(_blip)
-    blips[getOrElse(blip.id, #blips + 1)] = _blip
+    blips[getOrElse(blip.id, #blips + 1)] = {
+        _blip = _blip,
+        blip = blip
+    }
 end)
 
 RegisterNetEvent('disc-base:updateBlip')
-AddEventHandler('disc-base:updateBlip', function(blip)
-    if not blip.id then
-        print('Blip Id Missing')
+AddEventHandler('disc-base:updateBlip', function(blip, debug)
+    if blip.id == nil or blips[blip.id] == nil then
         return
     end
-    local _blip = blips[blip.id]
+    local _blip = blips[blip.id]._blip
+
+    if blip.coords then
+
+        if _blip and GetBlipCoords(_blip) ~= blip.coords then
+            RemoveBlip(_blip)
+            local tempBlip = blips[blip.id].blip
+            blips[blip.id] = nil
+            tempBlip.coords = blip.coords
+            tempBlip.display = blip.display
+            TriggerEvent('disc-base:registerBlip', tempBlip)
+            return
+        end
+
+    end
+
     if blip.sprite then
         SetBlipSprite(_blip, blip.sprite)
     end
