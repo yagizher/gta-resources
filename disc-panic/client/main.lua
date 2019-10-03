@@ -76,6 +76,33 @@ AddEventHandler('disc-panic:addPanic', function(coords)
     end
 end)
 
+RegisterCommand('clearpanic', function(source, args, raw)
+    local blip = {
+        id = 'panic_current',
+        name = 'Panic Alert',
+        coords = vector3(0, 0, 0),
+        display = 0,
+        sprite = 472
+    }
+    TriggerEvent('disc-base:updateBlip', blip)
+end)
+
+RegisterCommand('911', function(source, args, rawCommand)
+
+    if cooldown then
+        return
+    else
+        cooldown = true
+    end
+
+    serverId = GetPlayerServerId(PlayerId())
+    ESX.TriggerServerCallback('disc-gcphone:getNumber', function(number)
+        local msg = 'Dispatch Message: #' .. number .. ' : '
+        msg = msg .. rawCommand:sub(5)
+        TriggerServerEvent('disc-gcphone:sendMessageFrom', 'police', 'police', msg, serverId)
+    end)
+end, false)
+
 Citizen.CreateThread(function()
     while true do
         if cooldown then
