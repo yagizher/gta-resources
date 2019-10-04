@@ -13,12 +13,12 @@ AddEventHandler(
 
 RegisterNetEvent("esx_inventoryhud:refreshDiscPropertyInventory")
 AddEventHandler("esx_inventoryhud:refreshDiscPropertyInventory", function()
-    refreshPropertyInventory()
+    refreshDiscPropertyInventory()
     Citizen.Wait(200)
     loadPlayerInventory()
 end)
 
-function refreshPropertyInventory()
+function refreshDiscPropertyInventory()
     ESX.TriggerServerCallback(
             "disc-property:getPropertyInventoryFor",
             function(data)
