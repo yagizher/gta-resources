@@ -58,13 +58,22 @@ end)
 RegisterServerEvent('disc-autorepair:takeMoney')
 AddEventHandler('disc-autorepair:takeMoney', function(price)
     local player = ESX.GetPlayerFromId(source)
-    if player.getMoney() >= price then
-        player.removeMoney(price)
-    elseif player.getBank() >= price then
+    if Config.AllowBank and not Config.AllowNegativeBank then
+        if player.getBank() >= price then
+            player.removeAccountMoney('bank', price)
+        else
+            print('Something went wrong maybe')
+        end
+    elseif Config.AllowBank and Config.AllowNegativeBank then
         player.removeAccountMoney('bank', price)
+    elseif not Config.AllowBank then
+        if player.getMoney() >= price then
+            player.removeMoney(price)
+        else
+            print('Something went wrong maybe')
+        end
     else
-        player.removeAccountMoney('bank', price)
-        TriggerClientEvent('mythic_notify:client:SendAlert', source, {type = 'error', text = 'You used your bank card, but ended up with a negative balance!'})
+        print('Deny them from doing anything')
     end
 end)
 
