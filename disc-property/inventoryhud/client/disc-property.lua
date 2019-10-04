@@ -6,7 +6,7 @@ AddEventHandler(
         "esx_inventoryhud:openDiscPropertyInventory",
         function(data)
             propertyName = data.inventory_name
-            setPropertyInventoryData(data)
+            setDiscPropertyInventoryData(data)
             openPropertyInventory()
         end
 )
@@ -22,13 +22,13 @@ function refreshPropertyInventory()
     ESX.TriggerServerCallback(
             "disc-property:getPropertyInventoryFor",
             function(data)
-                setPropertyInventoryData(data)
+                setDiscPropertyInventoryData(data)
             end,
             propertyName
     )
 end
 
-function setPropertyInventoryData(data)
+function setDiscPropertyInventoryData(data)
     propertyData = data
     items = {}
 
