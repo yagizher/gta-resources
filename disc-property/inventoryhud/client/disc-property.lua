@@ -7,7 +7,7 @@ AddEventHandler(
         function(data)
             propertyName = data.inventory_name
             setDiscPropertyInventoryData(data)
-            openPropertyInventory()
+            openDiscPropertyInventory()
         end
 )
 
@@ -110,7 +110,7 @@ function setDiscPropertyInventoryData(data)
     )
 end
 
-function openPropertyInventory()
+function openDiscPropertyInventory()
     loadPlayerInventory()
     isInInventory = true
 
