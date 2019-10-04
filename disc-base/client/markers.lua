@@ -135,7 +135,7 @@ AddEventHandler('disc-base:registerBlip', function(blip)
 
     local _blip = AddBlipForCoord(blip.coords)
     SetBlipSprite(_blip, getOrElse(blip.sprite, 1))
-
+    SetBlipAsShortRange(_blip, true)
     SetBlipDisplay(_blip, getOrElse(blip.display, 4))
 
     if blip.scale then
