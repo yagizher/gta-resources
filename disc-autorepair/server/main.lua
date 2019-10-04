@@ -58,7 +58,14 @@ end)
 RegisterServerEvent('disc-autorepair:takeMoney')
 AddEventHandler('disc-autorepair:takeMoney', function(price)
     local player = ESX.GetPlayerFromId(source)
-    player.removeMoney(price)
+    if player.getMoney() >= price then
+        player.removeMoney(price)
+    elseif player.getBank() >= price then
+        player.removeAccountMoney('bank', price)
+    else
+        player.removeAccountMoney('bank', price)
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, {type = 'error', text = 'You used your bank card, but ended up with a negative balance!'})
+    end
 end)
 
 function GetVehicleAtPlaceForSource(place, source)
