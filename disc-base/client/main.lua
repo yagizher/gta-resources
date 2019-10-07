@@ -103,4 +103,33 @@ function OpenDialogMenu(menu)
             end)
 end
 
+function OpenListMenu(menu)
+
+    local elements = {
+        head = menu.head or {},
+        rows = menu.rows or {}
+    }
+
+    for k, v in pairs(menu.options) do
+        local cols = {}
+        for _, v2 in pairs(v) do
+            table.insert(cols, v2)
+        end
+        table.insert(elements.rows, {
+            data = v,
+            cols = cols
+        })
+    end
+
+    ESX.UI.Menu.Open('list', GetCurrentResourceName(), menu.name or 'default_list_menu', elements, function(data, menu)
+        ESX.UI.Menu.CloseAll()
+    end, function(data, menu)
+        ESX.UI.Menu.CloseAll()
+    end, function(data, menu)
+        ESX.UI.Menu.CloseAll()
+    end, function(data, menu)
+        ESX.UI.Menu.CloseAll()
+    end)
+end
+
 
