@@ -20,6 +20,11 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
+RegisterNetEvent('esx:setJob')
+AddEventHandler('esx:setJob', function(job)
+    ESX.PlayerData.job = job
+end)
+
 function GetNeareastPlayers()
     local playerPed = PlayerPedId()
     local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 1.0)
@@ -40,6 +45,32 @@ RegisterCommand('closeMenu', function()
     ESX.UI.Menu.CloseAll()
 end)
 
+RegisterCommand('lookup', function()
+    if ESX.PlayerData.job.name == 'police' then
+        local nearByPlayers = GetNeareastPlayers()
+
+        local options = {}
+        for k, v in pairs(nearByPlayers) do
+            table.insert(options, {
+                label = v.playerName .. ' (' .. v.playerId .. ')', action = function()
+                    ESX.UI.Menu.CloseAll()
+                    PlayAnim('random@arrests', 'generic_radio_chatter', true)
+                    Citizen.Wait(Config.LookupTime)
+                    ClearPedTasksImmediately(GetPlayerPed(-1))
+                    TriggerServerEvent('disc-identification:getIdFor', v.playerId)
+                end })
+        end
+
+        local menu = {
+            type = 'default',
+            title = 'Lookup',
+            name = 'id_lookup_players',
+            options = options
+        }
+        TriggerEvent('disc-base:openMenu', menu)
+    end
+end)
+
 RegisterNetEvent('disc-identification:idcard')
 AddEventHandler('disc-identification:idcard', function()
     ShowPlayers()
@@ -54,7 +85,7 @@ function ShowPlayers()
             label = v.playerName .. ' (' .. v.playerId .. ')', action = function()
                 ESX.UI.Menu.CloseAll()
                 TriggerServerEvent('disc-identification:showIdTo', v.playerId)
-                PlayAnim()
+                PlayAnim('mp_common', 'givetake1_a')
             end })
     end
 
@@ -70,7 +101,6 @@ end
 RegisterNetEvent('disc-identification:showId')
 AddEventHandler('disc-identification:showId', function(data)
     ESX.UI.Menu.CloseAll()
-    PlayAnim()
     local menu = {
         head = { '', '' },
         name = 'id_show',
@@ -88,9 +118,9 @@ AddEventHandler('disc-identification:showId', function(data)
     TriggerEvent('disc-base:openMenu', menu)
 end)
 
-function PlayAnim()
+function PlayAnim(lib, anim, r)
     local playerPed = GetPlayerPed(-1)
-    ESX.Streaming.RequestAnimDict('mp_common', function()
-        TaskPlayAnim(playerPed, 'mp_common', 'givetake1_a', 8.0, -8, -1, 0, 0, 0, 0, 0)
+    ESX.Streaming.RequestAnimDict(lib, function()
+        TaskPlayAnim(playerPed, lib, anim, 8.0, -8, -1, r and 49 or 0, 0, 0, 0, 0)
     end)
 end
