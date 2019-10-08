@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS job_cars
     props  LONGTEXT             NULL,
     `stored` BOOLEAN DEFAULT TRUE NULL,
     model TEXT NOT NULL,
+    job TEXT NOT NULL,
     CONSTRAINT id
         UNIQUE (id)
 );

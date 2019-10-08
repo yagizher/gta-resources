@@ -6,9 +6,10 @@ end)
 
 ESX.RegisterServerCallback("disc-jobcars:getJobCars", function(source, cb)
     local player = ESX.GetPlayerFromId(source)
-    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner',
+    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner and job = @job',
             {
-                ['@owner'] = player.identifier
+                ['@owner'] = player.identifier,
+                ['@job'] = player.job.name
             },
             function(results)
                 cb(results)
@@ -17,9 +18,10 @@ end)
 
 ESX.RegisterServerCallback("disc-jobcars:getClaimableCars", function(source, cb)
     local player = ESX.GetPlayerFromId(source)
-    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner and `stored` = false',
+    MySQL.Async.fetchAll('SELECT * FROM job_cars WHERE owner = @owner and `stored` = false and job = @job',
             {
-                ['@owner'] = player.identifier
+                ['@owner'] = player.identifier,
+                ['@job'] = player.job.name
             },
             function(results)
                 cb(results)
@@ -39,12 +41,13 @@ end)
 RegisterServerEvent('disc-jobcars:buyCar')
 AddEventHandler("disc-jobcars:buyCar", function(car, props, plate)
     local player = ESX.GetPlayerFromId(source)
-    MySQL.Async.execute('INSERT INTO job_cars (model, owner, props, `stored`, plate) VALUES (@model, @owner, @props, 1, @plate)',
+    MySQL.Async.execute('INSERT INTO job_cars (model, owner, props, `stored`, plate, job) VALUES (@model, @owner, @props, 1, @plate, @job)',
             {
                 ['@model'] = car.model,
                 ['@owner'] = player.identifier,
                 ['@props'] = json.encode(props),
-                ['@plate'] = plate
+                ['@plate'] = plate,
+                ['@job'] = player.job.name
             }
     )
 end)

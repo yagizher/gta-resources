@@ -13,20 +13,22 @@ Config.Shops = {
         cars = {
             recruit = {
                 { name = 'Police', model = 'police', price = 150000 },
+            },
+            sergeant = {
+                { name = 'Police', model = 'police', price = 150000 },
             }
         }
     },
     {
         name = 'Ambulance',
         job = 'ambulance',
-        coords = vector3(297.7, -602.16, 43.3),
+        coords = vector3(454.6, -1020.4, 28.4),
         heading = 0.0,
         shopCoords = vector3(446.7, -1355.6, 43.5),
         colour = { r = 255, b = 55, g = 55 },
         cars = {
             doctor = {
-                { name = 'Ambulance', model = 'ambu', price = 100000 },
-                { name = 'Volkswagen', model = 'VWA', price = 300000 },
+                { name = 'Ambulance', model = 'reaper', price = 100000 }
             }
         }
     }
