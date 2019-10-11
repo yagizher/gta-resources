@@ -48,6 +48,11 @@ AddEventHandler('disc-base:registerMarker', function(marker)
 
 end)
 
+RegisterNetEvent('disc-base:removeMarker')
+AddEventHandler('disc-base:removeMarker', function(name)
+    markers[name] = nil
+end)
+
 Citizen.CreateThread(function()
 
     while true do
@@ -64,7 +69,7 @@ Citizen.CreateThread(function()
                         ESX.Game.Utils.DrawText3D(v.coords, v.msg, 0.5)
                     end
                 elseif v.type ~= -1 then
-                    DrawMarker(v.type, v.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.size.x, v.size.y, v.size.z, v.colour.r, v.colour.g, v.colour.b, 100, getOrElse(v.bob, false), true, 2, true, false, false, false)
+                    DrawMarker(v.type, v.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.size.x, v.size.y, v.size.z, v.colour.r, v.colour.g, v.colour.b, 100, getOrElse(v.bob, false), true, 2, getOrElse(v.rotate, true), false, false, false)
                 end
             end
             if distance < v.size.x and v.shouldDraw() then
@@ -105,7 +110,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
 
         if CurrentMarker and CurrentMarker.shouldDraw() then
-            if not CurrentMarker.show3D then
+            if not CurrentMarker.show3D and CurrentMarker.msg then
                 ESX.ShowHelpNotification(CurrentMarker.msg)
             end
 
