@@ -23,6 +23,13 @@ AddEventHandler('esx:setJob', function(job)
     ESX.PlayerData.job = job
 end)
 
+RegisterNetEvent('disc-hotwire:forceTurnOver')
+AddEventHandler('disc-hotwire:forceTurnOver', function(vehicle)
+    local plate = GetVehicleNumberPlateText(vehicle)
+    TrackVehicle(plate, vehicle)
+    trackedVehicles[plate].canTurnOver = true
+end)
+
 RegisterNetEvent('disc-hotwire:hotwire')
 AddEventHandler('disc-hotwire:hotwire', function()
     if isActive then
