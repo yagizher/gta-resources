@@ -6,29 +6,29 @@ AddEventHandler(
         "esx_inventoryhud:openDiscPropertyInventory",
         function(data)
             propertyName = data.inventory_name
-            setPropertyInventoryData(data)
-            openPropertyInventory()
+            setDiscPropertyInventoryData(data)
+            openDiscPropertyInventory()
         end
 )
 
 RegisterNetEvent("esx_inventoryhud:refreshDiscPropertyInventory")
 AddEventHandler("esx_inventoryhud:refreshDiscPropertyInventory", function()
-    refreshPropertyInventory()
+    refreshDiscPropertyInventory()
     Citizen.Wait(200)
     loadPlayerInventory()
 end)
 
-function refreshPropertyInventory()
+function refreshDiscPropertyInventory()
     ESX.TriggerServerCallback(
             "disc-property:getPropertyInventoryFor",
             function(data)
-                setPropertyInventoryData(data)
+                setDiscPropertyInventoryData(data)
             end,
             propertyName
     )
 end
 
-function setPropertyInventoryData(data)
+function setDiscPropertyInventoryData(data)
     propertyData = data
     items = {}
 
@@ -110,7 +110,7 @@ function setPropertyInventoryData(data)
     )
 end
 
-function openPropertyInventory()
+function openDiscPropertyInventory()
     loadPlayerInventory()
     isInInventory = true
 
