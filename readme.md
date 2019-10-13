@@ -50,6 +50,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-HotWire](https://github.com/DiscworldZA/gta-resources/tree/master/disc-hotwire)
 - [Disc-Identification](https://github.com/DiscworldZA/gta-resources/tree/master/disc-identification)
 - [Disc-Import](https://github.com/DiscworldZA/gta-resources/tree/master/disc-import)
+- [Disc-InventoryHUD](https://github.com/DiscworldZA/gta-resources/tree/master/disc-inventoryhud)
 - [Disc-JobCars](https://github.com/DiscworldZA/gta-resources/tree/master/disc-jobcars)
 - [Disc-Panic](https://github.com/DiscworldZA/gta-resources/tree/master/disc-panic)
 - [Disc-Property](https://github.com/DiscworldZA/gta-resources/tree/master/disc-property) (BETA)
