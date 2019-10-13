@@ -1,5 +1,5 @@
 # BETA
-This resource is in open beta. Please report all issues to my [Github](https://github.com/DiscworldZA/gta-resources/issues) or on this thread.
+This resource is in open beta. Please report all issues to my [Github](https://github.com/DiscworldZA/gta-resources/issues) or on [Discord](https://discord.gg/S2SckF6)
 
 # Stream
 
