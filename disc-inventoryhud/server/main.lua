@@ -14,6 +14,31 @@ AddEventHandler('disc-inventoryhud:RegisterInventory', function(inventory)
         inventory.slots = 4
     end
 
+    if inventory.getInventory == nil then
+        print('Registering Default getInventory')
+        inventory.getInventory = function(identifier, cb)
+            getInventory(identifier, inventory.name, cb)
+        end
+    end
+
+    if inventory.saveInventory == nil then
+        print('Registering Default saveInventory')
+        inventory.saveInventory = function(identifier, toSave)
+            if table.length(toSave) > 0 then
+                saveInventory(identifier, inventory.name, toSave)
+            else
+                deleteInventory(identifier, inventory.name)
+            end
+        end
+    end
+
+    if inventory.getDisplayInventory == nil then
+        print('Registering Default getDisplayInventory')
+        inventory.getDisplayInventory = function(identifier, cb, source)
+            getDisplayInventory(identifier, inventory.name, cb, source)
+        end
+    end
+
     InvType[inventory.name] = inventory
 end)
 

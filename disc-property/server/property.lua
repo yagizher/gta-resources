@@ -46,9 +46,9 @@ end)
 ESX.RegisterServerCallback('disc-property:searchUsers', function(source, cb, value)
     local value = value
     MySQL.Async.fetchAll(
-            'Select * from users where LOWER(firstname) = @firstname or firstname = @firstname or LOWER(lastname) = @lastname or lastname = @lastname ', {
-                 ['@firstname'] = value,
-                 ['@lastname'] = value
+            'SELECT * FROM users WHERE LOWER(firstname) LIKE LOWER(@firstname) or LOWER(lastname) LIKE LOWER(@lastname) ', {
+                ['@firstname'] = '%' .. value .. '%',
+                ['@lastname'] = '%' .. value .. '%'
             },
             function(results)
                 cb(results)
@@ -56,11 +56,11 @@ ESX.RegisterServerCallback('disc-property:searchUsers', function(source, cb, val
 end)
 
 ESX.RegisterServerCallback('disc-property:getKeyUsers', function(source, cb, property)
-   
+
     MySQL.Async.fetchAll('SELECT disc_property_owners.identifier, disc_property_owners.name as houses,disc_property_owners.owner, users.firstname,users.lastname FROM disc_property_owners INNER JOIN users where disc_property_owners.identifier = users.identifier and disc_property_owners.owner = "0" and disc_property_owners.name = @houses  '
-            , {
+    , {
                 ["@houses"] = property.name
-               
+
             },
             function(results)
                 cb(results)

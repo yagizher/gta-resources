@@ -3,7 +3,6 @@ Citizen.CreateThread(function()
     MySQL.Async.fetchAll('SELECT * FROM items WHERE name LIKE \'WEAPON_%\'', {}, function(results)
         for k, v in pairs(results) do
             ESX.RegisterUsableItem(v.name, function(source)
-                print('Using ' ..v.name)
                 TriggerClientEvent('disc-inventoryhud:useWeapon', source, v.name)
             end)
         end

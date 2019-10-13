@@ -12,6 +12,9 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         BlockWeaponWheelThisFrame()
+        HideHudComponentThisFrame(19)
+        HideHudComponentThisFrame(20)
+        HideHudComponentThisFrame(17)
         for k, v in pairs(keys) do
             if IsDisabledControlJustReleased(0, v) then
                 UseItem(k)

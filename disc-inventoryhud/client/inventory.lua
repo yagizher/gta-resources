@@ -2,22 +2,27 @@ secondInventory = nil
 
 RegisterNUICallback('MoveToEmpty', function(data)
     TriggerServerEvent('disc-inventoryhud:MoveToEmpty', data)
+    TriggerEvent('disc-inventoryhud:MoveToEmpty', data)
 end)
 
 RegisterNUICallback('EmptySplitStack', function(data)
     TriggerServerEvent('disc-inventoryhud:EmptySplitStack', data)
+    TriggerEvent('disc-inventoryhud:EmptySplitStack', data)
 end)
 
 RegisterNUICallback('SplitStack', function(data)
     TriggerServerEvent('disc-inventoryhud:SplitStack', data)
+    TriggerEvent('disc-inventoryhud:SplitStack', data)
 end)
 
 RegisterNUICallback('CombineStack', function(data)
     TriggerServerEvent('disc-inventoryhud:CombineStack', data)
+    TriggerEvent('disc-inventoryhud:CombineStack', data)
 end)
 
 RegisterNUICallback('SwapItems', function(data)
     TriggerServerEvent('disc-inventoryhud:SwapItems', data)
+    TriggerEvent('disc-inventoryhud:SwapItems', data)
 end)
 
 RegisterNUICallback('GiveItem', function(data)
@@ -117,6 +122,11 @@ function closeInventory()
     end
 end
 
+RegisterNetEvent('disc-inventoryhud:openInventory')
+AddEventHandler('disc-inventoryhud:openInventory', function(sI)
+    openInventory(sI)
+end)
+
 function openInventory(_secondInventory)
     isInInventory = true
     refreshPlayerInventory()
@@ -133,4 +143,40 @@ function openInventory(_secondInventory)
         })
     end
     SetNuiFocus(true, true)
+end
+
+RegisterNetEvent("disc-inventoryhud:MoveToEmpty")
+AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
+    playPickupOrDropAnimation(data)
+end)
+
+RegisterNetEvent("disc-inventoryhud:EmptySplitStack")
+AddEventHandler("disc-inventoryhud:EmptySplitStack", function(data)
+    playPickupOrDropAnimation(data)
+end)
+
+RegisterNetEvent("disc-inventoryhud:SplitStack")
+AddEventHandler("disc-inventoryhud:SplitStack", function(data)
+    playPickupOrDropAnimation(data)
+end)
+
+RegisterNetEvent("disc-inventoryhud:CombineStack")
+AddEventHandler("disc-inventoryhud:CombineStack", function(data)
+    playPickupOrDropAnimation(data)
+end)
+
+RegisterNetEvent("disc-inventoryhud:SwapItems")
+AddEventHandler("disc-inventoryhud:SwapItems", function(data)
+    playPickupOrDropAnimation(data)
+end)
+
+function playPickupOrDropAnimation(data)
+    if data.originTier.name == 'drop' or data.destinationTier.name == 'drop' then
+        local playerPed = GetPlayerPed(-1)
+        if not IsEntityPlayingAnim(playerPed, 'random@domestic', 'pickup_low', 3) then
+            ESX.Streaming.RequestAnimDict('random@domestic', function()
+                TaskPlayAnim(playerPed, 'random@domestic', 'pickup_low', 8.0, -8, -1, 48, 0, 0, 0, 0)
+            end)
+        end
+    end
 end
