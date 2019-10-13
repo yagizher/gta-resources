@@ -44,12 +44,11 @@ AddEventHandler('disc-property:TakeKeys', function(property, identifier)
 end)
 
 ESX.RegisterServerCallback('disc-property:searchUsers', function(source, cb, value)
+    local value = value
     MySQL.Async.fetchAll(
-            [[SELECT *
-                FROM users u
-                JOIN disc_property_owners o on u.identifier = o.identifier
-                WHERE (LOWER(u.firstname) = LOWER(@value) OR LOWER(u.lastname) = LOWER(@value)) and o.owner = 0]], {
-                ['@value'] = value
+            'Select * from users where LOWER(firstname) = @firstname or firstname = @firstname or LOWER(lastname) = @lastname or lastname = @lastname ', {
+                 ['@firstname'] = value,
+                 ['@lastname'] = value
             },
             function(results)
                 cb(results)
@@ -57,11 +56,11 @@ ESX.RegisterServerCallback('disc-property:searchUsers', function(source, cb, val
 end)
 
 ESX.RegisterServerCallback('disc-property:getKeyUsers', function(source, cb, property)
-    MySQL.Async.fetchAll(
-            [[SELECT * FROM disc_property_owners o
-            JOIN users u on u.identifier = o.identifier
-            WHERE o.name = @name and o.owner = 0]], {
-                ['@name'] = property.name
+   
+    MySQL.Async.fetchAll('SELECT disc_property_owners.identifier, disc_property_owners.name as houses,disc_property_owners.owner, users.firstname,users.lastname FROM disc_property_owners INNER JOIN users where disc_property_owners.identifier = users.identifier and disc_property_owners.owner = "0" and disc_property_owners.name = @houses  '
+            , {
+                ["@houses"] = property.name
+               
             },
             function(results)
                 cb(results)
