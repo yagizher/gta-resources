@@ -181,13 +181,14 @@ Citizen.CreateThread(function()
             id = property.name,
             name = property.name,
             coords = property.outside.coords,
-            scale = 0.8
+            scale = 0.8,
+            color = 0,
+            sprite = 40
         }
         TriggerEvent('disc-base:registerBlip', blip)
     end
     while true do
-        Citizen.Wait(0)
-        for propertyIndex, property in pairs(propertyData) do
+        for _, property in pairs(propertyData) do
             if property.sold then
                 local blip = {
                     id = property.name,
@@ -202,6 +203,7 @@ Citizen.CreateThread(function()
                 TriggerEvent('disc-base:updateBlip', blip)
             end
         end
+        Citizen.Wait(5000)
     end
 end)
 
