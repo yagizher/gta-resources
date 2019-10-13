@@ -85,7 +85,7 @@ function ShowPlayers()
             label = v.playerName .. ' (' .. v.playerId .. ')', action = function()
                 ESX.UI.Menu.CloseAll()
                 TriggerServerEvent('disc-identification:showIdTo', v.playerId)
-                PlayAnim('mp_common', 'givetake1_a')
+                PlayAnim('mp_common', 'givetake1_a', 48)
             end })
     end
 
