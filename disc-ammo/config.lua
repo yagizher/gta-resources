@@ -35,9 +35,9 @@ Config.Ammo = {
         name = 'disc_ammo_shotgun',
         weapons = {
             `WEAPON_ASSAULTSHOTGUN`,
-			`WEAPON_AUTOSHOTGUN`,
+	    `WEAPON_AUTOSHOTGUN`,
             `WEAPON_BULLPUPSHOTGUN`,
-			`WEAPON_DBSHOTGUN`,
+	    `WEAPON_DBSHOTGUN`,
             `WEAPON_HEAVYSHOTGUN`,
             `WEAPON_PUMPSHOTGUN`,
             `WEAPON_SAWNOFFSHOTGUN`
@@ -48,9 +48,9 @@ Config.Ammo = {
         name = 'disc_ammo_shotgun_large',
         weapons = {
             `WEAPON_ASSAULTSHOTGUN`,
-			`WEAPON_AUTOSHOTGUN`,
+	    `WEAPON_AUTOSHOTGUN`,
             `WEAPON_BULLPUPSHOTGUN`,
-			`WEAPON_DBSHOTGUN`,
+	    `WEAPON_DBSHOTGUN`,
             `WEAPON_HEAVYSHOTGUN`,
             `WEAPON_PUMPSHOTGUN`,
             `WEAPON_SAWNOFFSHOTGUN`
@@ -61,7 +61,7 @@ Config.Ammo = {
         name = 'disc_ammo_smg',
         weapons = {
             `WEAPON_ASSAULTSMG`,
-			`WEAPON_MICROSMG`,
+	    `WEAPON_MICROSMG`,
             `WEAPON_MINISMG`,
             `WEAPON_SMG`
         },
@@ -71,7 +71,7 @@ Config.Ammo = {
         name = 'disc_ammo_smg_large',
         weapons = {
             `WEAPON_ASSAULTSMG`,
-			`WEAPON_MICROSMG`,
+	    `WEAPON_MICROSMG`,
             `WEAPON_MINISMG`,
             `WEAPON_SMG`
         },
@@ -81,11 +81,11 @@ Config.Ammo = {
         name = 'disc_ammo_rifle',
         weapons = {
             `WEAPON_ADVANCEDRIFLE`,
-			`WEAPON_ASSAULTRIFLE`,
+	    `WEAPON_ASSAULTRIFLE`,
             `WEAPON_BULLPUPRIFLE`,
             `WEAPON_CARBINERIFLE`,
-			`WEAPON_SPECIALCARBINE`,
-			`WEAPON_COMPACTRIFLE`
+	    `WEAPON_SPECIALCARBINE`,
+	    `WEAPON_COMPACTRIFLE`
         },
         count = 45
     },
@@ -93,11 +93,11 @@ Config.Ammo = {
         name = 'disc_ammo_rifle_large',
         weapons = {
             `WEAPON_ADVANCEDRIFLE`,
-			`WEAPON_ASSAULTRIFLE`,
+	    `WEAPON_ASSAULTRIFLE`,
             `WEAPON_BULLPUPRIFLE`,
             `WEAPON_CARBINERIFLE`,
-			`WEAPON_SPECIALCARBINE`,
-			`WEAPON_COMPACTRIFLE`
+	    `WEAPON_SPECIALCARBINE`,
+	    `WEAPON_COMPACTRIFLE`
         },
         count = 65
     },
@@ -105,7 +105,7 @@ Config.Ammo = {
         name = 'disc_ammo_snp',
         weapons = {
             `WEAPON_SNIPERRIFLE`,
-			`WEAPON_HEAVYSNIPER`,
+	    `WEAPON_HEAVYSNIPER`,
             `WEAPON_MARKSMANRIFLE`
         },
         count = 10
@@ -114,7 +114,7 @@ Config.Ammo = {
         name = 'disc_ammo_snp_large',
         weapons = {
             `WEAPON_SNIPERRIFLE`,
-			`WEAPON_HEAVYSNIPER`,
+	    `WEAPON_HEAVYSNIPER`,
             `WEAPON_MARKSMANRIFLE`
         },
         count = 15
