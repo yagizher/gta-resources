@@ -4,6 +4,7 @@ local shopSecondaryInventory = {
 }
 
 Citizen.CreateThread(function()
+    Citizen.Wait(0)
     for k, v in pairs(Config.Shops) do
         for val, coords in pairs(v.coords) do
             local marker = {
