@@ -4,7 +4,8 @@ local stashSecondaryInventory = {
 }
 
 Citizen.CreateThread(function()
-    for k, v in pairs(Config.Stash) do
+        Citizen.Wait(0)
+        for k, v in pairs(Config.Stash) do
         local marker = {
             name = k,
             type = v.markerType or 1,
