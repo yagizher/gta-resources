@@ -49,6 +49,20 @@ AddEventHandler('disc-base:openMenu', function(menu)
     end
 end)
 
+RegisterNetEvent('disc-base:registerBlip')
+AddEventHandler('disc-base:registerBlip', function(xblip)
+    for i = 1, xblip, 1 do
+        SetBlipSprite (xblip.coords, blip.sprite)
+        SetBlipDisplay(xblip.coords, 4)
+        SetBlipScale  (xblip.coords, 1.0)
+        SetBlipColour (xblip.coords, xblip.colour)
+        SetBlipAsShortRange(xblip.coords, true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString(xblip.name)
+        EndTextCommandSetBlipName(xblip.coords)
+    end
+end)
+
 function OpenDefaultMenu(menu)
 
     local emptyMenu = { { label = 'Empty Menu', action = nil } }
