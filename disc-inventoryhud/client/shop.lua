@@ -4,6 +4,22 @@ local shopSecondaryInventory = {
 }
 
 Citizen.CreateThread(function()
+	for k,v in pairs(Config.Shops) do
+		for i = 1, #v.coords, 1 do
+			local blip = AddBlipForCoord(v.coords[i].x, v.coords[i].y, v.coords[i].z)
+			SetBlipSprite (blip, 52)
+			SetBlipDisplay(blip, 4)
+			SetBlipScale  (blip, 1.0)
+			SetBlipColour (blip, 2)
+			SetBlipAsShortRange(blip, true)
+			BeginTextCommandSetBlipName("STRING")
+			AddTextComponentString(k)
+			EndTextCommandSetBlipName(blip)
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
     for k, v in pairs(Config.Shops) do
         for val, coords in pairs(v.coords) do
             local marker = {
