@@ -32,7 +32,7 @@ end)
 RegisterServerEvent("disc-inventoryhud:MoveToEmpty")
 AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
     local source = source
-    if data.originOwner == data.destinationOwner then
+    if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.getInventory(data.originOwner, function(inventory)
             inventory[tostring(data.destinationSlot)] = inventory[tostring(data.originSlot)]
@@ -104,7 +104,7 @@ AddEventHandler("disc-inventoryhud:SwapItems", function(data)
         return
     end
 
-    if data.originOwner == data.destinationOwner then
+    if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.getInventory(data.originOwner, function(inventory)
             local tempItem = inventory[tostring(data.originSlot)]
@@ -169,7 +169,7 @@ AddEventHandler("disc-inventoryhud:CombineStack", function(data)
         return
     end
 
-    if data.originOwner == data.destinationOwner then
+    if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.getInventory(data.originOwner, function(inventory)
             inventory[tostring(data.originSlot)] = nil
@@ -225,7 +225,7 @@ AddEventHandler("disc-inventoryhud:EmptySplitStack", function(data)
     end
 
     local source = source
-    if data.originOwner == data.destinationOwner then
+    if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.getInventory(data.originOwner, function(inventory)
             inventory[tostring(data.originSlot)].count = inventory[tostring(data.originSlot)].count - data.moveQty
@@ -289,7 +289,7 @@ AddEventHandler("disc-inventoryhud:SplitStack", function(data)
         return
     end
 
-    if data.originOwner == data.destinationOwner then
+    if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.getInventory(data.originOwner, function(inventory)
             inventory[tostring(data.originSlot)].count = inventory[tostring(data.originSlot)].count - data.moveQty
@@ -469,6 +469,7 @@ ESX.RegisterServerCallback('disc-inventoryhud:getSecondaryInventory', function(s
 end)
 
 function saveInventory(identifier, type, data)
+    print('Type ' .. tostring(type))
     MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
         ['@owner'] = identifier,
         ['@type'] = type,

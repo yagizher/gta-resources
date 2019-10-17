@@ -50,9 +50,7 @@ files {
     'html/js/popper.min.js',
 
     -- IMAGES
-    'html/img/bullet.png',
-    'html/img/cash.png',
-    'html/img/bank.png',
+    'html/img/*.png',
     'html/success.wav',
     'html/fail.wav',
     -- ICONS

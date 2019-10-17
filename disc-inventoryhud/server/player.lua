@@ -37,6 +37,7 @@ function getPlayerDisplayInventory(identifier, cb)
             inventory = itemsObject,
             cash = player.getMoney(),
             bank = player.getAccount('bank').money,
+            black_money = player.getAccount('black_money').money,
         }
         cb(inv)
     end)
@@ -82,6 +83,9 @@ end)
 
 AddEventHandler('esx:onRemoveInventoryItem', function(source, item, count)
     local player = ESX.GetPlayerFromId(source)
+    TriggerClientEvent('disc-inventoryhud:showItemUse', source, {
+        { id = item.name, label = item.label, qty = count, msg = 'Item Removed' }
+    })
     getInventory(player.identifier, 'player', function(inventory)
         if impendingRemovals[source] then
             print('Looking at source' .. source)
@@ -111,6 +115,9 @@ end)
 
 AddEventHandler('esx:onAddInventoryItem', function(source, esxItem, count)
     local player = ESX.GetPlayerFromId(source)
+    TriggerClientEvent('disc-inventoryhud:showItemUse', source, {
+        { id = esxItem.name, label = esxItem.label, qty = count, msg = 'Item Added' }
+    })
     getInventory(player.identifier, 'player', function(inventory)
         if impendingAdditions[source] then
             for k, addingItem in pairs(impendingAdditions[source]) do

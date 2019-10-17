@@ -31,5 +31,23 @@ Config.Stash = {
         markerType = 2,
         markerColour = { r = 255, g = 255, b = 255 },
         msg = 'Open Stash ~INPUT_CONTEXT~'
+    },
+    ['Police Stash'] = {
+        coords = vector3(456.76, -981.05, 30.69),
+        size = vector3(1.0, 1.0, 1.0),
+        job = 'police',
+        markerType = 2,
+        markerColour = { r = 255, g = 255, b = 255 },
+        msg = 'Open Stash ~INPUT_CONTEXT~'
     }
+}
+
+Config.Steal = {
+    black_money = true,
+    cash = true
+}
+
+Config.Seize = {
+    black_money = true,
+    cash = true
 }

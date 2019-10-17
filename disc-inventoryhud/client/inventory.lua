@@ -88,6 +88,7 @@ function refreshPlayerInventory()
                   money = {
                       cash = data.cash,
                       bank = data.bank,
+                      black_money = data.black_money
                   }
                 }
         )
@@ -99,6 +100,8 @@ function refreshPlayerInventory()
 end
 
 function refreshSecondaryInventory()
+    print('secondInventory.type ' .. secondInventory.type)
+    print('secondInventory.owner ' .. secondInventory.owner)
     ESX.TriggerServerCallback('disc-inventoryhud:getSecondaryInventory', function(data)
         SendNUIMessage(
                 { action = "setSecondInventoryItems",
@@ -143,6 +146,16 @@ function openInventory(_secondInventory)
             action = "display",
             type = 'secondary'
         })
+        if _secondInventory.seize then
+            SendNUIMessage({
+                action = "showSeize"
+            })
+        end
+        if _secondInventory.steal then
+            SendNUIMessage({
+                action = "showSteal"
+            })
+        end
     end
     SetNuiFocus(true, true)
 end
