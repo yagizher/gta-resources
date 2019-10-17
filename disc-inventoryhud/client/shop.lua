@@ -4,6 +4,22 @@ local shopSecondaryInventory = {
 }
 
 Citizen.CreateThread(function()
+    for k, v in pairs(Config.Shops) do
+        if v.enableBlip then
+            for val, coords in pairs(v.coords) do
+                local blip = {
+                    name = k,
+                    coords = coords,
+                    colour = v.blipColour or 2,
+                    sprite = v.blipSprite or 52
+                }
+                TriggerEvent('disc-base:registerBlip', blip)
+            end
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
     Citizen.Wait(0)
     for k, v in pairs(Config.Shops) do
         for val, coords in pairs(v.coords) do

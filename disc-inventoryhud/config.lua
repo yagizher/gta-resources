@@ -19,6 +19,7 @@ Config.Shops = {
         markerType = 1,
         markerColour = { r = 255, g = 255, b = 255 },
         msg = 'Open Shop ~INPUT_CONTEXT~',
+        enableBlip = true,
         job = 'all'
     }
 }
