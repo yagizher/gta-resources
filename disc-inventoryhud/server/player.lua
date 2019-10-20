@@ -47,7 +47,7 @@ function ensurePlayerInventory(player)
     getInventory(player.identifier, 'player', function(result)
         local inventory = {}
         for _, esxItem in pairs(player.getInventory()) do
-            print('Adding ' .. esxItem.name .. ' ' .. esxItem.count)
+            print('Adding ' .. esxItem.name .. ' ' .. esxItem.count .. ' ' .. esxItem.limit)
             local item = createItem(esxItem.name, esxItem.count)
             addToInventory(item, 'player', inventory, esxItem.limit)
         end
@@ -59,6 +59,18 @@ function ensurePlayerInventory(player)
         end
     end)
 end
+
+Citizen.CreateThread(function()
+    while true do
+        for k, v in impendingRemovals do
+            impendingRemovals[k] = {}
+        end
+        for k, v in impendingAdditions do
+            impendingAdditions[k] = {}
+        end
+        Citizen.Wait(100)
+    end
+end)
 
 RegisterServerEvent('disc-inventoryhud:notifyImpendingRemoval')
 AddEventHandler('disc-inventoryhud:notifyImpendingRemoval', function(item, count, playerSource)
@@ -88,16 +100,11 @@ AddEventHandler('esx:onRemoveInventoryItem', function(source, item, count)
     })
     getInventory(player.identifier, 'player', function(inventory)
         if impendingRemovals[source] then
-            print('Looking at source' .. source)
             for k, removingItem in pairs(impendingRemovals[source]) do
-                print('Looking at ' .. removingItem.id)
                 if removingItem.id == item.name and removingItem.count == count then
-                    print('Found')
                     if removingItem.block then
-                        print('Blocked Removal')
                         impendingRemovals[source][k] = nil
                     else
-                        print('Non Blocked Removal')
                         removeItemFromSlot(inventory, removingItem.slot, count)
                         impendingRemovals[source][k] = nil
                         saveInventory(player.identifier, 'player', inventory)
@@ -122,16 +129,13 @@ AddEventHandler('esx:onAddInventoryItem', function(source, esxItem, count)
         if impendingAdditions[source] then
             for k, addingItem in pairs(impendingAdditions[source]) do
                 if addingItem.id == esxItem.name and addingItem.count == count then
-                    print('Found')
                     if addingItem.block then
-                        print('Blocked Addition')
                         impendingAdditions[source][k] = nil
                         return
                     end
                 end
             end
         end
-        print('Running Default')
         local item = createItem(esxItem.name, count)
         addToInventory(item, 'player', inventory, esxItem.limit)
         saveInventory(player.identifier, 'player', inventory)

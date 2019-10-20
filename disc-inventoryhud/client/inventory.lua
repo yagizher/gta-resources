@@ -100,8 +100,6 @@ function refreshPlayerInventory()
 end
 
 function refreshSecondaryInventory()
-    print('secondInventory.type ' .. secondInventory.type)
-    print('secondInventory.owner ' .. secondInventory.owner)
     ESX.TriggerServerCallback('disc-inventoryhud:getSecondaryInventory', function(data)
         SendNUIMessage(
                 { action = "setSecondInventoryItems",
@@ -163,26 +161,31 @@ end
 RegisterNetEvent("disc-inventoryhud:MoveToEmpty")
 AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
     playPickupOrDropAnimation(data)
+    playStealOrSearchAnimation(data)
 end)
 
 RegisterNetEvent("disc-inventoryhud:EmptySplitStack")
 AddEventHandler("disc-inventoryhud:EmptySplitStack", function(data)
     playPickupOrDropAnimation(data)
+    playStealOrSearchAnimation(data)
 end)
 
 RegisterNetEvent("disc-inventoryhud:SplitStack")
 AddEventHandler("disc-inventoryhud:SplitStack", function(data)
     playPickupOrDropAnimation(data)
+    playStealOrSearchAnimation(data)
 end)
 
 RegisterNetEvent("disc-inventoryhud:CombineStack")
 AddEventHandler("disc-inventoryhud:CombineStack", function(data)
     playPickupOrDropAnimation(data)
+    playStealOrSearchAnimation(data)
 end)
 
 RegisterNetEvent("disc-inventoryhud:SwapItems")
 AddEventHandler("disc-inventoryhud:SwapItems", function(data)
     playPickupOrDropAnimation(data)
+    playStealOrSearchAnimation(data)
 end)
 
 function playPickupOrDropAnimation(data)
@@ -191,6 +194,17 @@ function playPickupOrDropAnimation(data)
         if not IsEntityPlayingAnim(playerPed, 'random@domestic', 'pickup_low', 3) then
             ESX.Streaming.RequestAnimDict('random@domestic', function()
                 TaskPlayAnim(playerPed, 'random@domestic', 'pickup_low', 8.0, -8, -1, 48, 0, 0, 0, 0)
+            end)
+        end
+    end
+end
+
+function playStealOrSearchAnimation(data)
+    if data.originTier.name == 'player' and data.destinationTier.name == 'player' then
+        local playerPed = GetPlayerPed(-1)
+        if not IsEntityPlayingAnim(playerPed, 'random@mugging4', 'agitated_loop_a', 3) then
+            ESX.Streaming.RequestAnimDict('random@mugging4', function()
+                TaskPlayAnim(playerPed, 'random@mugging4', 'agitated_loop_a', 8.0, -8, -1, 48, 0, 0, 0, 0)
             end)
         end
     end

@@ -73,6 +73,9 @@ Citizen.CreateThread(function()
             local plate = GetVehicleNumberPlateText(vehicle)
             if plate ~= nil then
                 TrackVehicle(plate, vehicle)
+                if GetIsVehicleEngineRunning(vehicle) then
+                    TriggerEvent('disc-hotwire:forceTurnOver', vehicle)
+                end
             end
         end
         --Test In Vehicles (Helps with Spawning Vehicles)

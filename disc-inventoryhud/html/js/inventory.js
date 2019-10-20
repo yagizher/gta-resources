@@ -282,6 +282,7 @@ $(document).ready(function () {
                 InventoryLog('Using ' + itemData.label);
                 $.post("http://disc-inventoryhud/UseItem", JSON.stringify({
                     owner: $(draggingItem).parent().data('invOwner'),
+                    slot: $(draggingItem).data('slot'),
                     item: itemData
                 }), function (closeUi) {
                     if (closeUi) {

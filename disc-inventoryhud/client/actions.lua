@@ -1,4 +1,7 @@
 RegisterNUICallback('UseItem', function(data)
+    if isWeapon(data.item.id) then
+        currentWeaponSlot = data.slot
+    end
     TriggerServerEvent('disc-inventoryhud:notifyImpendingRemoval', data.item, 1)
     TriggerServerEvent("esx:useItem", data.item.id)
     TriggerEvent('disc-inventoryhud:refreshInventory')
@@ -41,6 +44,9 @@ end)
 function UseItem(slot)
     ESX.TriggerServerCallback('disc-inventoryhud:UseItemFromSlot', function(item)
         if item then
+            if isWeapon(item.id) then
+                currentWeaponSlot = slot
+            end
             TriggerServerEvent('disc-inventoryhud:notifyImpendingRemoval', item, 1)
             TriggerServerEvent("esx:useItem", item.id)
             item.msg = 'Item Used'

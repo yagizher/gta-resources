@@ -32,6 +32,7 @@ end)
 RegisterServerEvent("disc-inventoryhud:MoveToEmpty")
 AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
     local source = source
+    handleWeaponRemoval(data, source)
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.getInventory(data.originOwner, function(inventory)
@@ -90,6 +91,7 @@ RegisterServerEvent("disc-inventoryhud:SwapItems")
 AddEventHandler("disc-inventoryhud:SwapItems", function(data)
     local source = source
 
+    handleWeaponRemoval(data, source)
     if data.originTier.name == 'shop' then
         print('Attempt to Swap in Store')
         TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
@@ -153,6 +155,7 @@ RegisterServerEvent("disc-inventoryhud:CombineStack")
 AddEventHandler("disc-inventoryhud:CombineStack", function(data)
     local source = source
 
+    handleWeaponRemoval(data, source)
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.originQty then
@@ -208,6 +211,7 @@ end)
 RegisterServerEvent("disc-inventoryhud:EmptySplitStack")
 AddEventHandler("disc-inventoryhud:EmptySplitStack", function(data)
 
+    handleWeaponRemoval(data, source)
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
         if player.getMoney() >= data.originItem.price * data.moveQty then
@@ -272,6 +276,7 @@ end)
 RegisterServerEvent("disc-inventoryhud:SplitStack")
 AddEventHandler("disc-inventoryhud:SplitStack", function(data)
     local source = source
+    handleWeaponRemoval(data, source)
 
     if data.originTier.name == 'shop' then
         local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
@@ -327,6 +332,7 @@ end)
 
 RegisterServerEvent("disc-inventoryhud:GiveItem")
 AddEventHandler("disc-inventoryhud:GiveItem", function(data)
+    handleWeaponRemoval(data, source)
     local targetPlayer = ESX.GetPlayerFromId(data.target)
     targetPlayer.addInventoryItem(data.item.id, data.count)
     local sourcePlayer = ESX.GetPlayerFromId(source)
@@ -354,6 +360,7 @@ function debugData(data)
 end
 
 function removeItemFromSlot(inventory, slot, count)
+    print(inventory[tostring(slot)])
     if inventory[tostring(slot)].count - count > 0 then
         inventory[tostring(slot)].count = inventory[tostring(slot)].count - count
         return
@@ -419,6 +426,8 @@ end
 function AddToEmpty(item, type, inventory, count, max)
     for i = 1, InvType[type].slots, 1 do
         if inventory[tostring(i)] == nil then
+            print(count)
+            print(max)
             if count > max then
                 inventory[tostring(i)] = item
                 inventory[tostring(i)].count = max
@@ -533,4 +542,16 @@ function getInventory(identifier, type, cb)
         cb(json.decode(result[1].data))
         TriggerEvent('disc-inventoryhud:gotInventory', identifier, type, result[1].data)
     end)
+end
+
+function handleWeaponRemoval(data, source)
+    if isWeapon(data.originItem.id) then
+        if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
+            if data.destinationSlot > 5 then
+                TriggerClientEvent('disc-inventoryhud:removeCurrentWeapon', source)
+            end
+        else
+            TriggerClientEvent('disc-inventoryhud:removeCurrentWeapon', source)
+        end
+    end
 end
