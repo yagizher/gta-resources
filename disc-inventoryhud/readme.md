@@ -1,3 +1,9 @@
+# ESX Compatibility
+
+This mod has not been updated to support the WEIGHT update by ESX. It also won't for some time. Please use the previous version of ESX.
+
+Reasoning for this is, alot of mods has not been updated and if I force mine to update no one can use mine and their old scripts.
+
 # BETA
 This resource is in open beta. Please report all issues to my [Github](https://github.com/DiscworldZA/gta-resources/issues) or on [Discord](https://discord.gg/S2SckF6)
 
