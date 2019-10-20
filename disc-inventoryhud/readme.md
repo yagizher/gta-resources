@@ -1,6 +1,6 @@
 # ESX Compatibility
 
-This mod has not been updated to support the WEIGHT update by ESX. It also won't for some time. Please use the previous version of ESX.
+This mod has not been updated to support the WEIGHT update by ESX. It also won't for some time. Please use this previous version of [ESX](https://github.com/ESX-Org/es_extended/tree/130df3f18f0e248623060a87399ed710022d715a).
 
 Reasoning for this is, alot of mods has not been updated and if I force mine to update no one can use mine and their old scripts.
 
