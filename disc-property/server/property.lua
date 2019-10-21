@@ -15,7 +15,7 @@ ESX.RegisterServerCallback('disc-property:buyProperty', function(source, cb, pro
 	MySQL.Async.fetchAll('SELECT price FROM disc_property WHERE name = @name', {
         ['@name'] = property.name
     }, function(result)
-        if player.getMoney() >= result[1].price * Config.BuyPercentage then
+        if player.getMoney() >= result[1].price * Config.BuyPercentage and Config.BuyPercentage >= 1 then
         MySQL.Async.execute('UPDATE disc_property SET sold = 1 WHERE name = @name', {
             ['@name'] = property.name
         })
@@ -25,9 +25,9 @@ ESX.RegisterServerCallback('disc-property:buyProperty', function(source, cb, pro
         })
         player.removeMoney(property.price * Config.BuyPercentage)
         cb(true)
-		else
-			cb(false)
-		end
+	else
+		cb(false)
+	end
     end)
 end)
 
