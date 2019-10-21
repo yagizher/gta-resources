@@ -62,10 +62,10 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        for k, v in impendingRemovals do
+        for k, v in pairs(impendingRemovals) do
             impendingRemovals[k] = {}
         end
-        for k, v in impendingAdditions do
+        for k, v in pairs(impendingAdditions) do
             impendingAdditions[k] = {}
         end
         Citizen.Wait(100)
