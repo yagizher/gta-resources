@@ -36,7 +36,7 @@ AddEventHandler('disc-inventoryhud:steal', function()
         if IsEntityPlayingAnim(searchPlayerPed, 'random@mugging3', 'handsup_standing_base', 3) then
             ESX.TriggerServerCallback('disc-inventoryhud:getIdentifier', function(identifier)
                 secondaryStealInventory.owner = identifier
-                openInventory(secondarySearchInventory)
+                openInventory(secondaryStealInventory)
             end, GetPlayerServerId(closestPlayer))
         end
     end
