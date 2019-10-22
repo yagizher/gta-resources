@@ -163,23 +163,43 @@ Citizen.CreateThread(function()
     local currLevel = 1
     while true do
         Citizen.Wait(0)
-        if IsControlJustReleased(1, 74) and IsControlPressed(1, 21) then
-            currLevel = (currLevel + 1) % 3
-            if currLevel == 0 then
-                SendNUIMessage({
-                    action = 'set-voice',
-                    value = 66
-                })
-            elseif currLevel == 1 then
-                SendNUIMessage({
-                    action = 'set-voice',
-                    value = 100
-                })
-            elseif currLevel == 2 then
-                SendNUIMessage({
-                    action = 'set-voice',
-                    value = 33
-                })
+        if IsControlJustReleased(1, 20) then
+            if isTokovoip == true then
+                currLevel =  exports.tokovoip_script:getPlayerData(GetPlayerServerId(PlayerId()), 'voip:mode')
+                if currLevel == 1 then
+                    SendNUIMessage({
+                        action = 'set-voice',
+                        value = 66
+                    })
+                elseif currLevel == 2 then
+                    SendNUIMessage({
+                        action = 'set-voice',
+                        value = 33
+                    })
+                elseif currLevel == 3 then
+                    SendNUIMessage({
+                        action = 'set-voice',
+                        value = 100
+                    })
+                end
+            else
+                currLevel = (currLevel + 1) % 3
+                if currLevel == 0 then
+                    SendNUIMessage({
+                        action = 'set-voice',
+                        value = 66
+                    })
+                elseif currLevel == 1 then
+                    SendNUIMessage({
+                        action = 'set-voice',
+                        value = 100
+                    })
+                elseif currLevel == 2 then
+                    SendNUIMessage({
+                        action = 'set-voice',
+                        value = 33
+                    })
+                end
             end
         end
     end
