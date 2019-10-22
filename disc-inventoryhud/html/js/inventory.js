@@ -1,15 +1,15 @@
 var type = "normal";
 var firstTier = 1;
 var firstUsed = 0;
-var firstItems = new Array();
+var firstItems = [];
 var secondTier = 1;
 var secondUsed = 0;
-var secondItems = new Array();
+var secondItems = [];
 var errorHighlightTimer = null;
 var originOwner = false;
 var destinationOwner = false;
 
-var dragging = false
+var dragging = false;
 var origDrag = null;
 var draggingItem = null;
 var givingItem = null;
@@ -162,7 +162,6 @@ function setupPlayerSlots() {
         $('#inventoryOne').find('.slot-template').data('inventory', 'inventoryOne');
         $('#inventoryOne').find('.slot-template').removeClass('slot-template');
     }
-    ;
 }
 
 function setupSecondarySlots(owner) {
@@ -222,8 +221,6 @@ $(document).ready(function () {
         if (itemData == null && !dragging) {
             return
         }
-        ;
-
         if (dragging) {
             if ($(this).data('slot') !== undefined && $(origDrag).data('slot') !== $(this).data('slot') || $(this).data('slot') !== undefined && $(origDrag).data('invOwner') !== $(this).parent().data('invOwner')) {
                 if ($(this).find('.item').data('item') !== undefined) {
@@ -238,7 +235,7 @@ $(document).ready(function () {
         } else {
             if (itemData !== undefined) {
                 // Store a reference because JS is retarded
-                origDrag = $(this)
+                origDrag = $(this);
                 AddItemToSlot(origDrag, itemData);
                 $(origDrag).data('slot', $(this).data('slot'));
                 $(origDrag).data('invOwner', $(this).parent().data('invOwner'));
@@ -273,7 +270,7 @@ $(document).ready(function () {
 
     $('.close-ui').click(function (event, ui) {
         closeInventory();
-    })
+    });
 
     $('#use').click(function (event, ui) {
         if (dragging) {
@@ -486,7 +483,7 @@ $('.popup-body').on('click', '.cashchoice', function () {
 
 
 function AttemptDropInEmptySlot(origin, destination, moveQty) {
-    var result = ErrorCheck(origin, destination, moveQty)
+    var result = ErrorCheck(origin, destination, moveQty);
     if (result === -1) {
         $('.slot.error').removeClass('error');
         var item = origin.find('.item').data('item');
@@ -592,7 +589,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                 }));
             } else {
                 if (destinationItem.qty === destinationItem.max) {
-                    destinationItem.slot = origin.data('slot')
+                    destinationItem.slot = origin.data('slot');
                     originItem.slot = destination.data('slot');
 
                     ResetSlotToEmpty(origin);
@@ -605,8 +602,12 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                     $.post("http://disc-inventoryhud/SwapItems", JSON.stringify({
                         originOwner: origin.parent().data('invOwner'),
                         originItem: origin.find('.item').data('item'),
+                        originSlot: origin.data('slot'),
+                        originTier: origin.parent().data('invTier'),
                         destinationOwner: destination.parent().data('invOwner'),
                         destinationItem: destination.find('.item').data('item'),
+                        destinationSlot: destination.data('slot'),
+                        destinationTier: destination.parent().data('invTier'),
                     }));
                 } else if (originItem.qty + destinationItem.qty <= destinationItem.max) {
                     ResetSlotToEmpty(origin);
@@ -653,7 +654,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
             }
 
         } else {
-            destinationItem.slot = origin.data('slot')
+            destinationItem.slot = origin.data('slot');
             originItem.slot = destination.data('slot');
 
             ResetSlotToEmpty(origin);
@@ -768,7 +769,7 @@ $('.popup-body').on('click', '.player', function () {
 
     let target = $(this).data('id');
     let action = $(this).data('action');
-    let count = parseInt($("#count").val())
+    let count = parseInt($("#count").val());
     if (action === "nearPlayersGive") {
 
         if (givingItem != null) {
