@@ -49,6 +49,7 @@ It is the same concept that [ESX](https://github.com/ESX-Org/es_extended) works 
 - [Disc-DrugSales](https://github.com/DiscworldZA/gta-resources/tree/master/disc-drugsales)
 - [Disc-GcPhone](https://github.com/DiscworldZA/gta-resources/tree/master/disc-gcphone) (add-on to [gcphone](https://github.com/N3MTV/gcphone))
 - [Disc-HotWire](https://github.com/DiscworldZA/gta-resources/tree/master/disc-hotwire)
+- [Disc-HUD](https://github.com/DiscworldZA/gta-resources/tree/master/disc-hud)
 - [Disc-Identification](https://github.com/DiscworldZA/gta-resources/tree/master/disc-identification)
 - [Disc-Import](https://github.com/DiscworldZA/gta-resources/tree/master/disc-import)
 - [Disc-InventoryHUD](https://github.com/DiscworldZA/gta-resources/tree/master/disc-inventoryhud)
