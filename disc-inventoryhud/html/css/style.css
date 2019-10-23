@@ -92,6 +92,11 @@ body .ui .inventory .inventory-wrapper #inventoryOne, body .ui .inventory .inven
   grid-auto-rows: 20%;
 }
 
+body .ui .inventory .inventory-wrapper #inventoryOne.disabled, body .ui .inventory .inventory-wrapper #inventoryTwo.disabled {
+  filter: brightness(0.25);
+  transition: filter ease-in 0.15s;
+}
+
 body .ui .inventory .inventory-wrapper .inv-label {
   font-size: 25px;
   width: 100%;

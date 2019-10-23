@@ -1,28 +1,33 @@
 secondInventory = nil
 
-RegisterNUICallback('MoveToEmpty', function(data)
+RegisterNUICallback('MoveToEmpty', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:MoveToEmpty', data)
     TriggerEvent('disc-inventoryhud:MoveToEmpty', data)
+    cb('OK')
 end)
 
-RegisterNUICallback('EmptySplitStack', function(data)
+RegisterNUICallback('EmptySplitStack', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:EmptySplitStack', data)
     TriggerEvent('disc-inventoryhud:EmptySplitStack', data)
+    cb('OK')
 end)
 
-RegisterNUICallback('SplitStack', function(data)
+RegisterNUICallback('SplitStack', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:SplitStack', data)
     TriggerEvent('disc-inventoryhud:SplitStack', data)
+    cb('OK')
 end)
 
-RegisterNUICallback('CombineStack', function(data)
+RegisterNUICallback('CombineStack', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:CombineStack', data)
     TriggerEvent('disc-inventoryhud:CombineStack', data)
+    cb('OK')
 end)
 
-RegisterNUICallback('SwapItems', function(data)
+RegisterNUICallback('SwapItems', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:SwapItems', data)
     TriggerEvent('disc-inventoryhud:SwapItems', data)
+    cb('OK')
 end)
 
 RegisterNUICallback('GiveItem', function(data, cb)
@@ -76,6 +81,10 @@ AddEventHandler('disc-inventoryhud:refreshInventory', function()
     if secondInventory ~= nil then
         refreshSecondaryInventory()
     end
+    Citizen.Wait(100)
+    SendNUIMessage({
+        action = "unlock"
+    })
 end)
 
 function refreshPlayerInventory()

@@ -8,6 +8,7 @@ var secondItems = [];
 var errorHighlightTimer = null;
 var originOwner = false;
 var destinationOwner = false;
+var locked = false
 
 var dragging = false;
 var origDrag = null;
@@ -75,6 +76,10 @@ window.addEventListener("message", function (event) {
         ActionBar(event.data.items);
     } else if (event.data.action == 'actionbarUsed') {
         ActionBarUsed(event.data.index);
+    } else if (event.data.action == 'unlock') {
+        UnlockInventory()
+    } else if (event.data.action == 'lock') {
+        LockInventory()
     }
 
 });
@@ -217,6 +222,10 @@ $(document).ready(function () {
     $('#inventoryTwo').parent().hide();
 
     $('#inventoryOne, #inventoryTwo').on('click', '.slot', function (e) {
+        if (locked) {
+            return
+        }
+
         itemData = $(this).find('.item').data('item');
         if (itemData == null && !dragging) {
             return
@@ -276,16 +285,15 @@ $(document).ready(function () {
         if (dragging) {
             itemData = $(draggingItem).find('.item').data("item");
             if (itemData.usable) {
-                InventoryLog('Using ' + itemData.label);
+                InventoryLog('Using ' + itemData.label + ' and Close ' + itemData.closeUi);
                 $.post("http://disc-inventoryhud/UseItem", JSON.stringify({
                     owner: $(draggingItem).parent().data('invOwner'),
                     slot: $(draggingItem).data('slot'),
                     item: itemData
-                }), function (closeUi) {
-                    if (closeUi) {
-                        closeInventory();
-                    }
-                });
+                }));
+                if (itemData.closeUi) {
+                    closeInventory();
+                }
                 successAudio.play();
             } else {
                 failAudio.play();
@@ -502,7 +510,7 @@ function AttemptDropInEmptySlot(origin, destination, moveQty) {
             AddItemToSlot(destination, item);
             successAudio.play();
 
-            InventoryLog('Moving ' + item.qty + ' ' + item.label + ' ' + ' From ' + origin.data('invOwner') + ' Slot ' + origin.data('slot') + ' To ' + destination.parent().data('invOwner') + ' Slot ' + item.slot);
+            InventoryLog('1Moving ' + item.qty + ' ' + item.label + ' ' + ' From ' + origin.data('invOwner') + ' Slot ' + origin.data('slot') + ' To ' + destination.parent().data('invOwner') + ' Slot ' + item.slot);
             $.post("http://disc-inventoryhud/MoveToEmpty", JSON.stringify({
                 originOwner: origin.parent().data('invOwner'),
                 originSlot: origin.data('slot'),
@@ -514,6 +522,7 @@ function AttemptDropInEmptySlot(origin, destination, moveQty) {
                 destinationTier: destination.parent().data('invTier'),
                 destinationItem: destination.find('.item').data('item'),
             }));
+            LockInventory();
         } else {
             var item2 = Object.create(item);
             item2.slot = destination.data('slot');
@@ -535,6 +544,7 @@ function AttemptDropInEmptySlot(origin, destination, moveQty) {
                 destinationItem: destination.find('.item').data('item'),
                 moveQty: moveQty,
             }));
+            LockInventory();
         }
     } else {
         failAudio.play();
@@ -587,6 +597,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                     destinationTier: destination.parent().data('invTier'),
                     moveQty: moveQty,
                 }));
+                LockInventory();
             } else {
                 if (destinationItem.qty === destinationItem.max) {
                     destinationItem.slot = origin.data('slot');
@@ -609,6 +620,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                         destinationSlot: destination.data('slot'),
                         destinationTier: destination.parent().data('invTier'),
                     }));
+                    LockInventory();
                 } else if (originItem.qty + destinationItem.qty <= destinationItem.max) {
                     ResetSlotToEmpty(origin);
                     destinationItem.qty += originItem.qty;
@@ -628,6 +640,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                         destinationTier: destination.parent().data('invTier'),
                         destinationItem: destinationItem,
                     }));
+                    LockInventory();
                 } else if (destinationItem.qty < destinationItem.max) {
                     var newOrigQty = destinationItem.max - destinationItem.qty;
                     originItem.qty -= newOrigQty;
@@ -648,6 +661,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                         destinationSlot: destinationItem.slot,
                         destinationTier: destination.parent().data('invTier'),
                     }));
+                    LockInventory();
                 } else {
                     DisplayMoveError(origin, destination, "Stack At Max Items");
                 }
@@ -675,6 +689,7 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
                 destinationSlot: destination.data('slot'),
                 destinationTier: destination.parent().data('invTier'),
             }));
+            LockInventory();
         }
 
         let originInv = origin.parent().data('invOwner');
@@ -808,14 +823,15 @@ $('.popup-body').on('click', '.player', function () {
 });
 
 var alertTimer = null;
+
 function ItemUsed(alerts) {
     clearTimeout(alertTimer);
-    $('#use-alert').hide('slide', { direction: 'left' }, 500, function() {
+    $('#use-alert').hide('slide', {direction: 'left'}, 500, function () {
         $('#use-alert .slot').remove();
 
-        $.each(alerts, function(index, data) {
+        $.each(alerts, function (index, data) {
             $('#use-alert').append(`<div class="slot alert-${index}""><div class="item"><div class="item-count">${data.qty}</div><div class="item-name">${data.item.label}</div></div><div class="alert-text">${data.message}</div></div>`)
-                .ready(function() {
+                .ready(function () {
                     $(`.alert-${index}`).find('.item').css('background-image', 'url(\'img/items/' + data.item.itemId + '.png\')');
                     if (data.item.slot <= 5) {
                         $(`.alert-${index}`).find('.item').append(`<div class="item-keybind">${data.item.slot}</div>`)
@@ -824,10 +840,10 @@ function ItemUsed(alerts) {
         });
     });
 
-    $('#use-alert').show('slide', { direction: 'left' }, 500, function() {
-        alertTimer = setTimeout(function() {
+    $('#use-alert').show('slide', {direction: 'left'}, 500, function () {
+        alertTimer = setTimeout(function () {
             $('#use-alert .slot').addClass('expired');
-            $('#use-alert').hide('slide', { direction: 'left' }, 500, function() {
+            $('#use-alert').hide('slide', {direction: 'left'}, 500, function () {
                 $('#use-alert .slot.expired').remove();
             });
         }, 2500);
@@ -835,6 +851,7 @@ function ItemUsed(alerts) {
 }
 
 var actionBarTimer = null;
+
 function ActionBar(items, timer) {
     if ($('#action-bar').is(':visible')) {
         clearTimeout(actionBarTimer);
@@ -853,9 +870,9 @@ function ActionBar(items, timer) {
                 $(`.slot-${i}`).find('.item').css('background-image', 'none');
             }
 
-            actionBarTimer = setTimeout(function() {
+            actionBarTimer = setTimeout(function () {
                 $('#action-bar .slot').addClass('expired');
-                $('#action-bar').hide('slide', { direction: 'down' }, 500, function() {
+                $('#action-bar').hide('slide', {direction: 'down'}, 500, function () {
                     $('#action-bar .slot.expired').remove();
                 });
             }, timer == null ? 2500 : timer);
@@ -872,10 +889,10 @@ function ActionBar(items, timer) {
             }
         }
 
-        $('#action-bar').show('slide', { direction: 'down' }, 500, function() {
-            actionBarTimer = setTimeout(function() {
+        $('#action-bar').show('slide', {direction: 'down'}, 500, function () {
+            actionBarTimer = setTimeout(function () {
                 $('#action-bar .slot').addClass('expired');
-                $('#action-bar').hide('slide', { direction: 'down' }, 500, function() {
+                $('#action-bar').hide('slide', {direction: 'down'}, 500, function () {
                     $('#action-bar .slot.expired').remove();
                 });
             }, timer == null ? 2500 : timer);
@@ -884,6 +901,7 @@ function ActionBar(items, timer) {
 }
 
 var usedActionTimer = null;
+
 function ActionBarUsed(index) {
     clearTimeout(usedActionTimer);
 
@@ -893,9 +911,21 @@ function ActionBarUsed(index) {
         } else {
             $(`.slot-${index - 1}`).addClass('used');
         }
-        usedActionTimer = setTimeout(function() {
+        usedActionTimer = setTimeout(function () {
             $(`.slot-${index - 1}`).removeClass('used');
             $(`.slot-${index - 1}`).removeClass('empty-used');
         }, 1000)
     }
+}
+
+function LockInventory() {
+    locked = true;
+    $('#inventoryOne').addClass('disabled');
+    $('#inventoryTwo').addClass('disabled');
+}
+
+function UnlockInventory() {
+    locked = false;
+    $('#inventoryOne').removeClass('disabled');
+    $('#inventoryTwo').removeClass('disabled');
 }

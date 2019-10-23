@@ -60,18 +60,6 @@ function ensurePlayerInventory(player)
     end)
 end
 
-Citizen.CreateThread(function()
-    while true do
-        for k, v in pairs(impendingRemovals) do
-            impendingRemovals[k] = {}
-        end
-        for k, v in pairs(impendingAdditions) do
-            impendingAdditions[k] = {}
-        end
-        Citizen.Wait(100)
-    end
-end)
-
 RegisterServerEvent('disc-inventoryhud:notifyImpendingRemoval')
 AddEventHandler('disc-inventoryhud:notifyImpendingRemoval', function(item, count, playerSource)
     local _source = playerSource or source
@@ -79,8 +67,12 @@ AddEventHandler('disc-inventoryhud:notifyImpendingRemoval', function(item, count
         impendingRemovals[_source] = {}
     end
     item.count = count
-    print(_source)
-    table.insert(impendingRemovals[_source], item)
+    local k = #impendingRemovals + 1
+    impendingRemovals[_source][k] = item
+    Citizen.CreateThread(function()
+        Citizen.Wait(100)
+        impendingRemovals[k] = nil
+    end)
 end)
 
 RegisterServerEvent('disc-inventoryhud:notifyImpendingAddition')
@@ -90,7 +82,12 @@ AddEventHandler('disc-inventoryhud:notifyImpendingAddition', function(item, coun
         impendingAdditions[_source] = {}
     end
     item.count = count
-    table.insert(impendingAdditions[_source], item)
+    local k = #impendingAdditions + 1
+    impendingAdditions[_source][k] = item
+    Citizen.CreateThread(function()
+        Citizen.Wait(100)
+        impendingAdditions[k] = nil
+    end)
 end)
 
 AddEventHandler('esx:onRemoveInventoryItem', function(source, item, count)

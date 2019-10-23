@@ -75,6 +75,8 @@ body {
                 position: absolute;
                 left: 0;
 
+                
+
                 &:last-child {
                     right: 0;
                     left: auto;
@@ -90,8 +92,15 @@ body {
                     width: 100.5%;
                     min-width: 100.5%;
                     grid-auto-rows: 20%;
+
+                    &.disabled {
+                        filter: brightness(0.25);
+                        transition: filter ease-in 0.15s;
+                      }
+
                 }
-        
+                
+
                 .inv-label{
                     font-size: 25px;
                     width: 100%;
@@ -291,6 +300,8 @@ body {
             border: 1px solid $border;
             transition: filter ease-in 0.15s;
             overflow: hidden;
+
+
         
             &.slot-template {
                 display: none;

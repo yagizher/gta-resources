@@ -2,6 +2,7 @@ RegisterNUICallback('UseItem', function(data)
     if isWeapon(data.item.id) then
         currentWeaponSlot = data.slot
     end
+    print('Close ' .. tostring(data.item.closeUi))
     TriggerServerEvent('disc-inventoryhud:notifyImpendingRemoval', data.item, 1)
     TriggerServerEvent("esx:useItem", data.item.id)
     TriggerEvent('disc-inventoryhud:refreshInventory')

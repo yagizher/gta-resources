@@ -33,6 +33,8 @@ RegisterServerEvent("disc-inventoryhud:MoveToEmpty")
 AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
     local source = source
     handleWeaponRemoval(data, source)
+    print(tostring(data.originSlot))
+    print(tostring(data.destinationSlot))
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
         originInvHandler.getInventory(data.originOwner, function(inventory)
@@ -73,12 +75,14 @@ AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
                 if data.originTier.name == 'player' then
                     data.originItem.block = true
                     TriggerEvent('disc-inventoryhud:notifyImpendingRemoval', data.originItem, data.originItem.qty, source)
+                    Citizen.Wait(1000)
                     ESX.GetPlayerFromIdentifier(data.originOwner).removeInventoryItem(data.originItem.id, data.originItem.qty)
                 end
 
                 if data.destinationTier.name == 'player' then
                     data.originItem.block = true
                     TriggerEvent('disc-inventoryhud:notifyImpendingAddition', data.originItem, data.originItem.qty, source)
+                    Citizen.Wait(1000)
                     ESX.GetPlayerFromIdentifier(data.destinationOwner).addInventoryItem(data.originItem.id, data.originItem.qty)
                 end
 
@@ -360,7 +364,6 @@ function debugData(data)
 end
 
 function removeItemFromSlot(inventory, slot, count)
-    print(inventory[tostring(slot)])
     if inventory[tostring(slot)].count - count > 0 then
         inventory[tostring(slot)].count = inventory[tostring(slot)].count - count
         return
@@ -426,8 +429,6 @@ end
 function AddToEmpty(item, type, inventory, count, max)
     for i = 1, InvType[type].slots, 1 do
         if inventory[tostring(i)] == nil then
-            print(count)
-            print(max)
             if count > max then
                 inventory[tostring(i)] = item
                 inventory[tostring(i)].count = max
@@ -465,7 +466,7 @@ function createDisplayItem(item, esxItem, slot, price, type)
         canRemove = esxItem.canRemove,
         price = price or 0,
         needs = false,
-        closeUi = true,
+        closeUi = getItemDataProperty(esxItem.name, 'closeonuse'),
     }
 end
 
@@ -478,7 +479,6 @@ ESX.RegisterServerCallback('disc-inventoryhud:getSecondaryInventory', function(s
 end)
 
 function saveInventory(identifier, type, data)
-    print('Type ' .. tostring(type))
     MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
         ['@owner'] = identifier,
         ['@type'] = type,
