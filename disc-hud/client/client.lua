@@ -137,7 +137,7 @@ Citizen.CreateThread(function()
             speed = math.ceil(speed),
             sign = sign
         })
-        Citizen.Wait(50)
+        Citizen.Wait(200)
     end
 end)
 
@@ -217,7 +217,7 @@ Citizen.CreateThread(function()
                 })
             end)
         end)
-        Citizen.Wait(50000)
+        Citizen.Wait(5000)
     end
 end)
 
@@ -233,7 +233,8 @@ AddEventHandler('disc-hud:EnteredVehicle', function()
     local prevHp = GetEntityHealth(veh)
 
     DisplayRadar(true)
-
+    cruiseIsOn = false
+    seatbeltIsOn = false
     Citizen.CreateThread(function()
         while IsPedInAnyVehicle(player) do
             Citizen.Wait(0)
@@ -306,7 +307,7 @@ AddEventHandler('disc-hud:EnteredVehicle', function()
 
     Citizen.CreateThread(function()
         while IsPedInAnyVehicle(player) do
-            Citizen.Wait(100)
+            Citizen.Wait(1000)
         end
         DisplayRadar(false)
         seatbeltIsOn = false
