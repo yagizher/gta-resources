@@ -38,23 +38,61 @@ AddEventHandler('disc-crafting:craft', function(bench, craftingData)
         local recipe = Config.Recipes[recipeName]
         if recipe.fuzzy then
 
-        else
-            if #recipe.items ~= #craftingData then
-                return
-            end
+            local make = true
+            local recipeItems = {}
+            local craftingItems = {}
 
             for i = 1, #recipe.items, 1 do
-                if recipe.items[i] ~= craftingData[i].itemId then
-                    return
+                if recipeItems[recipe.items[i]] == nil then
+                    recipeItems[recipe.items[i]] = 0
+                end
+                if craftingItems[craftingData[i].itemId] == nil then
+                    craftingItems[craftingData[i].itemId] = 0
+                end
+                recipeItems[recipe.items[i]] = recipeItems[recipe.items[i]] + 1
+                craftingItems[craftingData[i].itemId] = craftingItems[craftingData[i].itemId] + 1
+            end
+
+            if #recipeItems ~= #craftingItems then
+                break
+            end
+
+            for recipeK, v in pairs(recipeItems) do
+                if craftingItems[recipeK] == nil or v ~= craftingItems[recipeK] then
+                    make = false
+                    break
                 end
             end
 
-            local player = ESX.GetPlayerFromId(source)
-            for k, v in ipairs(recipe.items) do
-                player.removeInventoryItem(v, 1)
+            if make then
+                local player = ESX.GetPlayerFromId(source)
+                for _, v in ipairs(recipe.items) do
+                    player.removeInventoryItem(v, 1)
+                end
+                player.addInventoryItem(recipe.item, recipe.count)
+                TriggerClientEvent('disc-crafting:crafted', source)
             end
-            player.addInventoryItem(recipe.item, recipe.count)
-            TriggerClientEvent('disc-crafting:crafted', source)
+
+        else
+            if #recipe.items ~= #craftingData then
+                break
+            end
+            local make = true
+            for i = 1, #recipe.items, 1 do
+                if recipe.items[i] ~= craftingData[i].itemId then
+                    make = false
+                end
+            end
+
+            if make then
+                local player = ESX.GetPlayerFromId(source)
+                for k, v in ipairs(recipe.items) do
+                    player.removeInventoryItem(v, 1)
+                    Citizen.Wait(1000)
+                end
+                player.addInventoryItem(recipe.item, recipe.count)
+                TriggerClientEvent('disc-crafting:crafted', source)
+            end
         end
     end
 end)
