@@ -14,6 +14,12 @@ Citizen.CreateThread(function()
 
     ESX.PlayerData = ESX.GetPlayerData()
 end)
+RegisterNetEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded', function()
+    TriggerEvent('disc-inventoryhud:refreshInventory')
+end)
+
+
 
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)

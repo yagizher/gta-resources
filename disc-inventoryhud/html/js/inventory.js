@@ -102,6 +102,7 @@ function EndDragging() {
 function closeInventory() {
     InventoryLog('Closing');
     EndDragging();
+    $('.near-players-wrapper').fadeOut();
     $.post("http://disc-inventoryhud/NUIFocusOff", JSON.stringify({}));
 }
 
@@ -482,13 +483,13 @@ $(document).ready(function () {
         }
     });
 });
+
 $('.popup-body').on('click', '.cashchoice', function () {
     $.post("http://disc-inventoryhud/GetNearPlayers", JSON.stringify({
         action: 'pay',
-        item: 'cash',
+        item: $(this).data("id")
     }));
 });
-
 
 function AttemptDropInEmptySlot(origin, destination, moveQty) {
     var result = ErrorCheck(origin, destination, moveQty);
@@ -809,10 +810,10 @@ $('.popup-body').on('click', '.player', function () {
             });
         }
     } else if (action === "nearPlayersPay") {
-        InventoryLog(`Giving ${count} Cash To Nearby Player With Server ID ${target}`);
+        InventoryLog(`Giving ${count} ${givingItem} To Nearby Player With Server ID ${target}`);
         $.post("http://disc-inventoryhud/GiveCash", JSON.stringify({
             target: target,
-            item: 'cash',
+            item: givingItem,
             count: count
         }), function (status) {
             if (status) {
