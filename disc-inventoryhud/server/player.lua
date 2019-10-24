@@ -6,7 +6,6 @@ ESX.RegisterServerCallback('disc-inventoryhud:getPlayerInventory', function(sour
 end)
 
 Citizen.CreateThread(function()
-    --Player
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'player',
         label = 'Player',

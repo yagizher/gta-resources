@@ -31,7 +31,6 @@ RegisterNUICallback('SwapItems', function(data, cb)
 end)
 
 RegisterNUICallback('GiveItem', function(data, cb)
-    TriggerServerEvent('disc-inventoryhud:notifyImpendingRemoval', data.item, data.number)
     TriggerServerEvent('disc-inventoryhud:GiveItem', data)
     cb('OK')
 end)
@@ -55,6 +54,7 @@ RegisterNUICallback('GetNearPlayers', function(data)
         SendNUIMessage({
             action = "nearPlayersPay",
             players = GetNeareastPlayers(),
+            item = data.item
         })
     end
 end)

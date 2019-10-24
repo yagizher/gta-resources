@@ -13,14 +13,16 @@ Citizen.CreateThread(function()
             if DoesEntityExist(vehicle) then
                 local locked = GetVehicleDoorLockStatus(vehicle) == 2
                 local hasBoot = DoesVehicleHaveDoor(vehicle, 5)
-                if not locked and hasBoot then
-                    local boneIndex = GetEntityBoneIndexByName(vehicle, 'boot')
+                if not locked then
+                    local boneIndex = GetEntityBoneIndexByName(vehicle, 'platelight')
                     local vehicleCoords = GetWorldPositionOfEntityBone(vehicle, boneIndex)
                     local playerCoords = GetEntityCoords(GetPlayerPed(-1))
                     local distance = GetDistanceBetweenCoords(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z, playerCoords.x, playerCoords.y, playerCoords.z, true)
-                    if distance < 2 then
+                    if distance < 3 then
                         trunkSecondaryInventory.owner = GetVehicleNumberPlateText(vehicle)
                         openVehicle = vehicle
+                        local class = GetVehicleClass(vehicle)
+                        trunkSecondaryInventory.type = 'trunk-' .. class
                         SetVehicleDoorOpen(openVehicle, 5, false)
                         openInventory(trunkSecondaryInventory)
                         local playerPed = GetPlayerPed(-1)
