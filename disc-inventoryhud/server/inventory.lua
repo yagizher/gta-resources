@@ -353,6 +353,8 @@ end)
 RegisterServerEvent("disc-inventoryhud:GiveItem")
 AddEventHandler("disc-inventoryhud:GiveItem", function(data)
     handleWeaponRemoval(data, source)
+    TriggerEvent('disc-inventoryhud:notifyImpendingRemoval', data.item, data.count, source)
+    TriggerEvent('disc-inventoryhud:notifyImpendingAddition', data.item, data.count, data.target)
     local targetPlayer = ESX.GetPlayerFromId(data.target)
     targetPlayer.addInventoryItem(data.item.id, data.count)
     local sourcePlayer = ESX.GetPlayerFromId(source)
@@ -547,6 +549,7 @@ function getDisplayInventory(identifier, type, cb, source)
         for k, v in pairs(inventory) do
             local esxItem = player.getInventoryItem(v.name)
             local item = createDisplayItem(v, esxItem, tonumber(k))
+            item.usable = false
             table.insert(itemsObject, item)
         end
 

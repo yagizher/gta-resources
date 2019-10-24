@@ -1,12 +1,17 @@
 local drops = {}
 
 Citizen.CreateThread(function()
-    --Player
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'drop',
         label = 'Drop',
         slots = 10
     })
+end)
+
+MySQL.ready(function()
+    if Config.DeleteDropsOnStart then
+        MySQL.Async.execute('DELETE FROM disc_inventory WHERE type = \'drop\'')
+    end
 end)
 
 Citizen.CreateThread(function()

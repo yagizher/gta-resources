@@ -1,5 +1,4 @@
 Citizen.CreateThread(function()
-    --Player
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'shop',
         label = 'Shop',

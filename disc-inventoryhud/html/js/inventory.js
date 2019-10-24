@@ -220,7 +220,6 @@ $('#count').on('keyup blur', function (e) {
 });
 
 $(document).ready(function () {
-    $('#inventoryTwo').parent().hide();
 
     $('#inventoryOne, #inventoryTwo').on('click', '.slot', function (e) {
         if (locked) {
@@ -304,7 +303,7 @@ $(document).ready(function () {
     });
 
     $("#use").mouseenter(function () {
-        if (!$(this).hasClass('disabled')) {
+        if (draggingItem != null && !$(this).hasClass('disabled')) {
             $(this).addClass('hover');
         }
     }).mouseleave(function () {
@@ -312,7 +311,7 @@ $(document).ready(function () {
     });
 
     $('#give').click(function (event, ui) {
-        if (dragging) {
+        if (draggingItem != null && dragging) {
             itemData = $(draggingItem).find('.item').data("item");
             let dropCount = parseInt($("#count").val());
 
