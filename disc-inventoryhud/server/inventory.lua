@@ -397,10 +397,8 @@ end
 function removeItemFromSlot(inventory, slot, count)
     if inventory[tostring(slot)].count - count > 0 then
         inventory[tostring(slot)].count = inventory[tostring(slot)].count - count
-        return
     else
         inventory[tostring(slot)] = nil
-        return
     end
 end
 
