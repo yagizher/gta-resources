@@ -29,5 +29,9 @@ server_scripts {
 	'server/main.lua',
 }
 exports {
-  'setVoice'
+	'setVoice'
+}
+
+dependencies {
+	'baseevents'
 }
