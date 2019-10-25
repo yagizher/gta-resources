@@ -93,7 +93,7 @@ local removeLocked = false
 local additionLocked = false
 AddEventHandler('esx:onRemoveInventoryItem', function(source, item, count)
     while removeLocked or additionLocked do
-        Citizen.Wait(0)
+        Citizen.Wait(100)
     end
     removeLocked = true
     local player = ESX.GetPlayerFromId(source)
@@ -126,7 +126,7 @@ end)
 
 AddEventHandler('esx:onAddInventoryItem', function(source, esxItem, count)
     while additionLocked or removeLocked do
-        Citizen.Wait(0)
+        Citizen.Wait(100)
     end
     additionLocked = true
     local player = ESX.GetPlayerFromId(source)
