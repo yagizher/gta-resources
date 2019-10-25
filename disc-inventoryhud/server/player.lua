@@ -127,7 +127,6 @@ end)
 AddEventHandler('esx:onAddInventoryItem', function(source, esxItem, count)
     while additionLocked or removeLocked do
         Citizen.Wait(0)
-        print(tostring(additionLocked) .. tostring(removeLocked))
     end
     additionLocked = true
     local player = ESX.GetPlayerFromId(source)
