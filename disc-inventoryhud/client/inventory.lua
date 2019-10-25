@@ -77,11 +77,11 @@ end
 
 RegisterNetEvent('disc-inventoryhud:refreshInventory')
 AddEventHandler('disc-inventoryhud:refreshInventory', function()
+    Citizen.Wait(250)
     refreshPlayerInventory()
     if secondInventory ~= nil then
         refreshSecondaryInventory()
     end
-    Citizen.Wait(100)
     SendNUIMessage({
         action = "unlock"
     })
