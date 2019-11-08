@@ -9,6 +9,9 @@ Citizen.CreateThread(function()
         saveInventory = function(identifier, inventory)
 
         end,
+        applyToInventory = function(identifier, f)
+            getShopInventory(identifier, f)
+        end,
         getDisplayInventory = function(identifier, cb, source)
             getShopDisplayInventory(identifier, cb, source)
         end

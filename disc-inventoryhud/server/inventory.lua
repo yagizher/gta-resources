@@ -1,4 +1,5 @@
 local openInventory = {}
+loadedInventories = {}
 
 RegisterServerEvent('disc-inventoryhud:openInventory')
 AddEventHandler('disc-inventoryhud:openInventory', function(inventory)
@@ -29,18 +30,21 @@ AddEventHandler('disc-inventoryhud:refreshInventory', function(owner)
     end
 end)
 
+function dumpInventory(inventory)
+    for k, v in pairs(inventory) do
+        print(k .. ' ' .. v.name)
+    end
+end
+
 RegisterServerEvent("disc-inventoryhud:MoveToEmpty")
 AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
     local source = source
     handleWeaponRemoval(data, source)
-    print(tostring(data.originSlot))
-    print(tostring(data.destinationSlot))
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
-        originInvHandler.getInventory(data.originOwner, function(inventory)
+        originInvHandler.applyToInventory(data.originOwner, function(inventory)
             inventory[tostring(data.destinationSlot)] = inventory[tostring(data.originSlot)]
             inventory[tostring(data.originSlot)] = nil
-            originInvHandler.saveInventory(data.originOwner, inventory)
             TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
         end)
     else
@@ -64,13 +68,10 @@ AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
             return
         end
 
-        originInvHandler.getInventory(data.originOwner, function(originInventory)
-            destinationInvHandler.getInventory(data.destinationOwner, function(destinationInventory)
-
+        originInvHandler.applyToInventory(data.originOwner, function(originInventory)
+            destinationInvHandler.applyToInventory(data.destinationOwner, function(destinationInventory)
                 destinationInventory[tostring(data.destinationSlot)] = originInventory[tostring(data.originSlot)]
                 originInventory[tostring(data.originSlot)] = nil
-                destinationInvHandler.saveInventory(data.destinationOwner, destinationInventory)
-                originInvHandler.saveInventory(data.originOwner, originInventory)
 
                 if data.originTier.name == 'player' then
                     data.originItem.block = true
@@ -113,23 +114,20 @@ AddEventHandler("disc-inventoryhud:SwapItems", function(data)
 
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
-        originInvHandler.getInventory(data.originOwner, function(inventory)
+        originInvHandler.applyToInventory(data.originOwner, function(inventory)
             local tempItem = inventory[tostring(data.originSlot)]
             inventory[tostring(data.originSlot)] = inventory[tostring(data.destinationSlot)]
             inventory[tostring(data.destinationSlot)] = tempItem
-            originInvHandler.saveInventory(data.originOwner, inventory)
             TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
         end)
     else
         local originInvHandler = InvType[data.originTier.name]
         local destinationInvHandler = InvType[data.destinationTier.name]
-        originInvHandler.getInventory(data.originOwner, function(originInventory)
-            destinationInvHandler.getInventory(data.destinationOwner, function(destinationInventory)
+        originInvHandler.applyToInventory(data.originOwner, function(originInventory)
+            destinationInvHandler.applyToInventory(data.destinationOwner, function(destinationInventory)
                 local tempItem = originInventory[tostring(data.originSlot)]
                 originInventory[tostring(data.originSlot)] = destinationInventory[tostring(data.destinationSlot)]
                 destinationInventory[tostring(data.destinationSlot)] = tempItem
-                originInvHandler.saveInventory(data.originOwner, originInventory)
-                destinationInvHandler.saveInventory(data.destinationOwner, destinationInventory)
 
                 if data.originTier.name == 'player' then
                     data.originItem.block = true
@@ -183,21 +181,18 @@ AddEventHandler("disc-inventoryhud:CombineStack", function(data)
 
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
-        originInvHandler.getInventory(data.originOwner, function(inventory)
+        originInvHandler.applyToInventory(data.originOwner, function(inventory)
             inventory[tostring(data.originSlot)] = nil
             inventory[tostring(data.destinationSlot)].count = data.destinationQty
-            originInvHandler.saveInventory(data.originOwner, inventory)
             TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
         end)
     else
         local originInvHandler = InvType[data.originTier.name]
         local destinationInvHandler = InvType[data.destinationTier.name]
-        originInvHandler.getInventory(data.originOwner, function(originInventory)
-            destinationInvHandler.getInventory(data.destinationOwner, function(destinationInventory)
+        originInvHandler.applyToInventory(data.originOwner, function(originInventory)
+            destinationInvHandler.applyToInventory(data.destinationOwner, function(destinationInventory)
                 originInventory[tostring(data.originSlot)] = nil
                 destinationInventory[tostring(data.destinationSlot)].count = data.destinationQty
-                originInvHandler.saveInventory(data.originOwner, originInventory)
-                destinationInvHandler.saveInventory(data.destinationOwner, destinationInventory)
 
                 if data.originTier.name == 'player' then
                     data.originItem.block = true
@@ -245,29 +240,26 @@ AddEventHandler("disc-inventoryhud:EmptySplitStack", function(data)
     local source = source
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
-        originInvHandler.getInventory(data.originOwner, function(inventory)
+        originInvHandler.applyToInventory(data.originOwner, function(inventory)
             inventory[tostring(data.originSlot)].count = inventory[tostring(data.originSlot)].count - data.moveQty
             local item = inventory[tostring(data.originSlot)]
             inventory[tostring(data.destinationSlot)] = {
                 name = item.name,
                 count = data.moveQty
             }
-            originInvHandler.saveInventory(data.originOwner, inventory)
             TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
         end)
     else
         local originInvHandler = InvType[data.originTier.name]
         local destinationInvHandler = InvType[data.destinationTier.name]
-        originInvHandler.getInventory(data.originOwner, function(originInventory)
-            destinationInvHandler.getInventory(data.destinationOwner, function(destinationInventory)
+        originInvHandler.applyToInventory(data.originOwner, function(originInventory)
+            destinationInvHandler.applyToInventory(data.destinationOwner, function(destinationInventory)
                 originInventory[tostring(data.originSlot)].count = originInventory[tostring(data.originSlot)].count - data.moveQty
                 local item = originInventory[tostring(data.originSlot)]
                 destinationInventory[tostring(data.destinationSlot)] = {
                     name = item.name,
                     count = data.moveQty
                 }
-                originInvHandler.saveInventory(data.originOwner, originInventory)
-                destinationInvHandler.saveInventory(data.destinationOwner, destinationInventory)
 
                 if data.originTier.name == 'player' then
                     local originPlayer = ESX.GetPlayerFromIdentifier(data.originOwner)
@@ -314,21 +306,18 @@ AddEventHandler("disc-inventoryhud:SplitStack", function(data)
 
     if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
         local originInvHandler = InvType[data.originTier.name]
-        originInvHandler.getInventory(data.originOwner, function(inventory)
+        originInvHandler.applyToInventory(data.originOwner, function(inventory)
             inventory[tostring(data.originSlot)].count = inventory[tostring(data.originSlot)].count - data.moveQty
             inventory[tostring(data.destinationSlot)].count = inventory[tostring(data.destinationSlot)].count + data.moveQty
-            originInvHandler.saveInventory(data.originOwner, inventory)
             TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
         end)
     else
         local originInvHandler = InvType[data.originTier.name]
         local destinationInvHandler = InvType[data.destinationTier.name]
-        originInvHandler.getInventory(data.originOwner, function(originInventory)
-            destinationInvHandler.getInventory(data.destinationOwner, function(destinationInventory)
+        originInvHandler.applyToInventory(data.originOwner, function(originInventory)
+            destinationInvHandler.applyToInventory(data.destinationOwner, function(destinationInventory)
                 originInventory[tostring(data.originSlot)].count = originInventory[tostring(data.originSlot)].count - data.moveQty
                 destinationInventory[tostring(data.destinationSlot)].count = destinationInventory[tostring(data.destinationSlot)].count + data.moveQty
-                originInvHandler.saveInventory(data.originOwner, originInventory)
-                destinationInvHandler.saveInventory(data.destinationOwner, destinationInventory)
 
                 if data.originTier.name == 'player' then
                     data.originItem.block = true
@@ -509,7 +498,31 @@ ESX.RegisterServerCallback('disc-inventoryhud:getSecondaryInventory', function(s
     InvType[type].getDisplayInventory(identifier, cb, source)
 end)
 
-function saveInventory(identifier, type, data)
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(5 * 60 * 1000)
+        saveInventories()
+    end
+end)
+
+function saveInventories()
+    for type, inventories in pairs(loadedInventories) do
+        for identifier, inventory in pairs(inventories) do
+            if table.length(inventory) > 0 then
+                saveLoadedInventory(identifier, type, inventory)
+            else
+                deleteInventory(identifier, type)
+            end
+        end
+    end
+    RconPrint('[Disc-InventoryHud][SAVED] All Inventories' .. "\n")
+end
+
+function saveInventory(identifier, type)
+    saveLoadedInventory(identifier, type, loadedInventories[type][identifier])
+end
+
+function saveLoadedInventory(identifier, type, data)
     MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
         ['@owner'] = identifier,
         ['@type'] = type,
@@ -518,6 +531,7 @@ function saveInventory(identifier, type, data)
         if result == 0 then
             createInventory(identifier, type, data)
         end
+        loadedInventories[type][identifier] = nil
         TriggerEvent('disc-inventoryhud:savedInventory', identifier, type, data)
     end)
 end
@@ -563,16 +577,42 @@ function getDisplayInventory(identifier, type, cb, source)
 end
 
 function getInventory(identifier, type, cb)
+    if loadedInventories[type][identifier] ~= nil then
+        cb(loadedInventories[type][identifier])
+    else
+        loadInventory(identifier, type, cb)
+    end
+end
+
+function applyToInventory(identifier, type, f)
+    if loadedInventories[type][identifier] ~= nil then
+        f(loadedInventories[type][identifier])
+    else
+        loadInventory(identifier, type, function()
+            applyToInventory(identifier, type, f)
+        end)
+    end
+    if loadedInventories[type][identifier] and table.length(loadedInventories[type][identifier]) > 0 then
+        TriggerEvent('disc-inventoryhud:modifiedInventory', identifier, type, loadedInventories[type][identifier])
+    else
+        TriggerEvent('disc-inventoryhud:modifiedInventory', identifier, type, nil)
+    end
+end
+
+function loadInventory(identifier, type, cb)
     MySQL.Async.fetchAll('SELECT data FROM disc_inventory WHERE owner = @owner and type = @type', {
         ['@owner'] = identifier,
         ['@type'] = type
     }, function(result)
         if #result == 0 then
+            loadedInventories[type][identifier] = {}
             cb({})
             return
         end
-        cb(json.decode(result[1].data))
-        TriggerEvent('disc-inventoryhud:gotInventory', identifier, type, result[1].data)
+        inventory = json.decode(result[1].data)
+        loadedInventories[type][identifier] = inventory
+        cb(inventory)
+        TriggerEvent('disc-inventoryhud:loadedInventory', identifier, type, inventory)
     end)
 end
 

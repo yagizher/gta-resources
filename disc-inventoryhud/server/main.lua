@@ -21,6 +21,13 @@ AddEventHandler('disc-inventoryhud:RegisterInventory', function(inventory)
         end
     end
 
+    if inventory.applyToInventory == nil then
+        print('Registering Default applyToInventory')
+        inventory.applyToInventory = function(identifier, f)
+            applyToInventory(identifier, inventory.name, f)
+        end
+    end
+
     if inventory.saveInventory == nil then
         print('Registering Default saveInventory')
         inventory.saveInventory = function(identifier, toSave)
@@ -40,6 +47,7 @@ AddEventHandler('disc-inventoryhud:RegisterInventory', function(inventory)
     end
 
     InvType[inventory.name] = inventory
+    loadedInventories[inventory.name] = {}
 end)
 
 TriggerEvent('esx:getSharedObject', function(obj)
@@ -59,6 +67,23 @@ end
 RegisterCommand('test', function(source, args, raw)
     local str = 'x123y123z123'
     print(getCoordsFromOwner(str))
+end)
+
+AddEventHandler("onResourceStop", function(resource)
+    if resource == GetCurrentResourceName() then
+        saveInventories()
+    end
+end)
+
+AddEventHandler('esx:playerLoaded', function(data)
+    local player = ESX.GetPlayerFromId(data)
+    loadInventory(player.identifier, 'player', function()
+    end)
+end)
+
+AddEventHandler('esx:playerDropped', function(data)
+    local player = ESX.GetPlayerFromId(data)
+    saveInventory(player.identifier, 'player')
 end)
 
 

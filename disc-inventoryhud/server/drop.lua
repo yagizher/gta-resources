@@ -24,6 +24,14 @@ Citizen.CreateThread(function()
     end)
 end)
 
+RegisterServerEvent('disc-inventoryhud:modifiedInventory')
+AddEventHandler('disc-inventoryhud:modifiedInventory', function(identifier, type, data)
+    if type == 'drop' then
+        drops[identifier] = data
+        TriggerClientEvent('disc-inventoryhud:updateDrops', -1, drops)
+    end
+end)
+
 RegisterServerEvent('disc-inventoryhud:savedInventory')
 AddEventHandler('disc-inventoryhud:savedInventory', function(identifier, type, data)
     if type == 'drop' then
