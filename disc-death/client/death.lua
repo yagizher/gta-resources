@@ -35,6 +35,7 @@ Citizen.CreateThread(function()
                     EnableControlAction(0, 200)
                     Citizen.Wait(0)
                 end
+                EnableAllControlActions(0)
             end)
             Citizen.Wait(200)
             SetEntityHealth(playerPed, GetPedMaxHealth(playerPed))
