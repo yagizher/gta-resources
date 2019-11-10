@@ -28,7 +28,7 @@ Citizen.CreateThread(function()
 end)
 
 function canSell(pedId)
-    return hasDrugs ~= nill and hasDrugs and not IsPedSittingInAnyVehicle(pedId)
+    return hasDrugs ~= nil and hasDrugs and not IsPedSittingInAnyVehicle(pedId)
 end
 
 function CanSellTo(pedId)
