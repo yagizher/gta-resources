@@ -55,6 +55,8 @@ TriggerEvent('esx:getSharedObject', function(obj)
 end)
 
 RegisterCommand('ensureInv', function(source)
+    local owner = ESX.GetPlayerFromId(source).identifier
+    MySQL.Async.fetchAll('DELETE FROM disc_inventory WHERE data = @data AND owner = @owner',{['@data'] = "null",['@owner'] = owner})  -- Tgiann "Null" Fix    
     ensureInventories(source)
 end)
 
