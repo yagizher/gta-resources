@@ -508,10 +508,12 @@ end)
 function saveInventories()
     for type, inventories in pairs(loadedInventories) do
         for identifier, inventory in pairs(inventories) do
-            if table.length(inventory) > 0 then
-                saveLoadedInventory(identifier, type, inventory)
-            else
-                deleteInventory(identifier, type)
+            if inventory ~= nil then
+                if table.length(inventory) > 0 then
+                    saveLoadedInventory(identifier, type, inventory)
+                else
+                    deleteInventory(identifier, type)
+                end
             end
         end
     end
@@ -523,17 +525,19 @@ function saveInventory(identifier, type)
 end
 
 function saveLoadedInventory(identifier, type, data)
-    MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
-        ['@owner'] = identifier,
-        ['@type'] = type,
-        ['@data'] = json.encode(data)
-    }, function(result)
-        if result == 0 then
-            createInventory(identifier, type, data)
-        end
-        loadedInventories[type][identifier] = nil
-        TriggerEvent('disc-inventoryhud:savedInventory', identifier, type, data)
-    end)
+    if table.length(data) > 0 then
+        MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
+            ['@owner'] = identifier,
+            ['@type'] = type,
+            ['@data'] = json.encode(data)
+        }, function(result)
+            if result == 0 then
+                createInventory(identifier, type, data)
+            end
+            loadedInventories[type][identifier] = nil
+            TriggerEvent('disc-inventoryhud:savedInventory', identifier, type, data)
+        end)
+    end
 end
 
 function createInventory(identifier, type, data)
