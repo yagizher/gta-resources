@@ -51,6 +51,9 @@ files {
     'html/js/bootstrap.min.js',
     'html/js/popper.min.js',
 
+    -- JS langs
+    'html/locales/cs.js',
+    'html/locales/en.js',
     -- IMAGES
     'html/img/*.png',
     'html/success.wav',
