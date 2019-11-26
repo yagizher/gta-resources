@@ -80,6 +80,7 @@
     <div id="use-alert"></div>
     <div id="action-bar"></div>
 
+    <script src="locales/en.js"></script>
     <script src="./js/jquery.min.js" type="text/javascript"></script>
     <script src="./js/jquery-ui.min.js" type="text/javascript"></script>
     <script src="./js/popper.min.js" type="text/javascript"></script>
@@ -87,4 +88,14 @@
     <script src="./js/config.js" type="text/javascript"></script>
     <script src="./js/inventory.js" type="text/javascript"></script>
 </body>
+<script>
+    $(document).ready(function () {
+        $("#use").html(invLocale.useItem);
+        $("#give").html(invLocale.giveItem);
+        $("#pay").html(invLocale.dropItem);
+        $("#inv-label").html(invLocale.label);
+		$("#steal").html(invLocale.stealmoney);
+		$("#seize").html(invLocale.seizemoney);
+    });
+</script>
 </html>
