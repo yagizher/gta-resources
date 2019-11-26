@@ -341,7 +341,6 @@ end)
 
 RegisterServerEvent("disc-inventoryhud:GiveItem")
 AddEventHandler("disc-inventoryhud:GiveItem", function(data)
-    handleWeaponRemoval(data, source)
     TriggerEvent('disc-inventoryhud:notifyImpendingRemoval', data.item, data.count, source)
     TriggerEvent('disc-inventoryhud:notifyImpendingAddition', data.item, data.count, data.target)
     local targetPlayer = ESX.GetPlayerFromId(data.target)
@@ -413,10 +412,8 @@ function removeItemFromInventory(item, count, inventory)
     end
 end
 
-function addToInventory(item, type, inventory, max)
-    if max == -1 then
-        max = 9999
-    end
+function addToInventory(item, type, inventory)
+local max = 100
     local toAdd = item.count
     while toAdd > 0 do
         toAdd = AttemptMerge(item, inventory, toAdd, max)
@@ -428,7 +425,8 @@ function addToInventory(item, type, inventory, max)
     end
 end
 
-function AttemptMerge(item, inventory, count, max)
+function AttemptMerge(item, inventory, count)
+local max = 100
     for k, v in pairs(inventory) do
         if v.name == item.name then
             if v.count + count > max then
@@ -446,7 +444,8 @@ function AttemptMerge(item, inventory, count, max)
     return count
 end
 
-function AddToEmpty(item, type, inventory, count, max)
+function AddToEmpty(item, type, inventory, count)
+local max = 100
     for i = 1, InvType[type].slots, 1 do
         if inventory[tostring(i)] == nil then
             if count > max then
@@ -464,10 +463,7 @@ function AddToEmpty(item, type, inventory, count, max)
 end
 
 function createDisplayItem(item, esxItem, slot, price, type)
-    local max = esxItem.limit
-    if max == -1 then
-        max = 9999
-    end
+    local max = 100
     return {
         id = esxItem.name,
         itemId = esxItem.name,
@@ -526,17 +522,17 @@ end
 
 function saveLoadedInventory(identifier, type, data)
     if table.length(data) > 0 then
-        MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
-            ['@owner'] = identifier,
-            ['@type'] = type,
-            ['@data'] = json.encode(data)
-        }, function(result)
+     MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
+           ['@owner'] = identifier,
+           ['@type'] = type,
+           ['@data'] = json.encode(data)
+     }, function(result)
             if result == 0 then
-                createInventory(identifier, type, data)
-            end
-            loadedInventories[type][identifier] = nil
-            TriggerEvent('disc-inventoryhud:savedInventory', identifier, type, data)
-        end)
+              createInventory(identifier, type, data)
+          end
+          loadedInventories[type][identifier] = nil
+          TriggerEvent('disc-inventoryhud:savedInventory', identifier, type, data)
+      end)
     end
 end
 
