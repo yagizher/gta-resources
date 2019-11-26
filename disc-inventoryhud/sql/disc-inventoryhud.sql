@@ -14,6 +14,7 @@ create table disc_inventory_itemdata
     description text null,
     weight int default 0 not null,
     closeonuse tinyint(1) default 0 not null,
+    max int default 100 not null,
     constraint id
         unique (id)
 );
