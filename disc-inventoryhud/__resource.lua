@@ -58,6 +58,7 @@ files {
     'html/img/*.png',
     'html/success.wav',
     'html/fail.wav',
+    'html/fail2.wav',
     -- ICONS
 
     'html/img/items/*.png',

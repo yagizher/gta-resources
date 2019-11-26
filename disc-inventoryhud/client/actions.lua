@@ -72,7 +72,6 @@ AddEventHandler('disc-inventoryhud:showItemUse', function(items)
             message = v.msg
         })
     end
-    print(#data)
     SendNUIMessage({
         action = 'itemUsed',
         alerts = data

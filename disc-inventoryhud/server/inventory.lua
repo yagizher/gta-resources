@@ -215,6 +215,66 @@ AddEventHandler("disc-inventoryhud:CombineStack", function(data)
     end
 end)
 
+RegisterServerEvent("disc-inventoryhud:TopoffStack")
+AddEventHandler("disc-inventoryhud:TopoffStack", function(data)
+    local source = source
+
+    handleWeaponRemoval(data, source)
+    if data.originTier.name == 'shop' then
+        local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
+        if player.getMoney() >= data.originItem.price * data.originQty then
+            player.removeMoney(data.originItem.price * data.originQty)
+        else
+            TriggerClientEvent('disc-inventoryhud:refreshInventory', source)
+            TriggerClientEvent('disc-inventoryhud:refreshInventory', data.target)
+            return
+        end
+    end
+
+    if data.destinationTier.name == 'shop' then
+        TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
+        TriggerEvent('disc-inventoryhud:refreshInventory', data.destinationOwner)
+        print('Attempt to sell')
+        return
+    end
+
+    if data.originOwner == data.destinationOwner and data.originTier.name == data.destinationTier.name then
+        local originInvHandler = InvType[data.originTier.name]
+        originInvHandler.applyToInventory(data.originOwner, function(inventory)
+            inventory[tostring(data.originSlot)].count = data.originItem.qty
+            inventory[tostring(data.destinationSlot)].count = data.destinationItem.qty
+            print('Refreshing')
+            TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
+        end)
+    else
+        local originInvHandler = InvType[data.originTier.name]
+        local destinationInvHandler = InvType[data.destinationTier.name]
+        originInvHandler.applyToInventory(data.originOwner, function(originInventory)
+            destinationInvHandler.applyToInventory(data.destinationOwner, function(destinationInventory)
+                originInventory[tostring(data.originSlot)].count = data.originItem.qty
+                destinationInventory[tostring(data.destinationSlot)].count = data.destinationItem.qty
+
+                if data.originTier.name == 'player' then
+                    data.originItem.block = true
+                    local originPlayer = ESX.GetPlayerFromIdentifier(data.originOwner)
+                    TriggerEvent('disc-inventoryhud:notifyImpendingRemoval', data.originItem, data.originItem.qty, originPlayer.source)
+                    originPlayer.removeInventoryItem(data.originItem.id, data.originItem.qty)
+                end
+
+                if data.destinationTier.name == 'player' then
+                    data.originItem.block = true
+                    local destinationPlayer = ESX.GetPlayerFromIdentifier(data.destinationOwner)
+                    TriggerEvent('disc-inventoryhud:notifyImpendingAddition', data.originItem, data.originItem.qty, destinationPlayer.source)
+                    destinationPlayer.addInventoryItem(data.originItem.id, data.originItem.qty)
+                end
+
+                TriggerEvent('disc-inventoryhud:refreshInventory', data.originOwner)
+                TriggerEvent('disc-inventoryhud:refreshInventory', data.destinationOwner)
+            end)
+        end)
+    end
+end)
+
 RegisterServerEvent("disc-inventoryhud:EmptySplitStack")
 AddEventHandler("disc-inventoryhud:EmptySplitStack", function(data)
 
@@ -341,12 +401,13 @@ end)
 
 RegisterServerEvent("disc-inventoryhud:GiveItem")
 AddEventHandler("disc-inventoryhud:GiveItem", function(data)
-    TriggerEvent('disc-inventoryhud:notifyImpendingRemoval', data.item, data.count, source)
-    TriggerEvent('disc-inventoryhud:notifyImpendingAddition', data.item, data.count, data.target)
+    handleWeaponRemoval(data, source)
+    TriggerEvent('disc-inventoryhud:notifyImpendingRemoval', data.originItem, data.count, source)
+    TriggerEvent('disc-inventoryhud:notifyImpendingAddition', data.originItem, data.count, data.target)
     local targetPlayer = ESX.GetPlayerFromId(data.target)
-    targetPlayer.addInventoryItem(data.item.id, data.count)
+    targetPlayer.addInventoryItem(data.originItem.id, data.count)
     local sourcePlayer = ESX.GetPlayerFromId(source)
-    sourcePlayer.removeInventoryItem(data.item.id, data.count)
+    sourcePlayer.removeInventoryItem(data.originItem.id, data.count)
     TriggerClientEvent('disc-inventoryhud:refreshInventory', source)
     TriggerClientEvent('disc-inventoryhud:refreshInventory', data.target)
 end)
@@ -354,9 +415,7 @@ end)
 RegisterServerEvent("disc-inventoryhud:GiveCash")
 AddEventHandler("disc-inventoryhud:GiveCash", function(data)
     local sourcePlayer = ESX.GetPlayerFromId(source)
-    print(data.item)
     if data.item == 'cash' then
-
         if sourcePlayer.getMoney() >= data.count then
             sourcePlayer.removeMoney(data.count)
             local targetPlayer = ESX.GetPlayerFromId(data.target)
@@ -413,7 +472,7 @@ function removeItemFromInventory(item, count, inventory)
 end
 
 function addToInventory(item, type, inventory)
-local max = 100
+    local max = 100
     local toAdd = item.count
     while toAdd > 0 do
         toAdd = AttemptMerge(item, inventory, toAdd, max)
@@ -426,7 +485,7 @@ local max = 100
 end
 
 function AttemptMerge(item, inventory, count)
-local max = 100
+    local max = getItemDataProperty(item.name, 'max') or 100
     for k, v in pairs(inventory) do
         if v.name == item.name then
             if v.count + count > max then
@@ -445,7 +504,7 @@ local max = 100
 end
 
 function AddToEmpty(item, type, inventory, count)
-local max = 100
+    local max = getItemDataProperty(item.name, 'max') or 100
     for i = 1, InvType[type].slots, 1 do
         if inventory[tostring(i)] == nil then
             if count > max then
@@ -471,10 +530,11 @@ function createDisplayItem(item, esxItem, slot, price, type)
         slot = slot,
         label = esxItem.label,
         type = type or 'item',
-        max = max,
+        max = getItemDataProperty(esxItem.name, 'max') or max,
         stackable = true,
         unique = esxItem.rare,
         usable = esxItem.usable,
+        giveable = true,
         description = getItemDataProperty(esxItem.name, 'description'),
         weight = getItemDataProperty(esxItem.name, 'weight'),
         metadata = {},
@@ -489,6 +549,10 @@ end
 function createItem(name, count)
     return { name = name, count = count }
 end
+
+ESX.RegisterServerCallback('disc-inventoryhud:canOpenInventory', function(source, cb, type, identifier)
+    cb(not (table.length(openInventory[identifier]) > 0) or openInventory[identifier][source])
+end)
 
 ESX.RegisterServerCallback('disc-inventoryhud:getSecondaryInventory', function(source, cb, type, identifier)
     InvType[type].getDisplayInventory(identifier, cb, source)
@@ -522,17 +586,17 @@ end
 
 function saveLoadedInventory(identifier, type, data)
     if table.length(data) > 0 then
-     MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
-           ['@owner'] = identifier,
-           ['@type'] = type,
-           ['@data'] = json.encode(data)
-     }, function(result)
+        MySQL.Async.execute('UPDATE disc_inventory SET data = @data WHERE owner = @owner AND type = @type', {
+            ['@owner'] = identifier,
+            ['@type'] = type,
+            ['@data'] = json.encode(data)
+        }, function(result)
             if result == 0 then
-              createInventory(identifier, type, data)
-          end
-          loadedInventories[type][identifier] = nil
-          TriggerEvent('disc-inventoryhud:savedInventory', identifier, type, data)
-      end)
+                createInventory(identifier, type, data)
+            end
+            loadedInventories[type][identifier] = nil
+            TriggerEvent('disc-inventoryhud:savedInventory', identifier, type, data)
+        end)
     end
 end
 
@@ -564,6 +628,8 @@ function getDisplayInventory(identifier, type, cb, source)
             local esxItem = player.getInventoryItem(v.name)
             local item = createDisplayItem(v, esxItem, tonumber(k))
             item.usable = false
+            item.giveable = false
+            item.canRemove = false
             table.insert(itemsObject, item)
         end
 

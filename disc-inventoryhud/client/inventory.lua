@@ -24,6 +24,12 @@ RegisterNUICallback('CombineStack', function(data, cb)
     cb('OK')
 end)
 
+RegisterNUICallback('TopoffStack', function(data, cb)
+    TriggerServerEvent('disc-inventoryhud:TopoffStack', data)
+    TriggerEvent('disc-inventoryhud:TopoffStack', data)
+    cb('OK')
+end)
+
 RegisterNUICallback('SwapItems', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:SwapItems', data)
     TriggerEvent('disc-inventoryhud:SwapItems', data)
@@ -40,16 +46,14 @@ RegisterNUICallback('GiveCash', function(data, cb)
     cb('OK')
 end)
 
-RegisterNUICallback('GetNearPlayers', function(data)
-
+RegisterNUICallback('GetNearPlayers', function(data, cb)
     if data.action == 'give' then
         SendNUIMessage({
             action = "nearPlayersGive",
             players = GetNeareastPlayers(),
-            item = data.item
+            originItem = data.originItem
         })
     end
-
     if data.action == 'pay' then
         SendNUIMessage({
             action = "nearPlayersPay",
@@ -57,6 +61,7 @@ RegisterNUICallback('GetNearPlayers', function(data)
             item = data.item
         })
     end
+    cb('OK')
 end)
 
 function GetNeareastPlayers()
@@ -109,21 +114,38 @@ function refreshPlayerInventory()
 end
 
 function refreshSecondaryInventory()
-    ESX.TriggerServerCallback('disc-inventoryhud:getSecondaryInventory', function(data)
-        SendNUIMessage(
-                { action = "setSecondInventoryItems",
-                  itemList = data.inventory,
-                  invOwner = data.invId,
-                  invTier = data.invTier,
-                }
-        )
-        TriggerServerEvent('disc-inventoryhud:openInventory', secondInventory)
+    ESX.TriggerServerCallback('disc-inventoryhud:canOpenInventory', function(canOpen)
+        if canOpen then
+            ESX.TriggerServerCallback('disc-inventoryhud:getSecondaryInventory', function(data)
+                SendNUIMessage(
+                        { action = "setSecondInventoryItems",
+                          itemList = data.inventory,
+                          invOwner = data.invId,
+                          invTier = data.invTier,
+                        }
+                )
+                SendNUIMessage(
+                        {
+                            action = "show",
+                            type = 'secondary'
+                        }
+                )
+                TriggerServerEvent('disc-inventoryhud:openInventory', secondInventory)
+            end, secondInventory.type, secondInventory.owner)
+        else
+            SendNUIMessage(
+                    {
+                        action = "hide",
+                        type = 'secondary'
+                    }
+            )
+        end
     end, secondInventory.type, secondInventory.owner)
 end
 
 function closeInventory()
     isInInventory = false
-    SendNUIMessage({ action = "hide" })
+    SendNUIMessage({ action = "hide", type = 'primary'})
     SetNuiFocus(false, false)
     TriggerServerEvent('disc-inventoryhud:closeInventory', {
         type = 'player',
@@ -175,6 +197,12 @@ end)
 
 RegisterNetEvent("disc-inventoryhud:EmptySplitStack")
 AddEventHandler("disc-inventoryhud:EmptySplitStack", function(data)
+    playPickupOrDropAnimation(data)
+    playStealOrSearchAnimation(data)
+end)
+
+RegisterNetEvent("disc-inventoryhud:TopoffStack")
+AddEventHandler("disc-inventoryhud:TopoffStack", function(data)
     playPickupOrDropAnimation(data)
     playStealOrSearchAnimation(data)
 end)

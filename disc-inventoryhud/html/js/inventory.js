@@ -29,7 +29,7 @@ successAudio.src = './success.wav';
 var failAudio = document.createElement('audio');
 failAudio.controls = false;
 failAudio.volume = 0.1;
-failAudio.src = './fail.wav';
+failAudio.src = './fail2.wav';
 
 window.addEventListener("message", function (event) {
     if (event.data.action == "display") {
@@ -45,8 +45,12 @@ window.addEventListener("message", function (event) {
 
         $(".ui").fadeIn();
     } else if (event.data.action == "hide") {
-        $("#dialog").dialog("close");
-        $(".ui").fadeOut();
+        if (event.data.type == 'secondary') {
+            $('#inventoryTwo').parent().hide();
+        } else {
+            $("#dialog").dialog("close");
+            $(".ui").fadeOut();
+        }
     } else if (event.data.action == "setItems") {
         firstTier = event.data.invTier;
         originOwner = event.data.invOwner;
@@ -59,7 +63,7 @@ window.addEventListener("message", function (event) {
         $(".info-div").html(event.data.text);
     } else if (event.data.action == "nearPlayersGive" || event.data.action == "nearPlayersPay") {
         successAudio.play();
-        givingItem = event.data.item;
+        givingItem = event.data.originItem;
         $('.near-players-wrapper').find('.popup-body').html('');
         $.each(event.data.players, function (index, player) {
             $('.near-players-list .popup-body').append(`<div class="player" data-id="${player.id}" data-action="${event.data.action}">${player.id} - ${player.name}</div>`);
@@ -267,6 +271,10 @@ $(document).ready(function () {
                     $("#use").addClass("disabled");
                 }
 
+                if (!itemData.giveable) {
+                    $("#give").addClass("disabled");
+                }
+
                 if (!itemData.canRemove) {
                     $("#drop").addClass("disabled");
                     $("#give").addClass("disabled");
@@ -295,10 +303,10 @@ $(document).ready(function () {
                     closeInventory();
                 }
                 successAudio.play();
+                EndDragging();
             } else {
                 failAudio.play();
             }
-            EndDragging();
         }
     });
 
@@ -321,7 +329,7 @@ $(document).ready(function () {
 
             if (itemData.canRemove) {
                 $.post("http://disc-inventoryhud/GetNearPlayers", JSON.stringify({
-                    item: itemData,
+                    originItem: itemData,
                     action: 'give'
                 }));
 
@@ -650,16 +658,18 @@ function AttemptDropInOccupiedSlot(origin, destination, moveQty) {
 
                     successAudio.play();
 
-                    InventoryLog('Adding ' + originItem.label + ' To Existing Stack In Inventory ' + destination.parent().data('invOwner') + ' Slot ' + destinationItem.slot);
+                    InventoryLog('Topping Off Stack ' + originItem.label + ' To Existing Stack In Inventory ' + destination.parent().data('invOwner') + ' Slot ' + destinationItem.slot);
                     $.post("http://disc-inventoryhud/TopoffStack", JSON.stringify({
                         originOwner: origin.parent().data('invOwner'),
-                        originItem: origin.find('.item').data('item'),
-                        originSlot: originItem.slot,
+                        originSlot: origin.data('slot'),
                         originTier: origin.parent().data('invTier'),
+                        originItem: originItem,
+                        originQty: originItem.qty,
                         destinationOwner: destination.parent().data('invOwner'),
-                        destinationItem: destination.find('.item').data('item'),
                         destinationSlot: destinationItem.slot,
+                        destinationQty: destinationItem.qty,
                         destinationTier: destination.parent().data('invTier'),
+                        destinationItem: destinationItem,
                     }));
                     LockInventory();
                 } else {
@@ -794,7 +804,7 @@ $('.popup-body').on('click', '.player', function () {
             InventoryLog(`Giving ${count} ${givingItem.label} To Nearby Player With Server ID ${target}`);
             $.post("http://disc-inventoryhud/GiveItem", JSON.stringify({
                 target: target,
-                item: givingItem,
+                originItem: givingItem,
                 count: count
             }), function (status) {
                 if (status) {
