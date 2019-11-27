@@ -53,7 +53,7 @@ Citizen.CreateThread(function()
             coords = property.outside.coords,
             colour = { r = 55, b = 55, g = 255 },
             size = vector3(1.0, 1.0, 1.0),
-            msg = 'Press ~INPUT_CONTEXT~ to enter ' .. property.name,
+            msg = _U('enterkey') .. property.name,
             action = function()
                 EnterProperty(property)
             end,
@@ -70,7 +70,7 @@ Citizen.CreateThread(function()
             coords = property.view.coords,
             colour = { r = 55, b = 55, g = 255 },
             size = vector3(1.0, 1.0, 1.0),
-            msg = 'Press ~INPUT_CONTEXT~ to view ' .. property.name,
+            msg = _U('visitkey') .. property.name,
             action = function()
                 ShowViewProperty(property)
             end,
@@ -87,7 +87,7 @@ Citizen.CreateThread(function()
             coords = property.inside.coords,
             colour = { r = 0, b = 0, g = 0 },
             size = vector3(1.0, 1.0, 1.0),
-            msg = 'Press ~INPUT_CONTEXT~ to exit ' .. property.name,
+            msg = _U('leavekey') .. property.name,
             action = function()
                 ExitProperty(property)
             end,
@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
             coords = property.kitchen.coords,
             colour = { r = 0, b = 0, g = 0 },
             size = vector3(1.0, 1.0, 1.0),
-            msg = 'Press ~INPUT_CONTEXT~ to open Kitchen',
+            msg = _U('kitchenkey'),
             action = function()
                 OpenKitchen(property)
             end,
@@ -121,7 +121,7 @@ Citizen.CreateThread(function()
             coords = property.garage.coords,
             colour = { r = 0, b = 0, g = 0 },
             size = vector3(3.0, 3.0, 3.0),
-            msg = 'Press ~INPUT_CONTEXT~ to open Garage',
+            msg = _U('keygarage'),
             action = function()
                 OpenGarage(property)
             end,
@@ -141,7 +141,7 @@ Citizen.CreateThread(function()
                     coords = room.clothes.coords,
                     colour = { r = 0, b = 0, g = 0 },
                     size = vector3(1.0, 1.0, 1.0),
-                    msg = 'Press ~INPUT_CONTEXT~ to change Clothes',
+                    msg = _U('clotheskey'),
                     action = function()
                         OpenClothes(room)
                     end,
@@ -159,7 +159,7 @@ Citizen.CreateThread(function()
                 coords = room.cupboard.coords,
                 colour = { r = 0, b = 0, g = 0 },
                 size = vector3(1.0, 1.0, 1.0),
-                msg = 'Press ~INPUT_CONTEXT~ to open Cupboard',
+                msg = _U('keyroom'),
                 action = function()
                     OpenCupboard(property.name .. '_prop_room_items' .. roomIndex)
                 end,
@@ -286,9 +286,3 @@ function TeleportPlayerTo(x, y, z, heading)
     Citizen.Wait(700)
     DoScreenFadeIn(200)
 end
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 Citizen.CreateThread(function()
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'cupboard',
-        label = 'Cupboard',
+        label = _U('cupboard'),
         slots = 20
     })
 end)
