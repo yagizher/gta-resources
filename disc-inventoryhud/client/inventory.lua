@@ -241,7 +241,7 @@ function playStealOrSearchAnimation(data)
         local playerPed = GetPlayerPed(-1)
         if not IsEntityPlayingAnim(playerPed, 'random@mugging4', 'agitated_loop_a', 3) then
             ESX.Streaming.RequestAnimDict('random@mugging4', function()
-                TaskPlayAnim(playerPed, 'random@mugging4', 'agitated_loop_a', 8.0, -8, -1, 48, 0, 0, 0, 0)
+                --- TaskPlayAnim(playerPed, 'random@mugging4', 'agitated_loop_a', 8.0, -8, -1, 48, 0, 0, 0, 0)
             end)
         end
     end
