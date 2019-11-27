@@ -46,9 +46,9 @@ function ensurePlayerInventory(player)
     getInventory(player.identifier, 'player', function(result)
         local inventory = {}
         for _, esxItem in pairs(player.getInventory()) do
-            print('Adding ' .. esxItem.name .. ' ' .. esxItem.count .. ' ' .. esxItem.limit)
+            print('Adding ' .. esxItem.name .. ' ' .. esxItem.count .. ' ' .. esxItem.weight)
             local item = createItem(esxItem.name, esxItem.count)
-            addToInventory(item, 'player', inventory, esxItem.limit)
+            addToInventory(item, 'player', inventory, esxItem.weight)
         end
 
         if result == nil then
@@ -136,5 +136,3 @@ AddEventHandler('esx:onAddInventoryItem', function(source, esxItem, count)
         TriggerClientEvent('disc-inventoryhud:refreshInventory', source)
     end)
 end)
-
-
