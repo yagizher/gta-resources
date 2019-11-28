@@ -37,10 +37,15 @@ function RemoveWeapon(weapon)
 end
 
 function GiveWeapon(weapon)
+    local checkh = Config.Throwables
     local playerPed = GetPlayerPed(-1)
     local hash = GetHashKey(weapon)
     ESX.TriggerServerCallback('disc-inventoryhud:getAmmoCount', function(ammoCount)
         GiveWeaponToPed(playerPed, hash, 1, false, true)
+    if checkh[weapon] == hash then
+        SetPedAmmo(playerPed, hash, 1)
+    else
         SetPedAmmo(playerPed, hash, ammoCount)
+    end
     end, hash)
 end
