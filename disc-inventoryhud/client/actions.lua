@@ -1,3 +1,4 @@
+isHotKeyCoolDown = false
 RegisterNUICallback('UseItem', function(data)
     if isWeapon(data.item.id) then
         currentWeaponSlot = data.slot
@@ -43,6 +44,14 @@ Citizen.CreateThread(function()
 end)
 
 function UseItem(slot)
+    if isHotKeyCoolDown then
+        return
+    end
+    Citizen.CreateThread(function()
+        isHotKeyCoolDown = true
+        Citizen.Wait(Config.HotKeyCooldown)
+        isHotKeyCoolDown = false
+    end)
     ESX.TriggerServerCallback('disc-inventoryhud:UseItemFromSlot', function(item)
         if item then
             if isWeapon(item.id) then
