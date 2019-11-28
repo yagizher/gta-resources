@@ -3,6 +3,9 @@ loadedInventories = {}
 
 RegisterServerEvent('disc-inventoryhud:openInventory')
 AddEventHandler('disc-inventoryhud:openInventory', function(inventory)
+    if inventory.type == 'shop' then
+        return
+    end
     if openInventory[inventory.owner] == nil then
         openInventory[inventory.owner] = {}
     end
@@ -11,6 +14,9 @@ end)
 
 RegisterServerEvent('disc-inventoryhud:closeInventory')
 AddEventHandler('disc-inventoryhud:closeInventory', function(inventory)
+    if inventory.type == 'shop' then
+        return
+    end
     if openInventory[inventory.owner] == nil then
         openInventory[inventory.owner] = {}
     end
@@ -18,6 +24,12 @@ AddEventHandler('disc-inventoryhud:closeInventory', function(inventory)
         openInventory[inventory.owner][source] = nil
     end
 end)
+
+function closeAllOpenInventoriesForSource(source)
+    for k, inv in pairs(openInventory) do
+        openInventory[k][source] = nil
+    end
+end
 
 RegisterServerEvent('disc-inventoryhud:refreshInventory')
 AddEventHandler('disc-inventoryhud:refreshInventory', function(owner)
@@ -401,7 +413,7 @@ end)
 
 RegisterServerEvent("disc-inventoryhud:GiveItem")
 AddEventHandler("disc-inventoryhud:GiveItem", function(data)
-    handleWeaponRemoval(data, source)
+    handleGiveWeaponRemoval(data, source)
     TriggerEvent('disc-inventoryhud:notifyImpendingRemoval', data.originItem, data.count, source)
     TriggerEvent('disc-inventoryhud:notifyImpendingAddition', data.originItem, data.count, data.target)
     local targetPlayer = ESX.GetPlayerFromId(data.target)
@@ -691,5 +703,12 @@ function handleWeaponRemoval(data, source)
         else
             TriggerClientEvent('disc-inventoryhud:removeCurrentWeapon', source)
         end
+    end
+end
+
+
+function handleGiveWeaponRemoval(data, source)
+    if isWeapon(data.originItem.id) then
+        TriggerClientEvent('disc-inventoryhud:removeCurrentWeapon', source)
     end
 end

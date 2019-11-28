@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    while ESX == nil or ESX.PlayerData == nil or ESX.PlayerData.job == nil do
+    while not ESXLoaded do
         Citizen.Wait(10)
     end
     for k, v in pairs(Config.Shops) do

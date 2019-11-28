@@ -58,7 +58,7 @@ RegisterNUICallback('GetNearPlayers', function(data, cb)
         SendNUIMessage({
             action = "nearPlayersPay",
             players = GetNeareastPlayers(),
-            item = data.item
+            originItem = data.originItem
         })
     end
     cb('OK')

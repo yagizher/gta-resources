@@ -83,9 +83,10 @@ AddEventHandler('esx:playerLoaded', function(data)
     end)
 end)
 
-AddEventHandler('esx:playerDropped', function(data)
-    local player = ESX.GetPlayerFromId(data)
+AddEventHandler('esx:playerDropped', function(source)
+    local player = ESX.GetPlayerFromId(source)
     saveInventory(player.identifier, 'player')
+    closeAllOpenInventoriesForSource(source)
 end)
 
 

@@ -13,7 +13,7 @@ Config.Shops = {
         items = {
             { name = "bread", price = 100, count = 10 },
             { name = "water", price = 100, count = 10 },
-            { name = "disc_ammo_pistol", price = 100, count = 10} ,
+            { name = "disc_ammo_pistol", price = 100, count = 10 },
             { name = "disc_ammo_pistol_large", price = 1000, count = 10 },
             { name = "WEAPON_SNSPISTOL", price = 100, count = 10 },
         },
@@ -36,8 +36,8 @@ Config.Stash = {
         markerColour = { r = 255, g = 255, b = 255 },
         msg = 'Open Stash ~INPUT_CONTEXT~'
     },
-    ['Police Stash'] = {
-        coords = vector3(456.76, -981.05, 30.69),
+    ['Mc'] = {
+        coords = vector3(457.76, -979.05, 30.69),
         size = vector3(1.0, 1.0, 1.0),
         job = 'police',
         markerType = 2,

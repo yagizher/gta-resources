@@ -494,7 +494,7 @@ $(document).ready(function () {
 $('.popup-body').on('click', '.cashchoice', function () {
     $.post("http://disc-inventoryhud/GetNearPlayers", JSON.stringify({
         action: 'pay',
-        item: $(this).data("id")
+        originItem: $(this).data("id")
     }));
 });
 
