@@ -1,3 +1,5 @@
+# ESX Compatibility
+
 Run this SQL if you see action impossible errors `ALTER TABLE USER_INVENTORY CHANGE COLUMN count count INT(10) UNSIGNED NOT NULL`
 
 # BETA
