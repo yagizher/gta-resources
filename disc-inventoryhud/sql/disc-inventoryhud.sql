@@ -50,7 +50,7 @@ INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`
 INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_FLASHLIGHT', 'Flashlight', 1, 0, 1);
 INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_GARBAGEBAG', 'Garbage Bag', 1, 0, 1);
 INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_GOLFCLUB', 'Golf Club', 1, 0, 1);
-INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_GRENADE', 'Gernade', 1, 0, 1);
+INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_GRENADE', 'Grenade', 1, 0, 1);
 INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_GRENADELAUNCHER', 'Gernade Launcher', 1, 0, 1);
 INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_GUSENBERG', 'Gusenberg', 1, 0, 1);
 INSERT INTO essentialmode.items (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('WEAPON_HAMMER', 'Hammer', 1, 0, 1);
