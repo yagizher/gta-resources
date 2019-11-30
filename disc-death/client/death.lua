@@ -1,4 +1,5 @@
 local isDead = false
+local ShouldPlayDeathAnimation = false
 
 RegisterNetEvent('disc-death:onPlayerDeath')
 RegisterNetEvent('disc-death:onPlayerRevive')
@@ -6,7 +7,18 @@ RegisterNetEvent('disc-death:onPlayerRevive')
 RegisterNetEvent('esx:onPlayerDeath')
 AddEventHandler('esx:onPlayerDeath', function(data)
     isDead = true
+    ShouldPlayDeathAnimation = true
 end)
+
+RegisterNetEvent('disc-death:stopAnim')
+AddEventHandler('disc-death:stopAnim', function()
+    ShouldPlayDeathAnimation = false
+end)
+RegisterNetEvent('disc-death:startAnim')
+AddEventHandler('disc-death:startAnim', function()
+    ShouldPlayDeathAnimation = true
+end)
+
 
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function(data)
@@ -20,6 +32,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
         local playerPed = PlayerPedId()
         if isDead or GetEntityHealth(playerPed) <= 0 then
+            ShouldPlayDeathAnimation = true
             TriggerEvent('disc-death:onPlayerDeath')
             TriggerServerEvent('disc-death:setDead', true)
             ClearPedTasksImmediately(playerPed)
@@ -46,13 +59,13 @@ Citizen.CreateThread(function()
                 TaskPlayAnim(playerPed, lib, anim, 8.0, -8.0, -1, 1, 0, 0, 0, 0)
                 Citizen.Wait(3000)
                 while isDead do
-                    if not IsEntityPlayingAnim(playerPed, 'dead', 'dead_a', 3) then
+                    if not IsEntityPlayingAnim(playerPed, 'dead', 'dead_a', 3) and ShouldPlayDeathAnimation then
                         ESX.Streaming.RequestAnimDict('dead', function()
                             TaskPlayAnim(playerPed, 'dead', 'dead_a', 8.0, 8.0, -1, 33, 0, 0, 0, 0)
                         end)
-                        Citizen.Wait(5000)
-                    else
-                        ClearPedTasksImmediately(playerPed)
+                        Citizen.Wait(1000)
+                    elseif ShouldPlayDeathAnimation then
+                        ClearPedSecondaryTask(playerPed)
                         Citizen.Wait(0)
                     end
                     Citizen.Wait(0)
