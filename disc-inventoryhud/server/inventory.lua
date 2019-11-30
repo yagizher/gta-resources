@@ -447,6 +447,76 @@ AddEventHandler("disc-inventoryhud:GiveCash", function(data)
     end
 end)
 
+RegisterServerEvent("disc-inventoryhud:CashStore")
+AddEventHandler("disc-inventoryhud:CashStore", function(data)
+    local sourcePlayer = ESX.GetPlayerFromId(source)
+    if data.item == 'cash' then
+        if sourcePlayer.getMoney() >= data.count then
+            sourcePlayer.removeMoney(data.count)
+            local invHandler = InvType[data.destinationTier.name]
+            invHandler.applyToInventory(data.owner, function(inventory)
+                if inventory['cash'] == nil then
+                    inventory['cash'] = 0
+                end
+                inventory['cash'] = inventory['cash'] + data.count
+                TriggerEvent('disc-inventoryhud:refreshInventory', sourcePlayer.identifier)
+                TriggerEvent('disc-inventoryhud:refreshInventory', data.owner)
+            end)
+        end
+    elseif data.item == 'black_money' then
+        if sourcePlayer.getAccount('black_money').money >= data.count then
+            sourcePlayer.removeAccountMoney('black_money', data.count)
+            local invHandler = InvType[data.destinationTier.name]
+            invHandler.applyToInventory(data.owner, function(inventory)
+                if inventory['black_money'] == nil then
+                    inventory['black_money'] = 0
+                end
+                inventory['black_money'] = inventory['black_money'] + data.count
+                TriggerEvent('disc-inventoryhud:refreshInventory', sourcePlayer.identifier)
+                TriggerEvent('disc-inventoryhud:refreshInventory', data.owner)
+            end)
+        end
+    end
+end)
+
+RegisterServerEvent("disc-inventoryhud:CashTake")
+AddEventHandler("disc-inventoryhud:CashTake", function(data)
+    local sourcePlayer = ESX.GetPlayerFromId(source)
+    if data.item == 'cash' then
+        local invHandler = InvType[data.destinationTier.name]
+        invHandler.applyToInventory(data.owner, function(inventory)
+            if inventory['cash'] == nil then
+                inventory['cash'] = 0
+            end
+            if inventory['cash'] >= data.count then
+                inventory['cash'] = inventory['cash'] - data.count
+                if inventory['cash'] == 0 then
+                    inventory['cash'] = nil
+                end
+                sourcePlayer.addMoney(data.count)
+            end
+            TriggerEvent('disc-inventoryhud:refreshInventory', sourcePlayer.identifier)
+            TriggerEvent('disc-inventoryhud:refreshInventory', data.owner)
+        end)
+    elseif data.item == 'black_money' then
+        local invHandler = InvType[data.destinationTier.name]
+        invHandler.applyToInventory(data.owner, function(inventory)
+            if inventory['black_money'] == nil then
+                inventory['black_money'] = 0
+            end
+            if inventory['black_money'] >= data.count then
+                inventory['black_money'] = inventory['black_money'] - data.count
+                if inventory['black_money'] == 0 then
+                    inventory['black_money'] = nil
+                end
+                sourcePlayer.addAccountMoney('black_money', data.count)
+            end
+            TriggerEvent('disc-inventoryhud:refreshInventory', sourcePlayer.identifier)
+            TriggerEvent('disc-inventoryhud:refreshInventory', data.owner)
+        end)
+    end
+end)
+
 function debugData(data)
     for k, v in pairs(data) do
         print(k .. ' ' .. v)
@@ -637,18 +707,22 @@ function getDisplayInventory(identifier, type, cb, source)
         local itemsObject = {}
 
         for k, v in pairs(inventory) do
-            local esxItem = player.getInventoryItem(v.name)
-            local item = createDisplayItem(v, esxItem, tonumber(k))
-            item.usable = false
-            item.giveable = false
-            item.canRemove = false
-            table.insert(itemsObject, item)
+            if k ~= 'cash' and k ~= 'black_money' then
+                local esxItem = player.getInventoryItem(v.name)
+                local item = createDisplayItem(v, esxItem, tonumber(k))
+                item.usable = false
+                item.giveable = false
+                item.canRemove = false
+                table.insert(itemsObject, item)
+            end
         end
 
         local inv = {
             invId = identifier,
             invTier = InvType[type],
             inventory = itemsObject,
+            cash = inventory['cash'] or 0,
+            black_money = inventory['black_money'] or 0
         }
         cb(inv)
     end)
@@ -705,7 +779,6 @@ function handleWeaponRemoval(data, source)
         end
     end
 end
-
 
 function handleGiveWeaponRemoval(data, source)
     if isWeapon(data.originItem.id) then

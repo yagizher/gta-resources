@@ -46,6 +46,18 @@ RegisterNUICallback('GiveCash', function(data, cb)
     cb('OK')
 end)
 
+
+RegisterNUICallback('CashStore', function(data, cb)
+    TriggerServerEvent('disc-inventoryhud:CashStore', data)
+    cb('OK')
+end)
+
+RegisterNUICallback('CashTake', function(data, cb)
+    TriggerServerEvent('disc-inventoryhud:CashTake', data)
+    cb('OK')
+end)
+
+
 RegisterNUICallback('GetNearPlayers', function(data, cb)
     if data.action == 'give' then
         SendNUIMessage({
@@ -122,6 +134,10 @@ function refreshSecondaryInventory()
                           itemList = data.inventory,
                           invOwner = data.invId,
                           invTier = data.invTier,
+                          money = {
+                              cash = data.cash,
+                              black_money = data.black_money
+                          }
                         }
                 )
                 SendNUIMessage(

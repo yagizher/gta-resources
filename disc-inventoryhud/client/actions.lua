@@ -21,7 +21,6 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         BlockWeaponWheelThisFrame()
-        SetCamEffect(0)
         HideHudComponentThisFrame(19)
         HideHudComponentThisFrame(20)
         HideHudComponentThisFrame(17)

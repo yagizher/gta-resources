@@ -58,7 +58,7 @@ window.addEventListener("message", function (event) {
     } else if (event.data.action == "setSecondInventoryItems") {
         secondTier = event.data.invTier;
         destinationOwner = event.data.invOwner;
-        secondInventorySetup(event.data.invOwner, event.data.itemList, event.data.invTier);
+        secondInventorySetup(event.data.invOwner, event.data.itemList, event.data.invTier, event.data.money);
     } else if (event.data.action == "setInfoText") {
         $(".info-div").html(event.data.text);
     } else if (event.data.action == "nearPlayersGive" || event.data.action == "nearPlayersPay") {
@@ -140,12 +140,15 @@ function inventorySetup(invOwner, items, money, invTier) {
     })
 }
 
-function secondInventorySetup(invOwner, items, invTier) {
+function secondInventorySetup(invOwner, items, invTier, money) {
     setupSecondarySlots(invOwner);
     $('#other-inv-label').html(secondTier.label);
     $('#other-inv-id').html(invOwner);
     $('#inventoryTwo').data('invOwner', invOwner);
     $('#inventoryTwo').data('invTier', invTier);
+    $('#second-title').html(secondTier.label);
+    $('#second-cash').html('<img src="img/cash.png" class="moneyIcon"> $' + formatCurrency(money.cash));
+    $('#second-black_money').html('<img src="img/black_money.png" class="moneyIcon"> $' + formatCurrency(money.black_money));
     secondUsed = 0;
     $.each(items, function (index, item) {
         var slot = $('#inventoryTwo').find('.slot').filter(function () {
@@ -316,6 +319,34 @@ $(document).ready(function () {
         }
     }).mouseleave(function () {
         $(this).removeClass('hover');
+    });
+
+    $("#take").mouseenter(function () {
+        $(this).addClass('hover');
+    }).mouseleave(function () {
+        $(this).removeClass('hover');
+    }).click(function (event, ui) {
+        successAudio.play();
+        $('.near-players-wrapper').find('.popup-body').html('');
+        $('.near-players-wrapper').find('.popup-body').html('');
+        $('.near-players-list .popup-body').append(`<div class="cashtake" data-id="cash">Cash</div>`);
+        $('.near-players-list .popup-body').append(`<div class="cashtake" data-id="black_money">Black Money</div>`);
+        $('.near-players-wrapper').fadeIn();
+        EndDragging();
+    });
+
+    $("#store").mouseenter(function () {
+        $(this).addClass('hover');
+    }).mouseleave(function () {
+        $(this).removeClass('hover');
+    }).click(function (event, ui) {
+        successAudio.play();
+        $('.near-players-wrapper').find('.popup-body').html('');
+        $('.near-players-wrapper').find('.popup-body').html('');
+        $('.near-players-list .popup-body').append(`<div class="cashstore" data-id="cash">Cash</div>`);
+        $('.near-players-list .popup-body').append(`<div class="cashstore" data-id="black_money">Black Money</div>`);
+        $('.near-players-wrapper').fadeIn();
+        EndDragging();
     });
 
     $('#give').click(function (event, ui) {
@@ -497,6 +528,31 @@ $('.popup-body').on('click', '.cashchoice', function () {
         originItem: $(this).data("id")
     }));
 });
+
+$('.popup-body').on('click', '.cashstore', function () {
+    $.post("http://disc-inventoryhud/CashStore", JSON.stringify({
+        action: 'cashstore',
+        item: $(this).data("id"),
+        count: parseInt($("#count").val()),
+        owner: destinationOwner,
+        destinationTier: secondTier
+    }), function(status){
+        $('.near-players-wrapper').fadeOut();
+    });
+});
+
+$('.popup-body').on('click', '.cashtake', function () {
+    $.post("http://disc-inventoryhud/CashTake", JSON.stringify({
+        action: 'cashtake',
+        item: $(this).data("id"),
+        count: parseInt($("#count").val()),
+        owner: destinationOwner,
+        destinationTier: secondTier
+    }), function(status){
+        $('.near-players-wrapper').fadeOut();
+    });
+});
+
 
 function AttemptDropInEmptySlot(origin, destination, moveQty) {
     var result = ErrorCheck(origin, destination, moveQty);
