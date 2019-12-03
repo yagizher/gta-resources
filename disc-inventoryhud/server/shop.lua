@@ -43,6 +43,8 @@ function getShopDisplayInventory(identifier, cb, source)
             invId = identifier,
             invTier = InvType['shop'],
             inventory = itemsObject,
+            cash = 0,
+            black_money = 0
         }
         cb(inv)
     end)
