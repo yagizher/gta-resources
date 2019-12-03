@@ -99,3 +99,5 @@ Config.Throwables = {
     WEAPON_PIPEBOMB = -1169823560,
     WEAPON_SNOWBALL = 126349499
 }
+
+Config.FuelCan = 883325847
