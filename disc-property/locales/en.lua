@@ -40,7 +40,7 @@ Locales['en'] = {
     ['notowned'] = "You do not own this vehicle",
     ['exceed'] = "You have exceeded garage capacity",
     ['spawned'] = "Spawned ",
-    ['parked'] = "Store vhicle",
+    ['parked'] = "Store vehicle",
     ['takeveh'] = "Get Vehicle",
 -- Clothes
     ['changec'] = "Change Clothes",

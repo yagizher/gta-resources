@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
                 shouldDraw = function()
                     return ESX.PlayerData.job.name == v.job or v.job == 'all'
                 end,
-                msg = v.msg or 'Press ~INPUT_CONTEXT~ to open Shop',
+                msg = v.msg or _U('keyshop'),
             }
             TriggerEvent('disc-base:registerMarker', marker)
         end

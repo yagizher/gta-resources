@@ -1,12 +1,13 @@
-resource_manifest_version "44febabe-d386-4d18-afbe-5e627f4af937"
+resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
 
 description 'Disc InventoryHud'
 
-version '0.4.0'
+version '0.4.1'
 
 ui_page 'html/ui.html'
 
 client_scripts {
+    '@es_extended/locale.lua',
     'client/main.lua',
     'config.lua',
     'client/actions.lua',
@@ -21,9 +22,12 @@ client_scripts {
     'common/drop.lua',
     'common/weapons.lua',
     'utils.lua'
+    'locales/cs.lua',
+    'locales/en.lua',
 }
 
 server_scripts {
+    '@es_extended/locale.lua',
     'server/main.lua',
     'config.lua',
     '@mysql-async/lib/MySQL.lua',
@@ -41,6 +45,8 @@ server_scripts {
     'common/drop.lua',
     'common/weapons.lua',
     'utils.lua'
+    'locales/cs.lua',
+    'locales/en.lua',
 }
 
 files {
