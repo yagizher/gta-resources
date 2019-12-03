@@ -3,7 +3,7 @@ local drops = {}
 Citizen.CreateThread(function()
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'drop',
-        label = 'Drop',
+        label = _U('drop'),
         slots = 10
     })
 end)
@@ -60,4 +60,3 @@ AddEventHandler('disc-inventoryhud:deletedInventory', function(identifier, type)
         TriggerClientEvent('disc-inventoryhud:updateDrops', -1, drops)
     end
 end)
-

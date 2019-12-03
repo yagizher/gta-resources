@@ -6,7 +6,7 @@ RegisterNUICallback('UseItem', function(data)
     TriggerServerEvent('disc-inventoryhud:notifyImpendingRemoval', data.item, 1)
     TriggerServerEvent("esx:useItem", data.item.id)
     TriggerEvent('disc-inventoryhud:refreshInventory')
-    data.item.msg = 'Item Used'
+    data.item.msg = _U('used')
     data.item.qty = 1
     TriggerEvent('disc-inventoryhud:showItemUse', {
         data.item
@@ -57,7 +57,7 @@ function UseItem(slot)
             end
             TriggerServerEvent('disc-inventoryhud:notifyImpendingRemoval', item, 1)
             TriggerServerEvent("esx:useItem", item.id)
-            item.msg = 'Item Used'
+            item.msg = _U('used')
             item.qty = 1
             TriggerEvent('disc-inventoryhud:showItemUse', {
                 item,
@@ -85,4 +85,3 @@ AddEventHandler('disc-inventoryhud:showItemUse', function(items)
         alerts = data
     })
 end)
-

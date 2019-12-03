@@ -21,7 +21,7 @@ Citizen.CreateThread(function()
             shouldDraw = function()
                 return ESX.PlayerData.job.name == v.job or v.job == 'all'
             end,
-            msg = v.msg or 'Press ~INPUT_CONTEXT~ to open Stash',
+            msg = v.msg or _U('keystash'),
         }
         TriggerEvent('disc-base:registerMarker', marker)
     end
