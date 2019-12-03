@@ -637,6 +637,10 @@ ESX.RegisterServerCallback('disc-inventoryhud:canOpenInventory', function(source
 end)
 
 ESX.RegisterServerCallback('disc-inventoryhud:getSecondaryInventory', function(source, cb, type, identifier)
+    if InvType[type] == nil then
+        print('ERROR FINDING INVENTORY TYPE:' .. type)
+        return
+    end
     InvType[type].getDisplayInventory(identifier, cb, source)
 end)
 
