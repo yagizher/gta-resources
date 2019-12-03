@@ -9,5 +9,5 @@ Locales['cs'] = {
     ['player'] = "Hráč",
     ['shop'] = "Obchod",
     ['stash'] = "Úschovna",
-    ['trunk'] = "Kufr",
+    ['trunk'] = "Kufr-",
 } 

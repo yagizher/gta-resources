@@ -24,7 +24,7 @@ Locales['cs'] = {
 -- Controls
     ['visitkey'] = "Stiskni ~INPUT_CONTEXT~ pro navstiveni ",
     ['enterkey'] = "Stiskni ~INPUT_CONTEXT~ pro vstup do ",
-    ['leavekey'] = "Stiskni ~INPUT_CONTEXT~ to exit ",
+    ['leavekey'] = "Stiskni ~INPUT_CONTEXT~ pro odchod z ",
     ['kitchenkey'] = "Stiskni ~INPUT_CONTEXT~ pro otevreni kuchyne",
     ['keygarage'] = "Stiskni ~INPUT_CONTEXT~ pro otevreni garaze",
     ['clotheskey'] = "Stiskni ~INPUT_CONTEXT~ pro prevlceni",

@@ -9,5 +9,5 @@ Locales['en'] = {
     ['player'] = "Player",
     ['shop'] = "Shop",
     ['stash'] = "Stash",
-    ['trunk'] = "Trunk",
+    ['trunk'] = "Trunk-",
 } 
