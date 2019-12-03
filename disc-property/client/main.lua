@@ -132,6 +132,23 @@ Citizen.CreateThread(function()
         }
         TriggerEvent('disc-base:registerMarker', marker)
 
+	local marker = {
+            name = property.name .. '_prop_shower' .. propertyIndex,
+            type = -1,
+            coords = property.shower.coords,
+            colour = { r = 55, b = 55, g = 255 },
+            size = vector3(1.0, 1.0, 1.0),
+            msg = _U('showroom'),
+            action = function()
+                TriggerEvent('disc-property:shower')
+            end,
+            property = property,
+            shouldDraw = function()
+                return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
+            end
+        }
+        TriggerEvent('disc-base:registerMarker', marker)
+
         for roomIndex, room in pairs(property.rooms) do
 
             if room.clothes ~= nil then
@@ -170,7 +187,6 @@ Citizen.CreateThread(function()
             }
             TriggerEvent('disc-base:registerMarker', marker)
         end
-
     end
 end)
 

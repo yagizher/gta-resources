@@ -29,6 +29,7 @@ Locales['en'] = {
     ['keygarage'] = "Press ~INPUT_CONTEXT~ to open Garage",
     ['clotheskey'] = "Press ~INPUT_CONTEXT~ to change Clothes",
     ['keyroom'] = "Press ~INPUT_CONTEXT~ to open Cupboard",
+    ['showroom'] = "Press ~INPUT_CONTEXT~ to shower",
 -- Cupboard
     ['cupboard'] = "Cupboard",
 -- Garage
@@ -39,7 +40,7 @@ Locales['en'] = {
     ['notowned'] = "You do not own this vehicle",
     ['exceed'] = "You have exceeded garage capacity",
     ['spawned'] = "Spawned ",
-    ['parked'] = "No vehicle to store",
+    ['parked'] = "Store vhicle",
     ['takeveh'] = "Get Vehicle",
 -- Clothes
     ['changec'] = "Change Clothes",
@@ -50,4 +51,8 @@ Locales['en'] = {
     ['savc'] = "Saved Clothes: ",
     ['changc'] = "Change to Clothes: ",
     ['nameout'] = "Name your Outfit",
+-- Showers
+    ['commanderr'] = "You cant go dirty by command!",
+    ['smell'] = "Everyone in your area now knows how bad you smell!",
+    ['smell1'] = "~r~You are dirty",
 } 

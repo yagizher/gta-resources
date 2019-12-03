@@ -2,7 +2,7 @@ resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
 
 description 'Disc Property'
 
-version '1.0.0'
+version '1.1.0'
 
 client_scripts {
     '@es_extended/locale.lua',
@@ -13,6 +13,7 @@ client_scripts {
     'client/clothes.lua',
     'client/main.lua',
     'client/property.lua',
+    'client/showers.lua',
     'locales/cs.lua',
     'locales/en.lua',
 }
@@ -26,6 +27,7 @@ server_scripts {
     'server/garage.lua',
     'server/clothes.lua',
     'server/inventory.lua',
+    'server/showers.lua',
     'locales/cs.lua',
     'locales/en.lua',
 }

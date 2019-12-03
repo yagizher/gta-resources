@@ -29,6 +29,7 @@ Locales['cs'] = {
     ['keygarage'] = "Stiskni ~INPUT_CONTEXT~ pro otevreni garaze",
     ['clotheskey'] = "Stiskni ~INPUT_CONTEXT~ pro prevlceni",
     ['keyroom'] = "Stiskni ~INPUT_CONTEXT~ pro otevreni skrine",
+    ['showroom'] = "Stiskni ~INPUT_CONTEXT~ pro osprchovani se",
 -- Cupboard
     ['cupboard'] = "Skrin",
 -- Garage
@@ -50,4 +51,8 @@ Locales['cs'] = {
     ['savc'] = "Ulozene obleceni: ",
     ['changc'] = "Prevlecen na: ",
     ['nameout'] = "Pojmenuj svuj outfit",
-} 
+-- Showers
+    ['commanderr'] = "Nemuzes se uspinit prikazem!",
+    ['smell'] = "Nyni vsichni citi tvuj smrad!",
+    ['smell1'] = "Pachne",
+}
