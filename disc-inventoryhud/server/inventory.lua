@@ -651,6 +651,12 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterCommand('saveInventories', function(src, args, raw)
+    if src == 0 then
+        saveInventories()
+    end
+end)
+
 function saveInventories()
     for type, inventories in pairs(loadedInventories) do
         for identifier, inventory in pairs(inventories) do
