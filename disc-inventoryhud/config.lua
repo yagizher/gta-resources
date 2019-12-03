@@ -57,6 +57,12 @@ Config.Seize = {
     cash = true
 }
 
+Config.VehicleLimit = {
+    ['Zentorno'] = 10,
+    ['Panto'] = 1,
+    ['Zion'] = 5
+}
+
 --Courtesy DoctorTwitch
 Config.VehicleSlot = {
     [0] = 10, --Compact
