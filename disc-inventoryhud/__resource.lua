@@ -21,7 +21,7 @@ client_scripts {
     'client/stash.lua',
     'common/drop.lua',
     'common/weapons.lua',
-    'utils.lua'
+    'utils.lua',
     'locales/cs.lua',
     'locales/en.lua',
 }
@@ -44,7 +44,7 @@ server_scripts {
     'server/itemdata.lua',
     'common/drop.lua',
     'common/weapons.lua',
-    'utils.lua'
+    'utils.lua',
     'locales/cs.lua',
     'locales/en.lua',
 }
