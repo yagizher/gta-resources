@@ -57,13 +57,13 @@ Citizen.CreateThread(function()
             local lib, anim = 'move_fall', 'land_fall'
             ESX.Streaming.RequestAnimDict(lib, function()
                 TaskPlayAnim(playerPed, lib, anim, 8.0, -8.0, -1, 1, 0, 0, 0, 0)
-                Citizen.Wait(3000)
+                Citizen.Wait(1000)
                 while isDead do
                     if not IsEntityPlayingAnim(playerPed, 'dead', 'dead_a', 3) and ShouldPlayDeathAnimation then
                         ESX.Streaming.RequestAnimDict('dead', function()
                             TaskPlayAnim(playerPed, 'dead', 'dead_a', 8.0, 8.0, -1, 33, 0, 0, 0, 0)
                         end)
-                        Citizen.Wait(1000)
+                        Citizen.Wait(3000)
                     elseif ShouldPlayDeathAnimation then
                         ClearPedSecondaryTask(playerPed)
                         Citizen.Wait(0)
