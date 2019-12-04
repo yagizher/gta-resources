@@ -5,3 +5,5 @@ invLocale.giveItem = "Dát";
 invLocale.label = "Inventář";
 invLocale.stealmoney = "Ukrást peníze";
 invLocale.seizemoney = "Zabavit peníze";
+invLocale.takemoney = "Vzít";
+invLocale.storemoney = "Uložit";
