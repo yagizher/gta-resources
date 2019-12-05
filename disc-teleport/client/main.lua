@@ -14,6 +14,7 @@ Citizen.CreateThread(function()
     end
 
     ESX.PlayerData = ESX.GetPlayerData()
+    ESXLoaded = true
 end)
 
 RegisterNetEvent('esx:setJob')
