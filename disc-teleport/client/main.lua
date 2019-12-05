@@ -1,4 +1,5 @@
 ESX = nil
+ESXLoaded = false
 
 Citizen.CreateThread(function()
     while ESX == nil do
@@ -21,7 +22,9 @@ AddEventHandler('esx:setJob', function(job)
 end)
 
 Citizen.CreateThread(function()
-    Citizen.Wait(0)
+    while not ESXLoaded do
+        Citizen.Wait(10)
+    end
     for k, v in pairs(Config.Teleporters) do
         local marker = {
             name = v.name .. '_teleporter',
