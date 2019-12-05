@@ -76,6 +76,10 @@ Citizen.CreateThread(function()
 end)
 
 function Revive(playerPed)
+    Coords = GetEntityCoords(playerPed)
+    Heading = GetEntityHeading(playerPed)
+    NetworkResurrectLocalPlayer(Coords.x, Coords.y, Coords.z, Heading, true, false)
+    
     TriggerServerEvent('disc-death:setDead', false)
     TriggerEvent('disc-death:onPlayerRevive')
     isDead = false
