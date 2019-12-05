@@ -7,7 +7,7 @@ version '1.0.1'
 client_scripts {
     '@es_extended/locale.lua',
     'config.lua',
-    'client/main.lua'
+    'client/main.lua',
     'locales/cs.lua',
-    'locales/en.lua',
+    'locales/en.lua'
 }
