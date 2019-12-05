@@ -54,7 +54,7 @@ Citizen.CreateThread(function()
         local closestPed = GetPedInFront()
         local closestpedCoords = GetEntityCoords(closestPed)
         local dist = GetDistanceBetweenCoords(pedCoords.x, pedCoords.y, pedCoords.z, closestpedCoords.x, closestpedCoords.y, closestpedCoords.z, true)
-        if dist <= pedCoords.x then
+        if dist <= 2 then
 
             local cs = canSell(PlayerPedId())
             local cst = CanSellTo(closestPed)
