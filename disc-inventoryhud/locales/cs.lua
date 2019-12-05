@@ -1,6 +1,6 @@
 Locales['cs'] = {
  -- Client side
-    ['used'] = "Předmět byl použit",
+    ['used'] = "Předmět použit",
     ['keyshop'] = "Stiskni ~INPUT_CONTEXT~ pro otevreni obchodu",
     ['keystash'] = "Stiskni ~INPUT_CONTEXT~ pro otevreni uschovny",
 -- Server side
@@ -10,4 +10,5 @@ Locales['cs'] = {
     ['shop'] = "Obchod",
     ['stash'] = "Úschovna",
     ['trunk'] = "Kufr-",
+    ['added'] = "Předmět přidán",
 } 

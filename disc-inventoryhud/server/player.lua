@@ -118,7 +118,7 @@ end)
 AddEventHandler('esx:onAddInventoryItem', function(source, esxItem, count)
     local player = ESX.GetPlayerFromId(source)
     TriggerClientEvent('disc-inventoryhud:showItemUse', source, {
-        { id = esxItem.name, label = esxItem.label, qty = count, msg = 'Item Added' }
+        { id = esxItem.name, label = esxItem.label, qty = count, msg = _U('added') }
     })
     applyToInventory(player.identifier, 'player', function(inventory)
         if impendingAdditions[source] then
