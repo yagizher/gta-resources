@@ -46,7 +46,6 @@ end)
 
 Citizen.CreateThread(function()
     for propertyIndex, property in pairs(Config.Properties) do
-
         local marker = {
             name = property.name .. '_prop_enter' .. propertyIndex,
             type = -1,
@@ -132,7 +131,7 @@ Citizen.CreateThread(function()
         }
         TriggerEvent('disc-base:registerMarker', marker)
 
-	local marker = {
+        local marker = {
             name = property.name .. '_prop_shower' .. propertyIndex,
             type = -1,
             coords = property.shower.coords,
