@@ -7,26 +7,83 @@ Config.DeleteDropsOnStart = false
 Config.HotKeyCooldown = 1000
 
 Config.Shops = {
-    ['My Shop Of Awesome Things'] = {
+    ['TwentyFourSeven'] = {
         coords = {
-            vector3(44.38, -1746.76, 29.5),
-            vector3(44.38, -1742.76, 29.5),
+            vector3(373.875, 325.896, 103.566),
+            vector3(2557.458, 382.282, 106.622),
+            vector3(-3038.939, 585.954, 7.908),
+            vector3(-3241.927, 1001.462, 12.830),
+            vector3(547.431, 2671.710, 42.156),
+            vector3(1961.464, 3740.672, 32.343),
+            vector3(2678.916, 3280.671, 55.241),
+            vector3(1729.563, 6414.126, 36.037),
+            vector3(26.18, -1347.37, 29.5),
         },
         items = {
-            { name = "bread", price = 100, count = 10 },
-            { name = "water", price = 100, count = 10 },
-            { name = "disc_ammo_pistol", price = 100, count = 10 },
-            { name = "disc_ammo_pistol_large", price = 1000, count = 10 },
-            { name = "WEAPON_SNSPISTOL", price = 100, count = 10 },
+            { name = "bread", price = 20, count = 10 },
+            { name = "water", price = 10, count = 10 },
         },
         markerType = 1,
         markerColour = { r = 255, g = 255, b = 255 },
-        blipColour = 2,
-        blipSprite = 52,
         msg = 'Open Shop ~INPUT_CONTEXT~',
-        enableBlip = true,
+        enableBlip = false,
         job = 'all'
-    }
+    },
+
+    ['RobsLiquor'] = {
+        coords = {
+            vector3(-48.519, -1757.514, 29.421),
+            vector3(1163.373, -323.801, 68.205),
+            vector3(-707.501, -914.260, 19.215),
+            vector3(-1820.523, 792.518, 138.118),
+            vector3(1698.388, 4924.404, 42.063),
+        },
+        items = {
+            { name = "bread", price = 20, count = 10 },
+            { name = "water", price = 10, count = 10 }
+        },
+        markerType = 1,
+        markerColour = { r = 255, g = 255, b = 255 },
+        msg = 'Open Shop ~INPUT_CONTEXT~',
+        enableBlip = false,
+        job = 'all'
+    },
+
+    ['LTDgasoline'] = {
+        coords = {
+            vector3(1135.808, -982.281, 46.415),
+            vector3(-1222.915, -906.983, 12.326),
+            vector3(-1487.553, -379.107, 40.163),
+            vector3(-2968.243, 390.910, 15.043),
+            vector3(1166.024, 2708.930, 38.157),
+            vector3(1392.562, 3604.684, 34.980),
+        },
+        items = {
+            { name = "bread", price = 20, count = 10 },
+            { name = "water", price = 10, count = 10 },
+        },
+        markerType = 1,
+        markerColour = { r = 255, g = 255, b = 255 },
+        msg = 'Open Shop ~INPUT_CONTEXT~',
+        enableBlip = false,
+        job = 'all'
+    },
+    ['Diner'] = {
+        coords = {
+            vector3(282.43, -214.66, 53.99),
+            vector3(-272.78,239.46,90.57),
+        },
+        items = {
+            { name = "bread", price = 20, count = 10 },
+            { name = "water", price = 10, count = 10 },
+
+        },
+        markerType = 1,
+        markerColour = { r = 255, g = 255, b = 255 },
+        msg = 'Open Diner ~INPUT_CONTEXT~',
+        enableBlip = false,
+        job = 'all'
+    },
 }
 
 Config.Stash = {
