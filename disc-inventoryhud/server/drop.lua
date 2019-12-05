@@ -3,7 +3,7 @@ local drops = {}
 Citizen.CreateThread(function()
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'drop',
-        label = 'Drop',
+        label = _U('drop'),
         slots = 10
     })
 end)
@@ -22,6 +22,19 @@ Citizen.CreateThread(function()
         end
         TriggerClientEvent('disc-inventoryhud:updateDrops', -1, drops)
     end)
+end)
+
+AddEventHandler('esx:playerLoaded', function(data)
+    Citizen.Wait(5000)
+    TriggerClientEvent('disc-inventoryhud:updateDrops', data, drops)
+end)
+
+RegisterServerEvent('disc-inventoryhud:modifiedInventory')
+AddEventHandler('disc-inventoryhud:modifiedInventory', function(identifier, type, data)
+    if type == 'drop' then
+        drops[identifier] = data
+        TriggerClientEvent('disc-inventoryhud:updateDrops', -1, drops)
+    end
 end)
 
 RegisterServerEvent('disc-inventoryhud:savedInventory')
@@ -47,4 +60,3 @@ AddEventHandler('disc-inventoryhud:deletedInventory', function(identifier, type)
         TriggerClientEvent('disc-inventoryhud:updateDrops', -1, drops)
     end
 end)
-

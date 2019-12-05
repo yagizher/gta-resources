@@ -1,13 +1,16 @@
 Citizen.CreateThread(function()
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'shop',
-        label = 'Shop',
+        label = _U('shop'),
         slots = 20,
         getInventory = function(identifier, cb)
             getShopInventory(identifier, cb)
         end,
         saveInventory = function(identifier, inventory)
 
+        end,
+        applyToInventory = function(identifier, f)
+            getShopInventory(identifier, f)
         end,
         getDisplayInventory = function(identifier, cb, source)
             getShopDisplayInventory(identifier, cb, source)
@@ -19,6 +22,7 @@ function getShopInventory(identifier, cb)
     local shop = Config.Shops[identifier]
     local items = {}
     for k, v in pairs(shop.items) do
+        v.usable = false
         items[tostring(k)] = v
     end
     cb(items)
@@ -39,6 +43,8 @@ function getShopDisplayInventory(identifier, cb, source)
             invId = identifier,
             invTier = InvType['shop'],
             inventory = itemsObject,
+            cash = 0,
+            black_money = 0
         }
         cb(inv)
     end)
