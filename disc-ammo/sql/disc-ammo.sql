@@ -6,6 +6,7 @@ create table disc_ammo
     count int default 0 not null,
     constraint id
         unique (id)
+
     PRIMARY KEY (`id`)
 );
 
