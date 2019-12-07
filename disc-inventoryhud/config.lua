@@ -84,6 +84,34 @@ Config.Shops = {
         enableBlip = false,
         job = 'all'
     },
+    ['Weapon Shop - Police'] = {
+        coords = {
+            vector3(450.06, -990.55, 30.69),
+            vector3(451.85, -982.37, 30.69),
+        },
+        items = {
+            -- Ammo
+            { name = "disc_ammo_pistol", price = 0, count = 1, grade = 0 },
+            { name = "disc_ammo_pistol_large", price = 0, count = 1, grade = 0 },
+            { name = "disc_ammo_rifle", price = 0, count = 1, grade = 0 },
+            { name = "disc_ammo_rifle_large", price = 0, count = 1, grade = 0 },
+            { name = "disc_ammo_shotgun", price = 0, count = 1, grade = 0 },
+            { name = "disc_ammo_smg", price = 0, count = 1, grade = 0 },
+            { name = "disc_ammo_snp", price = 0, count = 1, grade = 0 },
+            { name = "WEAPON_COMBATPISTOL", price = 0, count = 1, grade = 0 },
+            { name = "WEAPON_STUNGUN", price = 0, count = 1, grade = 0 },
+            { name = "WEAPON_NIGHTSTICK", price = 0, count = 1, grade = 0 },
+            { name = "WEAPON_FLASHLIGHT", price = 0, count = 1, grade = 0 },
+            { name = "WEAPON_FLARE", price = 0, count = 1, grade = 0 },
+            { name = "WEAPON_PUMPSHOTGUN", price = 0, count = 1, grade = 2 },
+            { name = "WEAPON_CARBINERIFLE", price = 0, count = 1, grade = 3 },
+            { name = "WEAPON_FLARE", price = 0, count = 1, grade = 1 },
+        },
+        markerType = 2,
+        markerColour = { r = 0, g = 0, b = 255 },
+        msg = '[E] Police shop',
+        job = 'police'
+    },
 }
 
 Config.Stash = {
