@@ -18,9 +18,9 @@ server_scripts {
     'utils/utils.lua',
 }
 
-ui_page "html/html/index.html"
+ui_page "web/html/index.html"
 
 files {
-    "html/html/main.js",
-    "html/html/index.html"
+    "web/html/main.js",
+    "web/html/index.html"
 }
