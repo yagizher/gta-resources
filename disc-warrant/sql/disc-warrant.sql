@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS warrants
 (
-    id                BIGINT UNSIGNED AUTO_INCREMENT,
+    id                BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     identifier        TEXT              NULL,
     crime_description TEXT              NULL,
     char_description  TEXT              NULL,
@@ -9,6 +9,3 @@ CREATE TABLE IF NOT EXISTS warrants
     CONSTRAINT id
         UNIQUE (id)
 );
-
-ALTER TABLE warrants
-    ADD PRIMARY KEY (id);
