@@ -1,26 +1,17 @@
 ESX = nil
-
 ---------------------------------------------------------- Config ----------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------
 local command = true -- command /dirty sets you dirty
-local isSmutsig = false -- if false then you are clean by default
+local isDirty = false -- if false then you are clean by default
 local TreDMe = true -- you can download 3dme here: https://github.com/Sheamle/3dme
-----------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------- Status ----------------------------------------------------------
-local scriptStatus = false
-----------------------------------------------------------------------------------------------------------------------------
--- Set to true if u want to use dirty as status
-----------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------
+local scriptStatus = false -- Set to true if u want to use dirty as status
 ---------------------------------------------------------- Script --------------------------------------------------------
-
 Citizen.CreateThread(function()
 	if Config.Dirty == true then
 	while true do
 		Citizen.Wait(2700000)
-		local smutsigRisk = math.random(100)
-		if not isSmutsig and not scriptStatus and smutsigRisk <= 5 then -- 5% chance that u will get dirty with esx_status turned off
-			isSmutsig = true
+		local dirtyRisk = math.random(100)
+		if not isDirty and not scriptStatus and dirtyRisk <= 5 then -- 5% chance that u will get dirty with esx_status turned off
+			isDirty = true
 			Wait(500)
 		end
 	end
@@ -37,7 +28,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(5000)
-		if isSmutsig then
+		if isDirty then
 			TriggerServerEvent('disc-property:sync', GetPlayerServerId(PlayerId()), 'flugor')
 			if TreDMe then
 				TriggerServerEvent('3dme:shareDisplay', _U('smell1'))
@@ -61,7 +52,7 @@ AddEventHandler('esx_status:loaded', function(status)
 			local playerPed  = PlayerPedId()
 			TriggerEvent('esx_status:getStatus', 'dirty', function(status)
 				if status.val >= 750000 then
-					isSmutsig = true
+					isDirty = true
 				else
 				Wait(500)
 				end
@@ -107,7 +98,7 @@ AddEventHandler('disc-property:shower', function(property)
 local coords = GetEntityCoords(GetPlayerPed(-1))
     				for v, property in pairs(Config.Properties) do
 					if GetDistanceBetweenCoords(coords, property.shower.coords, true) < 1.5 then
-						isSmutsig = false
+						isDirty = false
 						local hashSkin = GetHashKey("mp_m_freemode_01") 
     						local x, y, z = table.unpack(property.shower.coords)
 						TeleportPlayerTo(x, y, z, property.shower.heading)	
@@ -120,6 +111,7 @@ local coords = GetEntityCoords(GetPlayerPed(-1))
 								['arms'] = 15,
 								['pants_1'] = 61, ['pants_2'] = 5,
 								['shoes_1'] = 34, ['shoes_2'] = 0,
+								['helmet_1'] = -1, ['helmet_2'] = 0,
 							}
 							TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
 						end)
@@ -131,6 +123,7 @@ local coords = GetEntityCoords(GetPlayerPed(-1))
 								['arms'] = 15,
 								['pants_1'] = 15, ['pants_2'] = 0,
 								['shoes_1'] = 35, ['shoes_2'] = 0,
+								['helmet_1'] = -1, ['helmet_2'] = 0,
 							}
 							TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
 							end)
@@ -191,7 +184,10 @@ AddEventHandler('disc-property:syncWater', function(ped, x, y, z)
 		Wait(25)
 		StopParticleFxLooped(effect, 0)
 		ClearPedTasks(PlayerPed)
+		DoScreenFadeOut(200)
 		ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin)
+		Citizen.Wait(200)
+		DoScreenFadeIn(200)
 		TriggerEvent('skinchanger:loadSkin', skin)
 		Wait(25)
 		StopParticleFxLooped(effect, 0)
@@ -205,7 +201,7 @@ RegisterCommand("dirty", function(source)
 			TriggerEvent('esx_status:set', 'dirty', 750000)
                         exports['mythic_notify']:SendAlert('error', _U('smell'))
 		else
-			isSmutsig = not isSmutsig
+			isDirty = not isDirty
 		end
 	else
                         exports['mythic_notify']:SendAlert('error', _U('commanderr'))

@@ -2,7 +2,7 @@ resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
 
 description 'Disc Property'
 
-version '1.1.0'
+version '1.1.1'
 
 client_scripts {
     '@es_extended/locale.lua',
