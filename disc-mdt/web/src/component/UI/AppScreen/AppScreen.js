@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { blue, grey } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   outsideDiv: {
@@ -9,7 +9,6 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     height: '80vh',
     margin: 'auto',
-    overflow: 'hidden',
     top: 0,
     left: 0,
     right: 0,
@@ -19,7 +18,7 @@ const useStyles = makeStyles(theme => ({
         width: 10,
         marginLeft: theme.spacing(1),
         marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(1),
       },
       '*::-webkit-scrollbar-track': {
         boxShadow: 'inset 0 0 1px grey',
@@ -29,21 +28,20 @@ const useStyles = makeStyles(theme => ({
         background: grey[500],
         borderRadius: 10,
         '&:hover': {
-          background: grey[700]
-        }
+          background: grey[700],
+        },
       },
-    }
+    },
   },
   insideDiv: {
     width: '100%',
     height: '100%',
     position: 'relative',
-    display: 'block'
+    display: 'block',
   },
 }));
 
 export default function AppScreen(props) {
-
   const classes = useStyles();
 
   return (

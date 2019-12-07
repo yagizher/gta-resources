@@ -6,18 +6,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import Fab from '@material-ui/core/Fab';
 import InfoIcon from '@material-ui/icons/Info';
-import Divider from '@material-ui/core/Divider';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import Card from '../../UI/Card/Card';
 
 const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'relative',
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  },
-  grid: {
-    padding: theme.spacing(1),
-  },
   table: {
     textAlign: 'left',
   },
@@ -57,39 +49,31 @@ export default function VehicleCard(props) {
   };
 
   return (
-    <Paper className={classes.paper}>
-      <Grid container justify={'left'} alignItems={'left'} spacing={3} className={classes.grid}>
-        <Grid item xs={12}>
-          <Typography variant={'h6'}>{props.data.plate}</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider/>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.tablePaper}>
-            <Table className={classes.table} size="small" aria-label="a dense table">
-              <TableBody>
-                <TableRow><TableCell>Owner</TableCell><TableCell><Typography variant={'body1'}
-                                                                             className={classes.capitalize}>{props.data.firstname + ' ' + props.data.lastname}</Typography></TableCell></TableRow>
-                <TableRow><TableCell>Model</TableCell><TableCell><Typography variant={'body1'}
-                                                                             className={classes.capitalize}>{props.data.model.toLowerCase()}</Typography></TableCell></TableRow>
-                <TableRow><TableCell>Primary Color</TableCell><TableCell><Typography variant={'body1'}
-                                                                                     className={classes.capitalize}>{props.data.colorPrimary}</Typography></TableCell></TableRow>
-                <TableRow><TableCell>Secondary Color</TableCell><TableCell><Typography variant={'body1'}
-                                                                                       className={classes.capitalize}>{props.data.colorSecondary}</Typography></TableCell></TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-        </Grid>
+    <Card title={props.data.plate}>
+      <Grid item xs={6}>
+        <Paper className={classes.tablePaper}>
+          <Table className={classes.table} size="small" aria-label="a dense table">
+            <TableBody>
+              <TableRow><TableCell>Owner</TableCell><TableCell><Typography variant={'body1'}
+                                                                           className={classes.capitalize}>{props.data.firstname + ' ' + props.data.lastname}</Typography></TableCell></TableRow>
+              <TableRow><TableCell>Model</TableCell><TableCell><Typography variant={'body1'}
+                                                                           className={classes.capitalize}>{props.data.model.toLowerCase()}</Typography></TableCell></TableRow>
+              <TableRow><TableCell>Primary Color</TableCell><TableCell><Typography variant={'body1'}
+                                                                                   className={classes.capitalize}>{props.data.colorPrimary}</Typography></TableCell></TableRow>
+              <TableRow><TableCell>Secondary Color</TableCell><TableCell><Typography variant={'body1'}
+                                                                                     className={classes.capitalize}>{props.data.colorSecondary}</Typography></TableCell></TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
       </Grid>
       {!props.hideFab && (<Fab variant="extended" aria-label="like" className={classes.infoFab} onClick={onInfoClick}>
         <InfoIcon className={classes.extendedIcon}/>
         Info
       </Fab>)}
-      <Fab className={classes.pictureFab} onClick={onPhotoClick}>
+      {!props.hideFab && <Fab className={classes.pictureFab} onClick={onPhotoClick}>
         <PhotoCameraIcon/>
-      </Fab>
-    </Paper>
+      </Fab>}
+    </Card>
   );
 
 }

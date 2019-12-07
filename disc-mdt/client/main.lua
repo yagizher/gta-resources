@@ -49,17 +49,6 @@ RegisterNUICallback("CloseUI", function(data, cb)
     SetNuiFocus(false, false)
 end)
 
-RegisterNUICallback("SearchCivilians", function(data, cb)
-    ESX.TriggerServerCallback("disc-mdt:searchCivilians", function(civilians)
-        SendNUIMessage({
-            type = "SET_CIVILIANS",
-            data = {
-                civilians = civilians
-            }
-        })
-    end, data.search)
-    cb('OK')
-end)
 
 function formatVehicle(vehicle)
     vehicle.model = GetDisplayNameFromVehicleModel(vehicle.props.model)

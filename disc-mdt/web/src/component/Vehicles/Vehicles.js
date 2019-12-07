@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import EntityModal from '../UI/Modal/EntityModal';
 import Screen from '../UI/Screen/Screen';
 import React, { useEffect, useState } from 'react';
-import { makeStyles, TextField, Typography } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import { connect, useSelector } from 'react-redux';
 import VehicleCard from './Vehicle/VehicleCard';
 import Fab from '@material-ui/core/Fab';
@@ -11,9 +11,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { green } from '@material-ui/core/colors';
 import TitleBar from '../UI/TitleBar/TitleBar';
 import Divider from '@material-ui/core/Divider';
-import ImageCard from '../UI/ImageCard/ImageCard';
-import PublishIcon from '@material-ui/icons/Publish';
-import { setSearch, setVehicleImage } from './actions';
+import { setSearch, setSelectedVehicle, setVehicleImage } from './actions';
+import ImageModal from '../UI/ImageModal/ImageModal';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -29,11 +28,6 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: green[300],
     },
-  },
-  fabPhoto: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
   },
   title: {
     textAlign: 'center',
@@ -56,33 +50,28 @@ export default connect()((props) => {
   const classes = useStyles();
   const vehicles = useSelector(state => state.veh.vehicles);
   const currentSearch = useSelector(state => state.veh.currentSearch);
-  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const selectedVehicle = useSelector(state => state.veh.selected);
+  const selectedVehicleImage = useSelector(state => state.veh.selectedImage);
   const [modalState, setModalState] = useState(false);
   const [photoModalState, setPhotoModalState] = useState(false);
   const [currentFilter, setFilter] = useState(null);
   const [filteredVehicles, setFilteredVehicles] = useState([]);
-  const [url, setUrl] = useState('');
 
   const search = (search) => {
     props.dispatch(setSearch(search));
   };
 
-  const setImage = () => {
+  const setImage = (url) => {
     setVehicleImage(selectedVehicle.plate, url, currentSearch);
   };
 
   useEffect(() => {
     setFilteredVehicles(vehicles.filter((veh) => filterVehicle(veh, currentFilter)));
     if (selectedVehicle !== null) {
-      setSelectedVehicle(vehicles.find((veh) => veh.plate === selectedVehicle.plate));
+      props.dispatch(setSelectedVehicle(vehicles.find((veh) => veh.plate === selectedVehicle.plate)));
     }
   }, [vehicles]);
 
-  useEffect(() => {
-    if (selectedVehicle !== null && selectedVehicle.vehicle_image !== null) {
-      setUrl(selectedVehicle.vehicle_image);
-    } else setUrl('');
-  }, [selectedVehicle]);
 
   const filter = (f) => {
     setFilter(f);
@@ -114,9 +103,10 @@ export default connect()((props) => {
             <SearchBar search={filter} instant label={'Filter'}/>
           </Grid>
         </Grid>
-        {filteredVehicles.map(civ =>
+        {filteredVehicles.map(veh =>
           <Grid item xs={12} className={classes.gridItem}>
-            <VehicleCard data={civ} setModalState={setModalState} setSelectedVehicle={setSelectedVehicle}
+            <VehicleCard data={veh} setModalState={setModalState}
+                         setSelectedVehicle={(veh) => props.dispatch(setSelectedVehicle(veh))}
                          setPhotoModalState={setPhotoModalState}/>
           </Grid>,
         )}
@@ -127,28 +117,16 @@ export default connect()((props) => {
             <Typography variant={'h4'} className={classes.title}>Vehicle Data</Typography>
           </Grid>
           <Divider/>
-          <VehicleCard data={selectedVehicle} hideFab={true}/>
+          <VehicleCard data={selectedVehicle} setModalState={setModalState}
+                       setSelectedVehicle={(veh) => props.dispatch(setSelectedVehicle(veh))}
+                       setPhotoModalState={setPhotoModalState} hideFab/>
         </Grid>
         <Fab aria-label="add" className={classes.fab}>
           <AddIcon/>
         </Fab>
       </EntityModal>
-      <EntityModal open={photoModalState} setModalState={setPhotoModalState}>
-        <Grid spacing={0} justify={'center'} alignItems={'center'}>
-          <Grid item xs={12}>
-            <Typography variant={'h4'} className={classes.title}>Vehicle Photo</Typography>
-          </Grid>
-          <Divider/>
-          {selectedVehicle !== null && <ImageCard url={selectedVehicle.vehicle_image}/>}
-          <Grid item xs={12}>
-            <TextField variant={'outlined'} className={classes.textField} value={url}
-                       onChange={(event) => setUrl(event.target.value)}/>
-          </Grid>
-          <Fab aria-label="add" className={classes.fabPhoto} onClick={setImage}>
-            <PublishIcon/>
-          </Fab>
-        </Grid>
-      </EntityModal>
+      <ImageModal open={photoModalState} setModalState={setPhotoModalState} title={'Vehicle Photo'}
+                  selectedImage={selectedVehicleImage} setImage={setImage}/>
     </Screen>
   );
 });

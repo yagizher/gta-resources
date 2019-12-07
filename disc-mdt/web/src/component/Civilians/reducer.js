@@ -1,16 +1,34 @@
 export const initialState = {
   civilians: [],
+  currentSearch: '',
+  selected : null,
+  selectedImage: ""
 };
 
 const reducer = (state = initialState, action) => {
-  if (action.type === 'SET_CIVILIANS') {
-    return {
-      ...state,
-      civilians: action.payload.civilians
+  switch (action.type) {
+    case 'SET_CIVILIANS':
+      return {
+        ...state,
+        civilians: action.payload.civilians,
+      };
+    case 'SET_CIV_SEARCH' : {
+      return {
+        ...state,
+        currentSearch: action.payload,
+      };
     }
-  } else {
-    return state;
+    case 'SET_SELECTED_CIVILIAN': {
+      return {
+        ...state,
+        selected: action.payload,
+        selectedImage: action.payload !== null ? action.payload.userimage : ""
+      };
+    }
+    default:
+      return state;
   }
+
 };
 
 export default reducer;

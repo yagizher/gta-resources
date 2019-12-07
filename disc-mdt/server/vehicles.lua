@@ -14,8 +14,8 @@ ESX.RegisterServerCallback('disc-mdt:searchVehicles', function(source, cb, searc
     end)
 end)
 
-ESX.RegisterServerCallback('disc-mdt:setImage', function(source, cb, data)
-    MySQL.Async.execute('UPDATE owned_vehicles SET vehicle_image=@url WHERE plate = @plate', {
+ESX.RegisterServerCallback('disc-mdt:setVehicleImage', function(source, cb, data)
+    MySQL.Async.execute('UPDATE owned_vehicles SET vehicleimage=@url WHERE plate = @plate', {
         ['@url'] = data.url,
         ['@plate'] = data.plate
     }, function()

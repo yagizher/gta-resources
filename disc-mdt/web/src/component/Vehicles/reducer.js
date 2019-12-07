@@ -1,6 +1,8 @@
 export const initialState = {
   vehicles: [],
   currentSearch: '',
+  selected: null,
+  selectedImage: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +18,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentSearch: action.payload,
       };
+    case 'SET_SELECTED_VEHICLE': {
+      return {
+        ...state,
+        selected: action.payload,
+        selectedImage: action.payload !== null ? action.payload.vehicleimage : '',
+      };
+    }
     default: {
       return state;
     }

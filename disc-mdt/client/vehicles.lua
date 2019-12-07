@@ -6,7 +6,6 @@ RegisterNUICallback("SearchVehicles", function(data, cb)
         local formatVehicles = {}
         for k, v in ipairs(vehicles) do
             v.props = json.decode(v.vehicle)
-            print(v.props.plate)
             table.insert(formatVehicles, formatVehicle(v))
         end
 
@@ -16,12 +15,12 @@ RegisterNUICallback("SearchVehicles", function(data, cb)
                 vehicles = formatVehicles
             }
         })
+        cb('OK')
     end, data.search, model)
-    cb('OK')
 end)
 
-RegisterNUICallback('SetImage', function(data, cb)
-    ESX.TriggerServerCallback('disc-mdt:setImage', function(done)
+RegisterNUICallback('SetVehicleImage', function(data, cb)
+    ESX.TriggerServerCallback('disc-mdt:setVehicleImage', function(done)
         cb('OK')
     end, data)
 end)
