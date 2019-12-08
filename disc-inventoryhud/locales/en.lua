@@ -11,4 +11,5 @@ Locales['en'] = {
     ['stash'] = "Stash",
     ['trunk'] = "Trunk-",
     ['added'] = "Item Added",
+    ['removed'] = "Item Removed",
 } 

@@ -574,7 +574,7 @@ function AttemptDropInEmptySlot(origin, destination, moveQty) {
             AddItemToSlot(destination, item);
             successAudio.play();
 
-            InventoryLog('1Moving ' + item.qty + ' ' + item.label + ' ' + ' From ' + origin.data('invOwner') + ' Slot ' + origin.data('slot') + ' To ' + destination.parent().data('invOwner') + ' Slot ' + item.slot);
+            InventoryLog('Moving ' + item.qty + ' ' + item.label + ' ' + ' From ' + origin.data('invOwner') + ' Slot ' + origin.data('slot') + ' To ' + destination.parent().data('invOwner') + ' Slot ' + item.slot);
             $.post("http://disc-inventoryhud/MoveToEmpty", JSON.stringify({
                 originOwner: origin.parent().data('invOwner'),
                 originSlot: origin.data('slot'),
