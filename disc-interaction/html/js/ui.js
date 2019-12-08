@@ -11,6 +11,7 @@ var doorIndex = 0;
 let menus = $('.ui').find('.menu');
 
 let subMenus = $('.ui').find('.sub-menu');
+$('.ui').hide();
 
 window.addEventListener("message", function (event) {
     switch (event.data.action) {
