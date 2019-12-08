@@ -3,7 +3,7 @@ ESX.RegisterServerCallback('disc-mdt:searchVehicles', function(source, cb, searc
         ['@plate'] = '%' .. search .. '%'
     }, function(vehicles)
         if model ~= nil then
-            MySQL.Async.fetchAll('SELECT * from OWNED_VEHICLES o JOIN users u on u.identifier = o.owner where JSON_EXTRACT(VEHICLE, "$.model") = @model', {
+            MySQL.Async.fetchAll('SELECT * from owned_vehicles o JOIN users u on u.identifier = o.owner where JSON_EXTRACT(VEHICLE, "$.model") = @model', {
                 ['@model'] = model
             }, function(models)
                 cb(table.combine(vehicles, models))
