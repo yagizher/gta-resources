@@ -176,7 +176,7 @@ AddEventHandler('disc-interaction:putInVehicle', function()
         local vehicle, distance = ESX.Game.GetClosestVehicle()
         local modelHash = GetEntityModel(vehicle)
         if vehicle and distance < 3 then
-            for i = GetVehicleModelNumberOfSeats(modelHash), -1, -1 do
+            for i = GetVehicleModelNumberOfSeats(modelHash), 0, -1 do
                 if IsVehicleSeatFree(vehicle, i) then
                     if carrying then
                         StopCarrying()
