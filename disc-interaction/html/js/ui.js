@@ -12,6 +12,9 @@ let menus = $('.ui').find('.menu');
 
 let subMenus = $('.ui').find('.sub-menu');
 $('.ui').hide();
+$('.main-menu').hide();
+hideMenus();
+hideSubMenus();
 
 window.addEventListener("message", function (event) {
     switch (event.data.action) {
