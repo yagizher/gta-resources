@@ -14,7 +14,7 @@ alter table users
     add darkmode BOOLEAN null;
 
 alter table users
-    add userimage BOOLEAN null;
+    add userimage LONGTEXT null;
 
 alter table owned_vehicles
-    add vehicleimage BOOLEAN null;
+    add vehicleimage LONGTEXT null;
