@@ -51,7 +51,7 @@ end)
 
 RegisterNetEvent('disc-interaction:stopDrag')
 AddEventHandler('disc-interaction:stopDrag', function()
-    dragStatus.isDragged = true
+    dragStatus.isDragged = false
     dragStatus.dragger = nil
 end)
 
