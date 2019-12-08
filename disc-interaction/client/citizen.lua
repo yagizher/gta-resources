@@ -35,7 +35,7 @@ function drag()
     end
 
     local player, distance = ESX.Game.GetClosestPlayer()
-    if distance >= 5.0 or player == nil or not canCarry(player) then
+    if distance >= 5.0 or not DoesEntityExist(player) or not canCarry(player) then
         return
     end
     draggingPlayer = GetPlayerServerId(player)
@@ -85,7 +85,7 @@ function Carry()
     local playerPed = PlayerPedId()
     ClearPedSecondaryTask(playerPed)
     local target, distance = ESX.Game.GetClosestPlayer()
-    if target and distance < 3 and canCarry(target) then
+    if DoesEntityExist(target) and distance < 3 and canCarry(target) then
         TriggerServerEvent('disc-interaction:carry', GetPlayerServerId(target))
         Citizen.Wait(200)
         carryingTarget = target
