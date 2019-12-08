@@ -5,7 +5,6 @@ import SearchBar from '../UI/SearchBar/SearchBar';
 import { connect, useSelector } from 'react-redux';
 import CivilianCard from './Civilian/CivilianCard';
 import Grid from '@material-ui/core/Grid';
-import EntityModal from '../UI/Modal/EntityModal';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,10 +12,12 @@ import { green, red } from '@material-ui/core/colors';
 import TitleBar from '../UI/TitleBar/TitleBar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import JailReport from '../JailReport/JailReport';
+import Report from '../Report/Report';
 import ImageModal from '../UI/ImageModal/ImageModal';
 import { setCivilianImage, setSearch, setSelectedCivilian } from './actions';
 import Divider from '@material-ui/core/Divider';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogModal from '../UI/Modal/DialogModal';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -40,8 +41,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     padding: theme.spacing(1),
   },
-  root: {
-  },
+  root: {},
 
 }));
 
@@ -55,7 +55,7 @@ export default connect()((props) => {
   const [modalState, setModalState] = useState(false);
   const [photoModalState, setPhotoModalState] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [jailOpen, setJailOpen] = React.useState(false);
+  const [reportOpen, setReportState] = React.useState(false);
 
   const searchForCivilians = (search) => {
     props.dispatch(setSearch(search));
@@ -64,8 +64,8 @@ export default connect()((props) => {
   const handleMenuSelect = (event) => {
     setAnchorEl(null);
     switch (event.target.id) {
-      case 'jail':
-        setJailOpen(true);
+      case 'report':
+        setReportState(true);
         break;
       default:
     }
@@ -99,7 +99,7 @@ export default connect()((props) => {
           </Grid>,
         )}
       </Grid>
-      <EntityModal open={modalState} setModalState={setModalState}>
+      <DialogModal open={modalState} setModalState={setModalState}>
         <Paper className={classes.title}>
           <Typography variant={'h6'}>Civilian Data</Typography>
         </Paper>
@@ -107,22 +107,23 @@ export default connect()((props) => {
         <CivilianCard data={selectedCivilian} setModalState={setModalState}
                       setSelectedCivilian={(civ) => props.dispatch(setSelectedCivilian(civ))}
                       setPhotoModalState={setPhotoModalState} hideFab/>
-        <Fab aria-label="add" className={classes.fab} onClick={(event) => setAnchorEl(event.currentTarget)}>
-          <AddIcon/>
-        </Fab>
+        <DialogActions>
+          <Fab onClick={(event) => setAnchorEl(event.currentTarget)}>
+            <AddIcon/>
+          </Fab>
+        </DialogActions>
         <Menu
-          id="simple-menu"
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
           onClose={() => setAnchorEl(null)}
         >
-          <MenuItem onClick={handleMenuSelect} id={'jail'}>Jail Report</MenuItem>
+          <MenuItem onClick={handleMenuSelect} id={'report'}>Create A Report</MenuItem>
         </Menu>
-      </EntityModal>
+      </DialogModal>
       <ImageModal open={photoModalState} setModalState={setPhotoModalState} title={'Civilian Photo'}
                   selectedImage={selectedCivilianImage} setImage={setImage}/>
-      <JailReport open={jailOpen} setModalState={setJailOpen}/>
+      {reportOpen && <Report open={reportOpen} setModalState={setReportState} data={selectedCivilian}/>}
     </Screen>
   );
 });

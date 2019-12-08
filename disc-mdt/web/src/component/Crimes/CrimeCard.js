@@ -5,6 +5,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import Card from '../UI/Card/Card';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -14,18 +15,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     overflowX: 'auto',
     marginBottom: theme.spacing(2),
-  },
-  infoFab: {
-    position: 'absolute',
-    margin: theme.spacing(1),
-    bottom: theme.spacing(0),
-    right: theme.spacing(1),
-  },
-  pictureFab: {
-    position: 'absolute',
-    margin: theme.spacing(1),
-    top: theme.spacing(0),
-    right: theme.spacing(1),
   },
   capitalize: {
     textTransform: 'capitalize',
@@ -42,8 +31,9 @@ export default (props) => {
           <Table className={classes.table} size="small" aria-label="a dense table">
             <TableBody>
               <TableRow><TableCell>Fine</TableCell><TableCell>{props.data.fine}</TableCell></TableRow>
-              <TableRow><TableCell>JailTime</TableCell><TableCell>{props.data.jailtime}</TableCell></TableRow>
+              <TableRow><TableCell>Jail Time</TableCell><TableCell>{props.data.jailtime}</TableCell></TableRow>
               <TableRow><TableCell>Type</TableCell><TableCell>{props.data.type}</TableCell></TableRow>
+              <TableRow><TableCell>Description</TableCell><TableCell><Typography variant={'body2'}>{props.data.description}</Typography></TableCell></TableRow>
             </TableBody>
           </Table>
         </Paper>

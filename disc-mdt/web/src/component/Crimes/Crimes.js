@@ -56,12 +56,6 @@ export default function Civilians(props) {
     setTypes(types);
   }, [crimes]);
 
-  useEffect(() => {
-    lodash.mapValues(types, (value) => console.log(JSON.stringify(value)));
-  }, [types]);
-
-  console.log('Types: ' + types);
-
   return (
     <Screen>
       <Grid container direction={'column'} alignItems={'center'} spacing={0} justify={'center'}

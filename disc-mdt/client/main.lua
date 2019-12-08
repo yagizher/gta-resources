@@ -24,12 +24,15 @@ local isShowing = false
 
 RegisterCommand('mdt', function()
     if not isShowing then
-        SendNUIMessage({
-            type = 'SET_USER',
-            data = {
-                player = ESX.GetPlayerData()
-            }
-        })
+        ESX.TriggerServerCallback('disc-mdt:getUser', function(user)
+            SendNUIMessage({
+                type = 'SET_USER',
+                data = {
+                    user = user
+                }
+            })
+        end)
+
         SendNUIMessage({
             type = "APP_SHOW"
         })
@@ -49,11 +52,32 @@ RegisterNUICallback("CloseUI", function(data, cb)
     SetNuiFocus(false, false)
 end)
 
+RegisterNUICallback('SetDarkMode', function(data, cb)
+    TriggerServerEvent('disc-mdt:setDarkMode', data)
+    cb('OK')
+end)
 
-function formatVehicle(vehicle)
-    vehicle.model = GetDisplayNameFromVehicleModel(vehicle.props.model)
-    vehicle.colorPrimary = Config.Colors[tostring(vehicle.props.color1)]
-    vehicle.colorSecondary = Config.Colors[tostring(vehicle.props.color2)]
-    return vehicle
-end
-
+RegisterNUICallback('GetLocation', function(data, cb)
+    local player = PlayerPedId()
+    local x, y, z = table.unpack(GetEntityCoords(player))
+    local coords = { x, y, z }
+    local var1, var2 = GetStreetNameAtCoord(x, y, z, Citizen.ResultAsInteger(), Citizen.ResultAsInteger())
+    street1 = GetStreetNameFromHashKey(var1)
+    street2 = GetStreetNameFromHashKey(var2)
+    streetName = street1
+    if street2 ~= nil and street2 ~= '' then
+        streetName = streetName .. ' + ' .. street2
+    end
+    area = GetLabelText(GetNameOfZone(x, y, z))
+    SendNUIMessage({
+        type = 'SET_LOCATION',
+        data = {
+            location = {
+                street = streetName,
+                area = area,
+                coords = coords
+            }
+        }
+    })
+    cb('OK')
+end)

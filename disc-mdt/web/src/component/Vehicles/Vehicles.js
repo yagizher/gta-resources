@@ -1,14 +1,13 @@
 import SearchBar from '../UI/SearchBar/SearchBar';
 import Grid from '@material-ui/core/Grid';
-import EntityModal from '../UI/Modal/EntityModal';
+import DialogModal from '../UI/Modal/DialogModal';
 import Screen from '../UI/Screen/Screen';
 import React, { useEffect, useState } from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { DialogActions, makeStyles, Typography } from '@material-ui/core';
 import { connect, useSelector } from 'react-redux';
 import VehicleCard from './Vehicle/VehicleCard';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import { green } from '@material-ui/core/colors';
 import TitleBar from '../UI/TitleBar/TitleBar';
 import Divider from '@material-ui/core/Divider';
 import { setSearch, setSelectedVehicle, setVehicleImage } from './actions';
@@ -20,14 +19,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2),
   },
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing(1),
     right: theme.spacing(1),
-    color: green[500].contrastText,
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[300],
-    },
   },
   title: {
     textAlign: 'center',
@@ -111,7 +103,7 @@ export default connect()((props) => {
           </Grid>,
         )}
       </Grid>
-      <EntityModal open={modalState} setModalState={setModalState}>
+      <DialogModal open={modalState} setModalState={setModalState}>
         <Grid spacing={0} justify={'center'} alignItems={'center'}>
           <Grid item xs={12}>
             <Typography variant={'h4'} className={classes.title}>Vehicle Data</Typography>
@@ -121,10 +113,12 @@ export default connect()((props) => {
                        setSelectedVehicle={(veh) => props.dispatch(setSelectedVehicle(veh))}
                        setPhotoModalState={setPhotoModalState} hideFab/>
         </Grid>
-        <Fab aria-label="add" className={classes.fab}>
-          <AddIcon/>
-        </Fab>
-      </EntityModal>
+        <DialogActions>
+          <Fab aria-label="add">
+            <AddIcon/>
+          </Fab>
+        </DialogActions>
+      </DialogModal>
       <ImageModal open={photoModalState} setModalState={setPhotoModalState} title={'Vehicle Photo'}
                   selectedImage={selectedVehicleImage} setImage={setImage}/>
     </Screen>

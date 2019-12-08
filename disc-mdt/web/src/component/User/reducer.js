@@ -1,15 +1,46 @@
 export const initialState = {
-  player: {},
+  user: {},
+  darkMode: true,
+  location: {
+    area: '',
+    street: '',
+    coords: {},
+  },
+  datetime: {
+    time: '',
+    date: ''
+  },
 };
 
 const reducer = (state = initialState, action) => {
-  if (action.type === 'SET_USER') {
-    return {
-      ...state,
-      player: action.payload.player
+  switch (action.type) {
+    case 'SET_USER':
+      return {
+        ...state,
+        user: action.payload.user,
+        darkMode: action.payload.user.darkmode,
+      };
+    case 'SET_DARKMODE' : {
+      return {
+        ...state,
+        darkMode: action.payload,
+      };
     }
-  } else {
-    return state;
+    case 'SET_LOCATION' : {
+      return {
+        ...state,
+        location: action.payload.location,
+      };
+    }
+    case 'SET_TIME' : {
+      return {
+        ...state,
+        datetime: action.payload.datetime,
+      };
+    }
+    default: {
+      return state;
+    }
   }
 };
 

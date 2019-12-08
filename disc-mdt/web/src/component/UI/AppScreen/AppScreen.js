@@ -39,6 +39,12 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     display: 'block',
   },
+  dialog: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: 'fit-content',
+  },
 }));
 
 export default function AppScreen(props) {

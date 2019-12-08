@@ -19,6 +19,15 @@ RegisterNUICallback("SearchVehicles", function(data, cb)
     end, data.search, model)
 end)
 
+
+function formatVehicle(vehicle)
+    vehicle.model = GetDisplayNameFromVehicleModel(vehicle.props.model)
+    vehicle.colorPrimary = Config.Colors[tostring(vehicle.props.color1)]
+    vehicle.colorSecondary = Config.Colors[tostring(vehicle.props.color2)]
+    return vehicle
+end
+
+
 RegisterNUICallback('SetVehicleImage', function(data, cb)
     ESX.TriggerServerCallback('disc-mdt:setVehicleImage', function(done)
         cb('OK')
