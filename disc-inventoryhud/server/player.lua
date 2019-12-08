@@ -43,19 +43,11 @@ function getPlayerDisplayInventory(identifier, cb)
 end
 
 function ensurePlayerInventory(player)
-    getInventory(player.identifier, 'player', function(result)
-        local inventory = {}
+    applyToInventory(player.identifier, 'player', function(inventory)
         for _, esxItem in pairs(player.getInventory()) do
-            print('Adding ' .. esxItem.name .. ' ' .. esxItem.count .. ' ' .. esxItem.weight)
+            print('Adding ' .. esxItem.name .. ' ' .. esxItem.count)
             local item = createItem(esxItem.name, esxItem.count)
-            addToInventory(item, 'player', inventory, esxItem.weight)
-        end
-
-        if result == nil then
-            createInventory(player.identifier, 'player', inventory)
-        else
-            saveInventory(player.identifier, 'player', inventory)
-            loadedInventories['player'][player.identifier] = inventory
+            addToInventory(item, 'player', inventory)
         end
     end)
 end

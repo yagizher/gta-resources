@@ -96,3 +96,5 @@ typings/
 # Cruft
 .DS_Store
 .idea
+.vs/
+node_modules/
