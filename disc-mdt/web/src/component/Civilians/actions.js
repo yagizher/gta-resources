@@ -1,6 +1,6 @@
 import Nui from '../../util/Nui';
 
-export const setSearch = (search) => {
+export const searchCivilians = (search) => {
   return dispatch => {
     Nui.send('SearchCivilians', {
       search: search,
@@ -21,7 +21,7 @@ export const setCivilianImage = (identifier, url, search) => {
     Nui.send('SearchCivilians', {
       search: search,
     });
-  })
+  });
 };
 
 export const setSelectedCivilian = (data) => {
@@ -31,3 +31,8 @@ export const setSelectedCivilian = (data) => {
   };
 };
 
+export const getReports = (identifier) => {
+  Nui.send('GetReportsForPlayer', {
+    identifier: identifier,
+  })
+};

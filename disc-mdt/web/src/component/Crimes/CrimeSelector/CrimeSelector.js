@@ -12,6 +12,7 @@ import * as lodash from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import { Paper } from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 const useStyles = makeStyles(theme => ({
@@ -73,17 +74,20 @@ export default (props) => {
                 <li className={classes.listSection}>
                   <ul className={classes.ul}>
                     <ListSubheader>{cat}</ListSubheader>
-                    {lodash.map(filteredCrimes.filter(crime => crime.type === cat), (crime) => <ListItem button dense
-                                                                                                         onClick={() => props.handleCrime(crime.id)}>
-                      <ListItemText primary={crime.name}/>
-                      <ListItemSecondaryAction>
-                        <Checkbox
-                          disabled
-                          edge="end"
-                          checked={props.selectedCrimes.find(c => crime.id === c) !== undefined}
-                        />
-                      </ListItemSecondaryAction>
-                    </ListItem>)}
+                    {lodash.map(filteredCrimes.filter(crime => crime.type === cat), (crime) =>
+                      <Tooltip title={crime.description} placement="right-end">
+                        <ListItem button dense
+                                  onClick={() => props.handleCrime(crime.id)}>
+                          <ListItemText primary={crime.name}/>
+                          <ListItemSecondaryAction>
+                            <Checkbox
+                              disabled
+                              edge="end"
+                              checked={props.selectedCrimes.find(c => crime.id === c) !== undefined}
+                            />
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      </Tooltip>)}
                   </ul>
                 </li>
               );

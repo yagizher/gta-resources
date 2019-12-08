@@ -18,3 +18,16 @@ alter table users
 
 alter table owned_vehicles
     add vehicleimage LONGTEXT null;
+
+create table disc_mdt_reports
+(
+    id bigint unsigned auto_increment PRIMARY KEY,
+    officerIdentifier text not null,
+    playerIdentifier text not null,
+    report longtext not null,
+    date date null,
+    time time null,
+    constraint id
+        unique (id)
+);
+

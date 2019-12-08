@@ -60,7 +60,7 @@ end)
 RegisterNUICallback('GetLocation', function(data, cb)
     local player = PlayerPedId()
     local x, y, z = table.unpack(GetEntityCoords(player))
-    local coords = { x, y, z }
+    local coords = { x = x, y = y, z = z }
     local var1, var2 = GetStreetNameAtCoord(x, y, z, Citizen.ResultAsInteger(), Citizen.ResultAsInteger())
     street1 = GetStreetNameFromHashKey(var1)
     street2 = GetStreetNameFromHashKey(var2)

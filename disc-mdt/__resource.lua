@@ -7,6 +7,7 @@ client_scripts {
     'client/vehicles.lua',
     'client/civilians.lua',
     'client/crimes.lua',
+    'client/report.lua',
     'utils/utils.lua',
 }
 
@@ -15,6 +16,7 @@ server_scripts {
     'config/config.lua',
     'server/main.lua',
     'server/vehicles.lua',
+    'server/report.lua',
     'server/civilians.lua',
     'server/crimes.lua',
     'utils/utils.lua',

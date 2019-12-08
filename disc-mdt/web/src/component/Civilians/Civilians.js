@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Screen from '../UI/Screen/Screen';
 import SearchBar from '../UI/SearchBar/SearchBar';
 import { connect, useSelector } from 'react-redux';
 import CivilianCard from './Civilian/CivilianCard';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { green, red } from '@material-ui/core/colors';
@@ -13,11 +12,13 @@ import TitleBar from '../UI/TitleBar/TitleBar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Report from '../Report/Report';
-import ImageModal from '../UI/ImageModal/ImageModal';
-import { setCivilianImage, setSearch, setSelectedCivilian } from './actions';
+import { getReports, searchCivilians, setCivilianImage, setSelectedCivilian } from './actions';
 import Divider from '@material-ui/core/Divider';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogModal from '../UI/Modal/DialogModal';
+import ReportDisplay from '../Report/ReportsDisplay/ReportDisplay';
+import Card from '../UI/Card/Card';
+import ImageModal from '../UI/ImageModal/ImageModal';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -52,13 +53,14 @@ export default connect()((props) => {
   const currentSearch = useSelector(state => state.civ.currentSearch);
   const selectedCivilian = useSelector(state => state.civ.selected);
   const selectedCivilianImage = useSelector(state => state.civ.selectedImage);
+  const reports = useSelector(state => state.civ.reports);
   const [modalState, setModalState] = useState(false);
   const [photoModalState, setPhotoModalState] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [reportOpen, setReportState] = React.useState(false);
 
   const searchForCivilians = (search) => {
-    props.dispatch(setSearch(search));
+    props.dispatch(searchCivilians(search));
   };
 
   const handleMenuSelect = (event) => {
@@ -81,6 +83,12 @@ export default connect()((props) => {
     }
   }, [civilians]);
 
+  useEffect(() => {
+    if (selectedCivilian !== null) {
+      getReports(selectedCivilian.identifier);
+    }
+  }, [selectedCivilian]);
+
   return (
     <Screen>
       <Grid container direction={'column'} alignItems={'center'} spacing={0} justify={'center'}
@@ -99,28 +107,25 @@ export default connect()((props) => {
           </Grid>,
         )}
       </Grid>
-      <DialogModal open={modalState} setModalState={setModalState}>
-        <Paper className={classes.title}>
-          <Typography variant={'h6'}>Civilian Data</Typography>
-        </Paper>
-        <Divider/>
-        <CivilianCard data={selectedCivilian} setModalState={setModalState}
-                      setSelectedCivilian={(civ) => props.dispatch(setSelectedCivilian(civ))}
-                      setPhotoModalState={setPhotoModalState} hideFab/>
-        <DialogActions>
-          <Fab onClick={(event) => setAnchorEl(event.currentTarget)}>
-            <AddIcon/>
-          </Fab>
-        </DialogActions>
-        <Menu
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={() => setAnchorEl(null)}
-        >
-          <MenuItem onClick={handleMenuSelect} id={'report'}>Create A Report</MenuItem>
-        </Menu>
-      </DialogModal>
+      {modalState && <DialogModal open={modalState} setModalState={setModalState}>
+        <Card title={selectedCivilian.firstname + ' ' + selectedCivilian.lastname}>
+          <Divider/>
+          <ReportDisplay reports={reports}/>
+          <DialogActions>
+            <Fab onClick={(event) => setAnchorEl(event.currentTarget)}>
+              <AddIcon/>
+            </Fab>
+          </DialogActions>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={() => setAnchorEl(null)}
+          >
+            <MenuItem onClick={handleMenuSelect} id={'report'}>Create A Report</MenuItem>
+          </Menu>
+        </Card>
+      </DialogModal>}
       <ImageModal open={photoModalState} setModalState={setPhotoModalState} title={'Civilian Photo'}
                   selectedImage={selectedCivilianImage} setImage={setImage}/>
       {reportOpen && <Report open={reportOpen} setModalState={setReportState} data={selectedCivilian}/>}

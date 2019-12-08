@@ -2,7 +2,8 @@ export const initialState = {
   civilians: [],
   currentSearch: '',
   selected : null,
-  selectedImage: ""
+  selectedImage: "",
+  reports: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +12,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         civilians: action.payload.civilians,
+      };
+    case 'SET_CIVILIAN_REPORTS':
+      return {
+        ...state,
+        reports: action.payload.reports,
       };
     case 'SET_CIV_SEARCH' : {
       return {

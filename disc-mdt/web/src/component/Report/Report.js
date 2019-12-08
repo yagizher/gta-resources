@@ -10,8 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import CrimeSelector from '../Crimes/CrimeSelector/CrimeSelector';
 import { grey } from '@material-ui/core/colors';
-import CrimeSummary from '../Crimes/CrimeSummary/CrimeSummary';
+import CrimeSummary from './CrimeSummary/CrimeSummary';
 import { getLocation, getTime } from '../User/actions';
+import { postReport } from './actions';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -56,9 +57,11 @@ export default connect()((props) => {
   });
 
   const [crimes, setCrimes] = useState([]);
+  const [notes, setNotes] = useState('');
   const location = useSelector(state => state.user.location);
   const date = useSelector(state => state.user.datetime.date);
   const time = useSelector(state => state.user.datetime.time);
+  const currentSearch = useSelector(state => state.civ.currentSearch);
 
   useEffect(() => {
     if (props.open) {
@@ -92,9 +95,10 @@ export default connect()((props) => {
     });
   };
 
-  useEffect(() => {
-    console.log(JSON.stringify(date, null, 2))
-  }, [date]);
+  const postForm = () => {
+    props.dispatch(postReport(form, location, date, time, crimes, notes, currentSearch));
+    props.setModalState(false);
+  };
 
   const handleDateChange = (date) => {
     console.log(date);
@@ -157,13 +161,13 @@ export default connect()((props) => {
                              selectedCrimes={crimes}/>
             </Grid>
             <Grid item xs={6}>
-              <CrimeSummary crimes={crimes}/>
+              <CrimeSummary crimes={crimes} notes={notes} setNotes={setNotes}/>
             </Grid>
           </Grid>
         </Grid>
       </Card>
       <DialogActions>
-        <Fab>
+        <Fab onClick={postForm}>
           <AddIcon/>
         </Fab>
       </DialogActions>
