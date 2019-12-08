@@ -16,5 +16,5 @@ alter table users
 alter table users
     add userimage BOOLEAN null;
 
-alter table OWNED_VEHICLES
+alter table owned_vehicles
     add vehicleimage BOOLEAN null;
