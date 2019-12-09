@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     right: 0,
     bottom: 0,
+    zIndex: -1,
     '@global': {
       '*::-webkit-scrollbar': {
         width: 10,
@@ -38,12 +39,14 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     position: 'relative',
     display: 'block',
+    zIndex: -1,
   },
   dialog: {
     display: 'flex',
     flexDirection: 'column',
     margin: 'auto',
     width: 'fit-content',
+    zIndex: -1,
   },
 }));
 

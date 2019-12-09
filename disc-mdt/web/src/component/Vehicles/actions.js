@@ -21,11 +21,20 @@ export const setVehicleImage = (plate, url, search) => {
     Nui.send('SearchVehicles', {
       search: search,
     });
-  })
+  });
 };
 export const setSelectedVehicle = (data) => {
   return {
     type: 'SET_SELECTED_VEHICLE',
     payload: data,
   };
+};
+
+export const setBolo = (plate, set, currentSearch) => {
+  return dispatch => Nui.send('SetBolo', {
+    plate: plate,
+    bolo: set,
+  }).then(_ => {
+    dispatch(setSearch(currentSearch));
+  });
 };

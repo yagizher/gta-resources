@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import AppScreen from '../../component/UI/AppScreen/AppScreen';
@@ -13,7 +13,6 @@ import { MuiThemeProvider } from '@material-ui/core';
 
 const App = ({ hidden }) => {
   const darkMode = useSelector(state => state.user.darkMode);
-
   return (
     <MuiThemeProvider theme={Theme(darkMode)}>
       <AppScreen hidden={hidden}>
@@ -23,7 +22,7 @@ const App = ({ hidden }) => {
           <Route path={'/civilians'} exact component={Civilians}/>
           <Route path={'/vehicles'} exact component={Vehicles}/>
           <Route path={'/crimes'} exact component={Crimes}/>
-          <Redirect to={'/'} />
+          <Redirect to={'/'}/>
         </Switch>
       </AppScreen>
     </MuiThemeProvider>

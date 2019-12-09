@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import InfoIcon from '@material-ui/icons/Info';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '../../UI/Card/Card';
+import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -33,6 +34,10 @@ const useStyles = makeStyles(theme => ({
   capitalize: {
     textTransform: 'capitalize',
   },
+  alert: {
+    backgroundColor: red[500],
+    color: red[500].getContrastText,
+  },
 }));
 
 export default function VehicleCard(props) {
@@ -48,27 +53,46 @@ export default function VehicleCard(props) {
     props.setPhotoModalState(true);
   };
 
+  const alertActive = [props.data.bolo].includes(true);
+
   return (
     <Card title={props.data.plate}>
-      <Grid item xs={6}>
-        <Paper className={classes.tablePaper}>
-          <Table className={classes.table} size="small" aria-label="a dense table">
-            <TableBody>
-              <TableRow><TableCell>Owner</TableCell><TableCell><Typography variant={'body1'}
-                                                                           className={classes.capitalize}>{props.data.firstname + ' ' + props.data.lastname}</Typography></TableCell></TableRow>
-              <TableRow><TableCell>Model</TableCell><TableCell><Typography variant={'body1'}
-                                                                           className={classes.capitalize}>{props.data.model.toLowerCase()}</Typography></TableCell></TableRow>
-              <TableRow><TableCell>Primary Color</TableCell><TableCell><Typography variant={'body1'}
-                                                                                   className={classes.capitalize}>{props.data.colorPrimary}</Typography></TableCell></TableRow>
-              <TableRow><TableCell>Secondary Color</TableCell><TableCell><Typography variant={'body1'}
-                                                                                     className={classes.capitalize}>{props.data.colorSecondary}</Typography></TableCell></TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
+      <Grid container justify={'flex-start'} alignItems={'flex-start'} spacing={3}>
+        <Grid item xs={6}>
+          <Card title={'Info'} variant={'h6'}>
+            <Paper className={classes.tablePaper}>
+              <Table className={classes.table} size="small" aria-label="a dense table">
+                <TableBody>
+                  <TableRow><TableCell>Owner</TableCell><TableCell><Typography variant={'body1'}
+                                                                               className={classes.capitalize}>{props.data.firstname + ' ' + props.data.lastname}</Typography></TableCell></TableRow>
+                  <TableRow><TableCell>Model</TableCell><TableCell><Typography variant={'body1'}
+                                                                               className={classes.capitalize}>{props.data.model.toLowerCase()}</Typography></TableCell></TableRow>
+                  <TableRow><TableCell>Primary Color</TableCell><TableCell><Typography variant={'body1'}
+                                                                                       className={classes.capitalize}>{props.data.colorPrimary}</Typography></TableCell></TableRow>
+                  <TableRow><TableCell>Secondary Color</TableCell><TableCell><Typography variant={'body1'}
+                                                                                         className={classes.capitalize}>{props.data.colorSecondary}</Typography></TableCell></TableRow>
+                </TableBody>
+              </Table>
+            </Paper>
+          </Card>
+        </Grid>
+        <Grid item xs={6}>
+          {alertActive && <Card title={'Current Active Alerts'} variant={'h6'}>
+            <Paper className={classes.tablePaper}>
+              <Table className={classes.table} size="small" aria-label="a dense table">
+                <TableBody>
+                  {props.data.bolo && <TableRow
+                    className={props.data.bolo ? classes.alert : null}><TableCell>BOLO</TableCell><TableCell><Typography
+                    variant={'body1'}
+                  >{props.data.bolo ? 'Active' : 'Inactive'}</Typography></TableCell></TableRow>}
+                </TableBody>
+              </Table>
+            </Paper>
+          </Card>}
+        </Grid>
       </Grid>
-      {!props.hideFab && (<Fab variant="extended" aria-label="like" className={classes.infoFab} onClick={onInfoClick}>
-        <InfoIcon className={classes.extendedIcon}/>
-        Info
+      {!props.hideFab && (<Fab aria-label="like" className={classes.infoFab} onClick={onInfoClick}>
+        <InfoIcon/>
       </Fab>)}
       {!props.hideFab && <Fab className={classes.pictureFab} onClick={onPhotoClick}>
         <PhotoCameraIcon/>

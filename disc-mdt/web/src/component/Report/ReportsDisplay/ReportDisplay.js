@@ -25,7 +25,7 @@ export default connect()((props) => {
   }, [props.reports]);
 
   return (
-    <Card title={'Reports'} className={classes.panel}>
+    <Card title={'Last 5 Reports'} className={classes.panel} variant={'h6'}>
       {props.reports.length > 0 ? lodash.map(props.reports, (report) =>
         <ExpansionPanel expanded={currentReport === report.id}
                         onChange={(event, expanded) => expanded ? setCurrentReport(report.id) : setCurrentReport(0)}>

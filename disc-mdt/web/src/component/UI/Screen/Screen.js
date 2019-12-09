@@ -8,6 +8,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     overflow: 'auto',
     position: 'relative',
+    zIndex: -1
   },
 }));
 

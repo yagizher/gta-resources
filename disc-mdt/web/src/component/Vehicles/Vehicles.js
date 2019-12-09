@@ -3,15 +3,20 @@ import Grid from '@material-ui/core/Grid';
 import DialogModal from '../UI/Modal/DialogModal';
 import Screen from '../UI/Screen/Screen';
 import React, { useEffect, useState } from 'react';
-import { DialogActions, makeStyles, Typography } from '@material-ui/core';
+import { DialogActions, makeStyles } from '@material-ui/core';
 import { connect, useSelector } from 'react-redux';
 import VehicleCard from './Vehicle/VehicleCard';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TitleBar from '../UI/TitleBar/TitleBar';
 import Divider from '@material-ui/core/Divider';
-import { setSearch, setSelectedVehicle, setVehicleImage } from './actions';
+import { setBolo, setSearch, setSelectedVehicle, setVehicleImage } from './actions';
 import ImageModal from '../UI/ImageModal/ImageModal';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import Card from '../UI/Card/Card';
+import BoloDialog from '../BoloDialog/BoloDialog';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -44,10 +49,22 @@ export default connect()((props) => {
   const currentSearch = useSelector(state => state.veh.currentSearch);
   const selectedVehicle = useSelector(state => state.veh.selected);
   const selectedVehicleImage = useSelector(state => state.veh.selectedImage);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const [modalState, setModalState] = useState(false);
   const [photoModalState, setPhotoModalState] = useState(false);
+  const [boloModalState, setBoloModalState] = useState(false);
   const [currentFilter, setFilter] = useState(null);
   const [filteredVehicles, setFilteredVehicles] = useState([]);
+
+  const handleMenuSelect = (event) => {
+    setAnchorEl(null);
+    switch (event.target.id) {
+      case 'bolo':
+        setBoloModalState(true);
+        break;
+      default:
+    }
+  };
 
   const search = (search) => {
     props.dispatch(setSearch(search));
@@ -55,6 +72,10 @@ export default connect()((props) => {
 
   const setImage = (url) => {
     setVehicleImage(selectedVehicle.plate, url, currentSearch);
+  };
+
+  const issueBolo = () => {
+    props.dispatch(setBolo(selectedVehicle.plate, !selectedVehicle.bolo, currentSearch));
   };
 
   useEffect(() => {
@@ -103,22 +124,29 @@ export default connect()((props) => {
           </Grid>,
         )}
       </Grid>
-      <DialogModal open={modalState} setModalState={setModalState}>
-        <Grid spacing={0} justify={'center'} alignItems={'center'}>
-          <Grid item xs={12}>
-            <Typography variant={'h4'} className={classes.title}>Vehicle Data</Typography>
-          </Grid>
+      {modalState && <DialogModal open={modalState} setModalState={setModalState}>
+        <Card title={selectedVehicle.plate}>
           <Divider/>
           <VehicleCard data={selectedVehicle} setModalState={setModalState}
                        setSelectedVehicle={(veh) => props.dispatch(setSelectedVehicle(veh))}
                        setPhotoModalState={setPhotoModalState} hideFab/>
-        </Grid>
-        <DialogActions>
-          <Fab aria-label="add">
-            <AddIcon/>
-          </Fab>
-        </DialogActions>
-      </DialogModal>
+          <DialogActions>
+            <Fab aria-label="add" onClick={(event) => setAnchorEl(event.target)}>
+              <MenuIcon/>
+            </Fab>
+          </DialogActions>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={() => setAnchorEl(null)}
+          >
+            <MenuItem onClick={handleMenuSelect} id={'bolo'}>{selectedVehicle.bolo ? 'Remove Bolo' : 'Issue Bolo'}</MenuItem>
+          </Menu>
+          <BoloDialog open={boloModalState} setModalState={setBoloModalState} identifier={selectedVehicle.plate}
+                      issue={issueBolo} active={selectedVehicle.bolo}/>
+        </Card>
+      </DialogModal>}
       <ImageModal open={photoModalState} setModalState={setPhotoModalState} title={'Vehicle Photo'}
                   selectedImage={selectedVehicleImage} setImage={setImage}/>
     </Screen>

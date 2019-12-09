@@ -62,9 +62,8 @@ export default function CivilianCard(props) {
           </Table>
         </Paper>
       </Grid>
-      {!props.hideFab && (<Fab variant="extended" aria-label="like" className={classes.infoFab} onClick={onInfoClick}>
+      {!props.hideFab && (<Fab aria-label="like" className={classes.infoFab} onClick={onInfoClick}>
         <InfoIcon/>
-        Info
       </Fab>)}
       {!props.hideFab && <Fab className={classes.pictureFab} onClick={onPhotoClick}>
         <PhotoCameraIcon/>

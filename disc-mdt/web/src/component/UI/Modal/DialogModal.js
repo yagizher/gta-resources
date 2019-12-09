@@ -1,8 +1,5 @@
 import React from 'react';
-import Modal from '@material-ui/core/Modal';
-import Paper from '@material-ui/core/Paper';
 import { Dialog, DialogContent, makeStyles } from '@material-ui/core';
-import { blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -10,7 +7,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     margin: 'auto',
     width: 'fit-content',
-  }
+    position: 'relative',
+  },
 }));
 
 export default function DialogModal(props) {

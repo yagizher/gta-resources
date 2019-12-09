@@ -23,7 +23,7 @@ export default (props) => {
     <Paper className={classes.paper}>
       <Grid container justify={'left'} alignItems={'left'} spacing={3} className={classes.grid}>
         <Grid item xs={12}>
-          <Typography variant={'h4'}>{props.title}</Typography>
+          <Typography variant={props.variant ? props.variant : "h4"}>{props.title}</Typography>
         </Grid>
         <Grid item xs={12}>
           <Divider/>

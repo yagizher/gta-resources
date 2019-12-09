@@ -8,6 +8,7 @@ client_scripts {
     'client/civilians.lua',
     'client/crimes.lua',
     'client/report.lua',
+    'client/bolo.lua',
     'utils/utils.lua',
 }
 
@@ -19,6 +20,7 @@ server_scripts {
     'server/report.lua',
     'server/civilians.lua',
     'server/crimes.lua',
+    'server/bolo.lua',
     'utils/utils.lua',
 }
 
