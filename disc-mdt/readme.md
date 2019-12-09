@@ -10,8 +10,9 @@ I stream on [Twitch](https://www.twitch.tv/DiscworldZA). Come hang out and learn
 Download available on my [repo](https://github.com/DiscworldZA/gta-resources)
 
 # Description
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/RXWBzCnjC5Y/0.jpg)](http://www.youtube.com/watch?v=RXWBzCnjC5Y)
-
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=RXWBzCnjC5Y
+" target="_blank"><img src="http://img.youtube.com/vi/RXWBzCnjC5Y/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 # Installation
 Add to resource folder `[esx]` or `[disc]`
