@@ -36,17 +36,18 @@ function getShopDisplayInventory(identifier, cb, source)
         for k, v in pairs(inventory) do
             local esxItem = player.getInventoryItem(v.name)
             local item = createDisplayItem(v, esxItem, tonumber(k), v.price)
+	    local addItem = true
             if v.grade ~= nil then
-				if player.job.grade >= v.grade then
-					table.insert(itemsObject, item)
+				if player.job.grade < v.grade then
+					addItem = false
                 end
-            elseif v.license ~= nil then
-                if player.getInventoryItem(v.license).count >= 1 then -- { name = "disc_ammo_pistol", price = 100, count = 1, license = "weaponlicenseone" },
-                    table.insert(itemsObject, item)
+            if v.license ~= nil then
+                if player.getInventoryItem(v.license).count <= 0 then -- { name = "disc_ammo_pistol", price = 100, count = 1, license = "weaponlicenseone" },
+                    addItem = false
                 end
-            else
-                table.insert(itemsObject, item)
-            end
+            if addItem then
+		table.insert(itemsObject, item)
+	    end
         end
 
         local inv = {
