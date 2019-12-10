@@ -1,6 +1,10 @@
 # BETA
 This resource is in open beta. Please report all issues to my [Github](https://github.com/DiscworldZA/gta-resources/issues) or on [Discord](https://discord.gg/S2SckF6)
 
+# Compatibility
+
+This MDT uses a JSON feature which requires the latest version of your MySQL Database to be installed. (8.0+)
+
 # Stream
 
 I stream on [Twitch](https://www.twitch.tv/DiscworldZA). Come hang out and learn from me!
