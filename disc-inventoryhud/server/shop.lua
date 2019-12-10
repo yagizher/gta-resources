@@ -53,16 +53,15 @@ function getShopDisplayInventory(identifier, cb, source)
             if addItem then
                 table.insert(itemsObject, item)
             end
-
-            local inv = {
-                invId = identifier,
-                invTier = InvType['shop'],
-                inventory = itemsObject,
-                cash = 0,
-                black_money = 0
-            }
-            cb(inv)
         end
 
+        local inv = {
+            invId = identifier,
+            invTier = InvType['shop'],
+            inventory = itemsObject,
+            cash = 0,
+            black_money = 0
+        }
+        cb(inv)
     end)
 end
