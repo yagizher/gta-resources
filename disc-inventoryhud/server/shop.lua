@@ -41,24 +41,26 @@ function getShopDisplayInventory(identifier, cb, source)
                 if player.job.grade < v.grade then
                     addItem = false
                 end
-                if v.license ~= nil then
-                    -- { name = "disc_ammo_pistol", price = 100, count = 1, license = "weaponlicenseone" },
-                    if player.getInventoryItem(v.license).count <= 0 then
-                        addItem = false
-                    end
-                end
+            end
 
-                if addItem then
-                    table.insert(itemsObject, item)
+            if v.license ~= nil then
+                -- { name = "disc_ammo_pistol", price = 100, count = 1, license = "weaponlicenseone" },
+                if player.getInventoryItem(v.license).count <= 0 then
+                    addItem = false
                 end
+            end
 
-                local inv = {
-                    invId = identifier,
-                    invTier = InvType['shop'],
-                    inventory = itemsObject,
-                    cash = 0,
-                    black_money = 0
-                }
-                cb(inv)
-            end)
-        end
+            if addItem then
+                table.insert(itemsObject, item)
+            end
+
+            local inv = {
+                invId = identifier,
+                invTier = InvType['shop'],
+                inventory = itemsObject,
+                cash = 0,
+                black_money = 0
+            }
+            cb(inv)
+        end)
+    end
