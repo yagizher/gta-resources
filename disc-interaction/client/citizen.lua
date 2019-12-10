@@ -5,6 +5,8 @@ local carrying = false
 local carryingTarget
 local gettingCarried = false
 local isDead = false
+local dragStatus = {}
+dragStatus.isDragged = false
 
 AddEventHandler('disc-death:onPlayerDeath', function(data)
     isDead = true
@@ -35,7 +37,7 @@ function drag()
     end
 
     local player, distance = ESX.Game.GetClosestPlayer()
-    if distance >= 5.0 or player == nil or not canCarry(player) then
+    if distance >= 5.0 or player == 0 or not canCarry(player) then
         return
     end
     draggingPlayer = GetPlayerServerId(player)
@@ -43,32 +45,40 @@ function drag()
 end
 RegisterNetEvent('disc-interaction:drag')
 AddEventHandler('disc-interaction:drag', function(dragger)
-    dragged = true
-    draggerPlayer = dragger
+    dragStatus.isDragged = true
+    dragStatus.dragger = dragger
 end)
 
 RegisterNetEvent('disc-interaction:stopDrag')
 AddEventHandler('disc-interaction:stopDrag', function()
-    dragged = false
-    draggerPlayer = nil
+    dragStatus.isDragged = false
+    dragStatus.dragger = nil
 end)
 
 Citizen.CreateThread(function()
+    local playerPed
+    local targetPed
+
     while true do
-        local playerPed = PlayerPedId()
-        if dragged then
-            local targetPed = GetPlayerPed(GetPlayerFromServerId(draggerPlayer))
-            if targetPed == nil then
-                dragged = false
-            else
+        Citizen.Wait(1)
+        playerPed = PlayerPedId()
+
+        if dragStatus.isDragged then
+            targetPed = GetPlayerPed(GetPlayerFromServerId(dragStatus.dragger))
+
+            -- undrag if target is in an vehicle
+            if not IsPedSittingInAnyVehicle(targetPed) then
                 AttachEntityToEntity(playerPed, targetPed, 11816, 0.54, 0.54, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+            else
+                dragStatus.isDragged = false
+                DetachEntity(playerPed, true, false)
             end
-            Citizen.Wait(0)
         else
-            Citizen.Wait(0)
+            DetachEntity(playerPed, true, false)
         end
     end
 end)
+
 
 RegisterNUICallback('Carry', function(data, cb)
     if not carrying then
@@ -85,7 +95,11 @@ function Carry()
     local playerPed = PlayerPedId()
     ClearPedSecondaryTask(playerPed)
     local target, distance = ESX.Game.GetClosestPlayer()
-    if target and distance < 3 and canCarry(target) then
+<<<<<<< HEAD
+    if DoesEntityExist(target) and distance < 3 and canCarry(target) then
+=======
+    if target ~= 0 and distance < 3 and canCarry(target) then
+>>>>>>> master
         TriggerServerEvent('disc-interaction:carry', GetPlayerServerId(target))
         Citizen.Wait(200)
         carryingTarget = target
@@ -124,9 +138,10 @@ AddEventHandler('disc-interaction:carry', function(carrier)
     end)
     Citizen.CreateThread(function()
         while gettingCarried do
-            Citizen.Wait(0)
+            Citizen.Wait(1)
             AttachEntityToEntity(playerPed, targetPed, 0, 0.27, 0.15, 0.63, 0.5, 0.5, 180, false, false, false, false, 2, false)
         end
+        DetachEntity(playerPed, true, false)
     end)
 end)
 
@@ -165,7 +180,7 @@ AddEventHandler('disc-interaction:putInVehicle', function()
         local vehicle, distance = ESX.Game.GetClosestVehicle()
         local modelHash = GetEntityModel(vehicle)
         if vehicle and distance < 3 then
-            for i = GetVehicleModelNumberOfSeats(modelHash), -1, -1 do
+            for i = GetVehicleModelNumberOfSeats(modelHash), 0, -1 do
                 if IsVehicleSeatFree(vehicle, i) then
                     if carrying then
                         StopCarrying()

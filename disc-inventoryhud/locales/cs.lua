@@ -11,4 +11,5 @@ Locales['cs'] = {
     ['stash'] = "Úschovna",
     ['trunk'] = "Kufr-",
     ['added'] = "Předmět přidán",
+    ['removed'] = "Předmět odebrán",
 } 

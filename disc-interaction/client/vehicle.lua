@@ -1,6 +1,6 @@
 RegisterNUICallback('SwitchSeats', function(data, cb)
     local vehicle = GetVehiclePedIsIn(PlayerPedId())
-    if IsVehicleSeatFree(vehicle, data.seat) then
+    if IsVehicleSeatFree(vehicle, data.seat) and data.seat then
         SetPedIntoVehicle(PlayerPedId(), vehicle, data.seat)
     end
     cb('OK')
