@@ -43,7 +43,7 @@ function getShopDisplayInventory(identifier, cb, source)
                 end
             end
 
-            if v.license ~= nil then
+            if Config.CheckLicense and v.license ~= nil then
                 -- { name = "disc_ammo_pistol", price = 100, count = 1, license = "weaponlicenseone" },
                 if player.getInventoryItem(v.license).count <= 0 then
                     addItem = false
@@ -62,5 +62,7 @@ function getShopDisplayInventory(identifier, cb, source)
                 black_money = 0
             }
             cb(inv)
-        end)
-    end
+        end
+
+    end)
+end
