@@ -5,6 +5,11 @@ local blips = {}
 
 local HasAlreadyEnteredMarker
 
+RegisterCommand('clearmarkers', function()
+    drawingMarkers = {}
+    markers = {}
+end)
+
 RegisterNetEvent('disc-base:registerMarker')
 AddEventHandler('disc-base:registerMarker', function(marker)
     if marker.coords == nil then
@@ -15,6 +20,8 @@ AddEventHandler('disc-base:registerMarker', function(marker)
         marker.shouldDraw = function()
             return true
         end
+    else
+        marker.shouldDraw()
     end
 
     if marker.command then
@@ -29,11 +36,16 @@ AddEventHandler('disc-base:registerMarker', function(marker)
         end)
     end
 
+    if Config.Debug then
+        print('[Disc-Base] Registering Marker ' .. marker.name)
+    end
     if markers[marker.name] ~= nil then
         marker.changed = true
         markers[marker.name] = marker
+    elseif marker.name ~= nil then
+        markers[marker.name] = marker
     else
-        markers[getOrElse(marker.name, #markers + 1)] = marker
+        table.insert(marker.name)
     end
 
 end)
