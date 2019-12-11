@@ -3,9 +3,6 @@ loadedInventories = {}
 
 RegisterServerEvent('disc-inventoryhud:openInventory')
 AddEventHandler('disc-inventoryhud:openInventory', function(inventory)
-    if inventory.type == 'shop' then
-        return
-    end
     if openInventory[inventory.owner] == nil then
         openInventory[inventory.owner] = {}
     end
@@ -14,9 +11,6 @@ end)
 
 RegisterServerEvent('disc-inventoryhud:closeInventory')
 AddEventHandler('disc-inventoryhud:closeInventory', function(inventory)
-    if inventory.type == 'shop' then
-        return
-    end
     if openInventory[inventory.owner] == nil then
         openInventory[inventory.owner] = {}
     end
@@ -62,6 +56,7 @@ AddEventHandler("disc-inventoryhud:MoveToEmpty", function(data)
     else
         local originInvHandler = InvType[data.originTier.name]
         local destinationInvHandler = InvType[data.destinationTier.name]
+
         if data.originTier.name == 'shop' then
             local player = ESX.GetPlayerFromIdentifier(data.destinationOwner)
             if player.getMoney() >= data.originItem.price * data.originItem.qty then
@@ -554,7 +549,7 @@ function removeItemFromInventory(item, count, inventory)
 end
 
 function addToInventory(item, type, inventory)
-    local max = 100
+    local max = getItemDataProperty(item.name, 'max') or 100
     local toAdd = item.count
     while toAdd > 0 do
         toAdd = AttemptMerge(item, inventory, toAdd, max)
