@@ -28,5 +28,6 @@ ui_page "web/html/index.html"
 
 files {
     "web/html/main.js",
-    "web/html/index.html"
+    "web/html/index.html",
+    "web/html/notification.wav",
 }
