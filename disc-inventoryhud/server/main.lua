@@ -54,11 +54,9 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
-
 ESX.RegisterServerCallback('disc-inventoryhud:doesInvTypeExists', function(source, cb, type)
     cb(InvType[type] ~= nil)
 end)
-
 
 RegisterCommand('ensureInv', function(source)
     local owner = ESX.GetPlayerFromId(source).identifier
@@ -85,8 +83,14 @@ end)
 
 AddEventHandler('esx:playerLoaded', function(data)
     local player = ESX.GetPlayerFromId(data)
-    loadInventory(player.identifier, 'player', function()
-    end)
+    ensurePlayerInventory(player)
+end)
+
+Citizen.CreateThread(function()
+    local players = ESX.GetPlayers()
+    for k, v in ipairs(players) do
+        ensurePlayerInventory(ESX.GetPlayerFromId(v))
+    end
 end)
 
 AddEventHandler('esx:playerDropped', function(source)
@@ -94,9 +98,3 @@ AddEventHandler('esx:playerDropped', function(source)
     saveInventory(player.identifier, 'player')
     closeAllOpenInventoriesForSource(source)
 end)
-
-
-
-
-
-

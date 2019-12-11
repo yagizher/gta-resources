@@ -759,6 +759,7 @@ end
 
 function applyToInventory(identifier, type, f)
     if loadedInventories[type][identifier] ~= nil then
+        print('Running F')
         f(loadedInventories[type][identifier])
     else
         loadInventory(identifier, type, function()
