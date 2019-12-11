@@ -33,7 +33,7 @@ export default (props) => {
                     <TableRow><TableCell>Date of
                       Birth</TableCell><TableCell>{user.dateofbirth}</TableCell></TableRow>
                     <TableRow><TableCell>Height</TableCell><TableCell>{user.height} cm</TableCell></TableRow>
-                    <TableRow><TableCell>Sex</TableCell><TableCell>{user.sex === 'm' ? 'Male' : 'Female'}</TableCell></TableRow>
+                    <TableRow><TableCell>Sex</TableCell><TableCell>{user.sex.toLowerCase() === 'm' ? 'Male' : 'Female'}</TableCell></TableRow>
                     <TableRow><TableCell>Phone Number</TableCell><TableCell>{user.phone_number}</TableCell></TableRow>
                   </TableBody>
                 </Table>
