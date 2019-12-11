@@ -21,6 +21,6 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 # Installation
 Add to resource folder `[esx]` or `[disc]`
 
-Execute SQL : `disc-inventoryhud.sql`
+Execute SQL : `disc-mdt.sql`
 
-Start using `start disc-inventoryhud`
+Start using `start disc-mdt`
