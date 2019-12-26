@@ -8,7 +8,7 @@ ESX.RegisterServerCallback('disc-mdt:postReport', function(source, cb, data)
         notes = data.notes,
         crimes = data.crimes,
     }
-    MySQL.Async.execute('INSERT INTO essentialmode.disc_mdt_reports (officerIdentifier, playerIdentifier, report, date, time) VALUES (@officerIdentifier, @playerIdentifier, @report, @date, @time)', {
+    MySQL.Async.execute('INSERT INTO disc_mdt_reports (officerIdentifier, playerIdentifier, report, date, time) VALUES (@officerIdentifier, @playerIdentifier, @report, @date, @time)', {
         ['@officerIdentifier'] = data.form.officerIdentifier,
         ['@playerIdentifier'] = data.form.playerIdentifier,
         ['@report'] = json.encode(report),
