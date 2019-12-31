@@ -60,7 +60,7 @@ function startAnim()
               end
 		  attachObject()
 		  TaskPlayAnim(GetPlayerPed(-1), "amb@world_human_seat_wall_tablet@female@base", "base" ,8.0, -8.0, -1, 50, 0, false, false, false)
-          tijdelijk = '1'
+          temp = true
       end
 	end)
 end
