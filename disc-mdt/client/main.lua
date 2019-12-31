@@ -53,7 +53,7 @@ local tijdelijk = '0'
 function startAnim()
 	Citizen.CreateThread(function()
     
-      if tijdelijk ~= '1' then
+      if not temp then
 	       RequestAnimDict("amb@world_human_seat_wall_tablet@female@base")
               while not HasAnimDictLoaded("amb@world_human_seat_wall_tablet@female@base") do
                 Citizen.Wait(0)
