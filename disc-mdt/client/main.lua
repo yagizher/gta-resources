@@ -22,7 +22,8 @@ end)
 
 local isShowing = false
 
-RegisterCommand('mdt', function()
+RegisterCommand('pl', function()
+
     if not isShowing then
         ESX.TriggerServerCallback('disc-mdt:getUser', function(user)
             SendNUIMessage({
@@ -37,6 +38,7 @@ RegisterCommand('mdt', function()
             type = "APP_SHOW"
         })
         SetNuiFocus(true, true)
+		startAnim()
         isShowing = true
     else
         SendNUIMessage({
@@ -47,8 +49,37 @@ RegisterCommand('mdt', function()
     end
 end)
 
+local tijdelijk = '0'
+function startAnim()
+	Citizen.CreateThread(function()
+    
+      if tijdelijk ~= '1' then
+	       RequestAnimDict("amb@world_human_seat_wall_tablet@female@base")
+              while not HasAnimDictLoaded("amb@world_human_seat_wall_tablet@female@base") do
+                Citizen.Wait(0)
+              end
+		  attachObject()
+		  TaskPlayAnim(GetPlayerPed(-1), "amb@world_human_seat_wall_tablet@female@base", "base" ,8.0, -8.0, -1, 50, 0, false, false, false)
+          tijdelijk = '1'
+      end
+	end)
+end
+
+function attachObject()
+	tab = CreateObject(GetHashKey("prop_cs_tablet"), 0, 0, 0, true, true, true)
+	AttachEntityToEntity(tab, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.17, 0.10, -0.13, 20.0, 180.0, 180.0, true, true, false, true, 1, true)
+end
+
+function stopAnim()
+    tijdelijk = '0'
+	StopAnimTask(GetPlayerPed(-1), "amb@world_human_seat_wall_tablet@female@base", "base" ,8.0, -8.0, -1, 50, 0, false, false, false)
+    DeleteObject(tab)
+end
+
 RegisterNUICallback("CloseUI", function(data, cb)
     isShowing = false
+	stopAnim()
+	DeleteObject(tab)
     SetNuiFocus(false, false)
 end)
 
