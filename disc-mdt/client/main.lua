@@ -49,7 +49,7 @@ RegisterCommand('pl', function()
     end
 end)
 
-local tijdelijk = '0'
+local temp = false
 function startAnim()
 	Citizen.CreateThread(function()
     
