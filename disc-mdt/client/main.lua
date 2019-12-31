@@ -22,7 +22,7 @@ end)
 
 local isShowing = false
 
-RegisterCommand('pl', function()
+RegisterCommand('mdt', function()
 
     if not isShowing then
         ESX.TriggerServerCallback('disc-mdt:getUser', function(user)
