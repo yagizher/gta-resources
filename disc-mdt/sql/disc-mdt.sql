@@ -19,6 +19,11 @@ alter table users
 alter table owned_vehicles
     add vehicleimage LONGTEXT null;
 
+alter table owned_vehicles
+    add bolo_reason LONGTEXT null;
+alter table owned_vehicles
+    add bolo_officer varchar(30) null;
+
 create table disc_mdt_reports
 (
     id bigint unsigned auto_increment PRIMARY KEY,

@@ -32,6 +32,14 @@ RegisterCommand('mdt', function()
                 }
             })
         end)
+        ESX.TriggerServerCallback('disc-mdt:getCrimes', function(crimes)
+            SendNUIMessage({
+                type = "SET_CRIMES",
+                data = {
+                    crimes = crimes
+                }
+            })
+        end)
 
         SendNUIMessage({
             type = "APP_SHOW"
@@ -80,12 +88,4 @@ RegisterNUICallback('GetLocation', function(data, cb)
         }
     })
     cb('OK')
-end)
-
-RegisterNetEvent('disc-mdt:addNotification')
-AddEventHandler('disc-mdt:addNotification', function(data)
-    SendNUIMessage({
-        type = 'ADD_NOTIFICATION',
-        data = data
-    })
 end)
