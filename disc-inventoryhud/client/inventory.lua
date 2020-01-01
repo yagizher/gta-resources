@@ -46,7 +46,6 @@ RegisterNUICallback('GiveCash', function(data, cb)
     cb('OK')
 end)
 
-
 RegisterNUICallback('CashStore', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:CashStore', data)
     cb('OK')
@@ -56,7 +55,6 @@ RegisterNUICallback('CashTake', function(data, cb)
     TriggerServerEvent('disc-inventoryhud:CashTake', data)
     cb('OK')
 end)
-
 
 RegisterNUICallback('GetNearPlayers', function(data, cb)
     if data.action == 'give' then
@@ -127,7 +125,7 @@ end
 
 function refreshSecondaryInventory()
     ESX.TriggerServerCallback('disc-inventoryhud:canOpenInventory', function(canOpen)
-        if canOpen then
+        if canOpen or secondInventory.type == 'shop' then
             ESX.TriggerServerCallback('disc-inventoryhud:getSecondaryInventory', function(data)
                 SendNUIMessage(
                         { action = "setSecondInventoryItems",
@@ -161,7 +159,7 @@ end
 
 function closeInventory()
     isInInventory = false
-    SendNUIMessage({ action = "hide", type = 'primary'})
+    SendNUIMessage({ action = "hide", type = 'primary' })
     SetNuiFocus(false, false)
     TriggerServerEvent('disc-inventoryhud:closeInventory', {
         type = 'player',

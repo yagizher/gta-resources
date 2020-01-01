@@ -10,6 +10,8 @@ create table disc_mdt_crimes
         unique (id)
 );
 
+INSERT INTO `disc_mdt_crimes`(`name`, `fine`, `jailtime`, `type`, `description`) VALUES ('Grand Theft Auto','500','6','Theft','Grand Theft Auto (GTA) is a serious crime that involves stealing a vehicle with the intent of keeping it permanently.');
+
 alter table users
     add darkmode BOOLEAN null;
 
@@ -19,10 +21,14 @@ alter table users
 alter table owned_vehicles
     add vehicleimage LONGTEXT null;
 
+alter table owned_vehicles   
+    add bolo BOOLEAN null;
 alter table owned_vehicles
     add bolo_reason LONGTEXT null;
 alter table owned_vehicles
     add bolo_officer varchar(30) null;
+
+
 
 create table disc_mdt_reports
 (

@@ -2,7 +2,7 @@ Citizen.CreateThread(function()
     TriggerEvent('disc-inventoryhud:RegisterInventory', {
         name = 'shop',
         label = _U('shop'),
-        slots = 20,
+        slots = 40,
         getInventory = function(identifier, cb)
             getShopInventory(identifier, cb)
         end,
@@ -36,11 +36,21 @@ function getShopDisplayInventory(identifier, cb, source)
         for k, v in pairs(inventory) do
             local esxItem = player.getInventoryItem(v.name)
             local item = createDisplayItem(v, esxItem, tonumber(k), v.price)
+            local addItem = true
             if v.grade ~= nil then
-				if player.job.grade >= v.grade then
-					table.insert(itemsObject, item)
+                if player.job.grade < v.grade then
+                    addItem = false
                 end
-            else
+            end
+
+            if Config.CheckLicense and v.license ~= nil then
+                -- { name = "disc_ammo_pistol", price = 100, count = 1, license = "weaponlicenseone" },
+                if player.getInventoryItem(v.license).count <= 0 then
+                    addItem = false
+                end
+            end
+
+            if addItem then
                 table.insert(itemsObject, item)
             end
         end

@@ -11,3 +11,10 @@ function table.length(T)
     for _ in pairs(T) do count = count + 1 end
     return count
 end
+
+
+function table.print(table)
+    for k, v in pairs(table) do
+        print(k .. ' ' .. tostring(v))
+    end
+end

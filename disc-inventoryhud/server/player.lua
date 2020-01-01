@@ -43,12 +43,19 @@ function getPlayerDisplayInventory(identifier, cb)
 end
 
 function ensurePlayerInventory(player)
-    applyToInventory(player.identifier, 'player', function(inventory)
-        for _, esxItem in pairs(player.getInventory()) do
-            print('Adding ' .. esxItem.name .. ' ' .. esxItem.count)
-            local item = createItem(esxItem.name, esxItem.count)
-            addToInventory(item, 'player', inventory)
-        end
+    deleteInventory(player.identifier, 'player')
+    Citizen.Wait(1000)
+    loadInventory(player.identifier, 'player', function()
+        applyToInventory(player.identifier, 'player', function(inventory)
+            for _, esxItem in pairs(player.getInventory()) do
+                if esxItem.count > 0 then
+                    print('Adding ' .. esxItem.name .. ' ' .. esxItem.count)
+                    local item = createItem(esxItem.name, esxItem.count)
+                    addToInventory(item, 'player', inventory)
+                end
+            end
+            TriggerClientEvent('disc-inventoryhud:refreshInventory', player.source)
+        end)
     end)
 end
 
