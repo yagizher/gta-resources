@@ -52,6 +52,8 @@ RegisterCommand('mdt', function()
         SendNUIMessage({
             type = "APP_HIDE"
         })
+        stopAnim()
+        DeleteObject(tab)
         SetNuiFocus(false, false)
         isShowing = false
     end
