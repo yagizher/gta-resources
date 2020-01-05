@@ -1,13 +1,13 @@
 ESX = nil
 displayVehicle = nil
-ESXLoaded = false
 
 Citizen.CreateThread(function()
     while ESX == nil do
-        Citizen.Wait(0)
+
         TriggerEvent('esx:getSharedObject', function(obj)
             ESX = obj
         end)
+        Citizen.Wait(0)
     end
 
     while ESX.GetPlayerData().job == nil do
@@ -15,7 +15,6 @@ Citizen.CreateThread(function()
     end
 
     ESX.PlayerData = ESX.GetPlayerData()
-    ESXLoaded = true
 end)
 
 RegisterNetEvent('esx:setJob')
@@ -26,9 +25,6 @@ end)
 local vehicles = {}
 
 Citizen.CreateThread(function()
-    while not ESXLoaded do
-        Citizen.Wait(10)
-    end
     Citizen.Wait(0)
     while true do
         Citizen.Wait(1000)
