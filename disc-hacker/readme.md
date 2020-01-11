@@ -18,4 +18,4 @@ Start using `start disc-hacker`
 
 # Requirements
 
-- [Disc-Base](https://github.com/DiscworldZA/gta-resources/tree/master/disc-base)
+- [Mythic Notify](https://github.com/mythicrp/mythic_notify)
