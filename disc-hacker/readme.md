@@ -12,6 +12,8 @@ Adds a hacking tool
 # Installation
 Add to resource folder `[esx]` or `[disc]`
 
+Execute SQL : `disc-hacker.sql`
+
 Start using `start disc-hacker`
 
 # Requirements
