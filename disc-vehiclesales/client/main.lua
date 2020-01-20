@@ -1,12 +1,13 @@
 ESX = nil
 displayVehicle = nil
+ESXLoaded = false
 
 Citizen.CreateThread(function()
     while ESX == nil do
+        Citizen.Wait(0)
         TriggerEvent('esx:getSharedObject', function(obj)
             ESX = obj
         end)
-        Citizen.Wait(0)
     end
 
     while ESX.GetPlayerData().job == nil do
@@ -14,6 +15,7 @@ Citizen.CreateThread(function()
     end
 
     ESX.PlayerData = ESX.GetPlayerData()
+    ESXLoaded = true
 end)
 
 RegisterNetEvent('esx:setJob')
@@ -24,6 +26,9 @@ end)
 local vehicles = {}
 
 Citizen.CreateThread(function()
+    while not ESXLoaded do
+        Citizen.Wait(10)
+    end
     Citizen.Wait(0)
     while true do
         Citizen.Wait(1000)
@@ -87,6 +92,9 @@ AddEventHandler('disc-vehiclesales:newVehicles', function(newVehicles)
 end)
 
 Citizen.CreateThread(function()
+    while not ESXLoaded do
+        Citizen.Wait(10)
+    end
     Citizen.Wait(0)
     for k, v in pairs(Config.StoreAreas) do
         local marker = {
@@ -264,4 +272,3 @@ RegisterNetEvent('disc-vehiclesales:message')
 AddEventHandler('disc-vehiclesales:message', function(type, msg)
     exports['mythic_notify']:SendAlert(type, msg)
 end)
-
