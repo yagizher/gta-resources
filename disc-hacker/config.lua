@@ -1,5 +1,5 @@
 Config = {}
-
+Config.RequiredCops = 2
 Config.BruteForce = {
     ThreadSleep = 1
 }
