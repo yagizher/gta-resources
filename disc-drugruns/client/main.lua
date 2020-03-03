@@ -77,7 +77,7 @@ function DeliverDrugs()
             --Pay for Drugs
             local price = math.random(Config.Drugs[currentDrugTask.drugsIndex].price[1], Config.Drugs[currentDrugTask.drugsIndex].price[2])
 
-            exports['mythic_notify']:SendALert('success', 'Good, Here\'s $' .. price)
+            exports['mythic_notify']:SendAlert('success', 'Good, Here\'s $' .. price)
             TriggerServerEvent('disc-base:givePlayerMoney', price)
             --Continue if has more runs
             GotoNextRun()
