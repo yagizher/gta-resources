@@ -1,11 +1,44 @@
 ESX = nil
+local CopsConnected  = 0
 
 TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
+function CountCops()
+
+    local xPlayers = ESX.GetPlayers()
+
+    CopsConnected = 0
+
+    for i=1, #xPlayers, 1 do
+        local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+        if xPlayer.job.name == 'police' then
+            CopsConnected = CopsConnected + 1
+        end
+    end
+
+    SetTimeout(120 * 1000, CountCops)
+end
+
 ESX.RegisterUsableItem('hacktool', function(source)
+    local source = source
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local xPlayers = ESX.GetPlayers()
+        local cops = 0
+        for i=1, #xPlayers, 1 do
+        local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+        if xPlayer.job.name == 'police' then
+                cops = cops + 1
+            end
+        end
+
+        if cops >= 2 then
+
     TriggerClientEvent('disc-hacker:OpenTool', source)
+        else
+    TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'Not enough cops'}, 20000)
+     end
 end)
 
 RegisterServerEvent('disc-hacker:sendCommand')
