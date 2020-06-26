@@ -37,10 +37,10 @@ AddEventHandler('disc-ammo:useAmmoItem', function(ammo)
                 TaskReloadWeapon(playerPed)
                 if Config.EnableInventoryHUD then
                     TriggerServerEvent('disc-inventoryhud:updateAmmoCount', weapon, newAmmo)
-                    TriggerServerEvent('disc-ammo:updatexplayer', weapon, newAmmo)
                 end
                 SetPedAmmo(playerPed, weapon, newAmmo)
                 TriggerServerEvent('disc-ammo:removeAmmoItem', ammo)
+                TriggerServerEvent('disc-ammo:updatexplayer', weapon, newAmmo)
                 exports['mythic_notify']:SendAlert('success', 'Reloaded')
             else
                 exports['mythic_notify']:SendAlert('error', 'Max Ammo')
